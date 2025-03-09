@@ -1,0 +1,32 @@
+<div class="header w-full">
+    <nav class="navbar">
+        <!-- <div class="logo">🌿 SoapNest</div> -->
+        <div class="logo-wrapper flex">
+            <img class="logo w-full h-full cursor-pointer" src="assets/logo/logo-2.webp" alt="logo"
+                (click)="windowReload()">
+            <h1 class="cursor-pointer" (click)="windowReload()">SoapNest</h1>
+        </div>
+
+
+        <div class="nav-icons flex">
+            <div class="nav-links">
+                <a *ngFor="let link of navLinks" [routerLink]="link.path"><i class="nav-icon" [class]="link.icon"></i>{{
+                    link.label }}</a>
+            </div>
+            <a routerLink="/cart" class="cart-icon"><i class="fa-solid fa-cart-shopping"></i>
+                <span *ngIf="cartCount > 0" class="cart-count">{{ cartCount }}</span>
+            </a>
+            <button class="menu-btn cursor-pointer" (click)="toggleSidebar()">☰</button>
+        </div>
+    </nav>
+
+    <div class="sidebar" [class.open]="isSidebarOpen">
+        <button class="close-btn cursor-pointer" (click)="toggleSidebar()">✖</button>
+        <a *ngFor="let link of navLinks" [routerLink]="link.path" (click)="toggleSidebar()">
+            {{ link.label }}
+        </a>
+    </div>
+
+    <div class="overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>
+
+</div>

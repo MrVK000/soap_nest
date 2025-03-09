@@ -1,0 +1,83 @@
+<div class="home">
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Pure & Natural <br> Handmade Soaps & Shampoos</h1>
+            <p>Eco-friendly, chemical-free, and made with love ❤️</p>
+            <a routerLink="/products" class="btn shop-now-btn">Shop Now</a>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            <div class="product-card" *ngFor="let product of featuredProducts">
+                <img [src]="product.image" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                <p>₹{{ product.price }}</p>
+                <a routerLink="/products/{{ product.id }}" class="btn">View Product</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="why-choose">
+        <h2>Why Choose Our Products?</h2>
+
+        <div class="benefits">
+            <div class="benefit" *ngFor="let item of benifits">
+                <img [src]="item.image" [alt]="item.label">
+                <div class="benefit-content">
+                    <h3>{{item.label}}</h3>
+                    <p>{{item.description}}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <div class="testimonials">
+        <h2>What Our Customers Say</h2>
+        <div class="carousel flex justify-content-center align-items-center">
+            <p-carousel [value]="reviews" [circular]="true" [responsiveOptions]="responsiveOptions"
+                autoplayInterval="3000">
+
+                <ng-template let-review #item>
+
+                    <div class="testimonial">
+                        <p>"{{ review.text }}"</p>
+                        <h4>- {{ review.name }}</h4>
+                    </div>
+
+                </ng-template>
+
+            </p-carousel>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="newsletter">
+        <h2>Get Exclusive Offers</h2>
+        <input class="mail-input-field" type="email" placeholder="Enter your email">
+        <button class="subscription-btn">Subscribe</button>
+    </div>
+
+</div>
