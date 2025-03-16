@@ -1,3 +1,4 @@
+import { SharedService } from './../../service/shared.service';
 import { Component, HostListener } from '@angular/core';
 import { NAV_LINKS } from '../../data/data';
 import { RouterModule } from '@angular/router';
@@ -12,11 +13,10 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent {
   navLinks = NAV_LINKS;
   isSidebarOpen = false;
-  cartCount = 2;
 
-  constructor() { }
+  constructor(public sharedService: SharedService) { }
 
-  
+
   windowReload(): void {
     window.location.reload();
   }

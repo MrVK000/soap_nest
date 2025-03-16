@@ -4,3 +4,36 @@
     z-index: 9999;
 }
 
+// .footer-wrapper {
+//     position: fixed;
+//     bottom: 0;
+//     z-index: 9999;
+//     height: fit-content;
+// }
+
+
+
+@media screen and (max-width: 575px) {
+
+    .footer-wrapper {
+        position: relative;
+        bottom: 0;
+        z-index: 9999;
+    }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+    .footer-wrapper {
+        position: relative;
+        bottom: 0;
+        z-index: 9999;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 863px) {
+    .footer-wrapper {
+        position: relative;
+        bottom: 0;
+        z-index: 9999;
+    }
+}

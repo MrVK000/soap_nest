@@ -83,8 +83,8 @@
   .button {
     padding: 12px;
     border-radius: 38px;
-    border: 2px solid var(--green);
-    background-color: var(--green);
+    border: 2px solid var(--palevioletred);
+    background-color: var(--palevioletred);
     color: #ffffff;
     font-size: 16px;
     // height: 3em;
@@ -93,7 +93,7 @@
   }
   
   .button:hover {
-    box-shadow: 0px 0px 8px 0.2px var(--light-green);
+    box-shadow: 0px 0px 8px 0.2px var(--pink);
     transition: all 0.2s;
   }
   

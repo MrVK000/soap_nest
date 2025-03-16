@@ -1,0 +1,94 @@
+.contact-container {
+    padding: 50px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #4A4A4A;
+}
+
+.contact-form {
+    width: 40rem;
+}
+
+.hero {
+    background: url('../../../../public/assets/backgrount images/banner_1.jpg') no-repeat center center/cover;
+    color: white;
+    padding: 60px 20px;
+    border-radius: 10px;
+}
+
+.hero h1 {
+    font-size: 36px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.contact-form {
+    margin-top: 30px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 80%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.contact-form textarea {
+    height: 4rem;
+    min-height: 4rem;
+    max-height: 8rem;
+    min-width: 80%;
+    max-width: 80%;
+}
+
+.contact-form button {
+    background: var(--green);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: all 0.2s;
+}
+
+.contact-form button:hover {
+    background: var(--light-green);
+}
+
+.contact-form button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
+@media screen and (max-width: 575px) {
+    .contact-container {
+        padding: 12px;
+    }
+
+    .contact-form {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+    .contact-container {
+        padding: 20px;
+    }
+
+    .contact-form {
+        width: 100%;
+    }
+}

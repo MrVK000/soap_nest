@@ -1,9 +1,13 @@
+// .header-wrapper {
+//     max-width: 100rem;
+// }
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: var(--light-white);
-    padding: 15px 30px;
+    padding: 8px 30px;
     border-bottom: 2px solid var(--green);
 }
 
@@ -17,6 +21,7 @@
     margin: 0 15px;
     font-size: 18px;
     font-weight: 600;
+    transition: all 0.2s;
 }
 
 .nav-links a:hover {
@@ -33,6 +38,11 @@
     text-decoration: none;
     color: var(--dark-green);
     margin: 0px 28px;
+    transition: all 0.2s;
+}
+
+.cart-icon:hover {
+    color: var(--light-green);
 }
 
 .cart-count {
@@ -51,7 +61,6 @@
     font-size: 24px;
     background: none;
     border: none;
-    cursor: pointer;
     display: none;
 }
 
@@ -89,7 +98,6 @@
     font-size: 20px;
     border: none;
     background: none;
-    cursor: pointer;
     margin-bottom: 8px;
 }
 
@@ -105,6 +113,10 @@
 
 
 @media screen and (max-width: 575px) {
+    .navbar {
+        padding: 8px 8px;
+    }
+
     .nav-links {
         display: none;
     }
@@ -133,3 +145,21 @@
         display: block;
     }
 }
+
+@media screen and (min-width: 864px) and (max-width: 1023px) {}
+
+@media screen and (min-width: 1024px) and (max-width: 1439px) {}
+
+@media screen and (min-width: 1440px) and (max-width: 1919px) {}
+
+@media screen and (min-width: 1920px) and (max-width: 2559px) {}
+
+@media screen and (min-width: 2560px) and (max-width: 3139px) {}
+
+@media screen and (min-width: 3140px) and (max-width: 3839px) {}
+
+@media screen and (min-width: 3840px) and (max-width: 4519px) {}
+
+@media screen and (min-width: 4520px) and (max-width: 5119px) {}
+
+@media screen and (min-width: 5120px) {}

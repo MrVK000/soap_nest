@@ -1,1 +1,29 @@
-<p>login works!</p>
+<div class="login-container">
+    <section class="login-box">
+        <h2>Login to Your Account</h2>
+
+        <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+            <div class="input-group">
+                <input type="email" formControlName="email" placeholder="Email Address">
+                <!-- <span *ngIf="loginForm.get('email')?.valid" class="valid">✔️</span>
+          <span *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="invalid">❌</span> -->
+            </div>
+            <div class="error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                Enter a valid email.
+            </div>
+
+            <div class="input-group">
+                <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password">
+                <span class="toggle cursor-pointer" (click)="togglePassword()">{{ showPassword ? '👁️' : '🙈' }}</span>
+            </div>
+            <div class="error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                Password must be at least 6 characters.
+            </div>
+
+            <button type="submit" [disabled]="loginForm.invalid">Login</button>
+        </form>
+
+        <p class="forgot-password cursor-pointer"><a href="#">Forgot Password?</a></p>
+        <p class="signup cursor-pointer">New here? <a routerLink="/register">Create an account</a></p>
+    </section>
+</div>

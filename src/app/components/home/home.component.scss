@@ -1,11 +1,11 @@
 .home {
-    max-width: 85rem;
+    max-width: 100rem;
     width: 100%;
 }
 
 
 .hero {
-    background: url('../../../../public/background images/banner_1.jpg') no-repeat center center/cover;
+    background: url('../../../../public/assets/backgrount images/banner_1.jpg') no-repeat center center/cover;
     height: 40rem;
     display: flex;
     align-items: center;
@@ -139,43 +139,6 @@
 
 
 
-
-
-
-.newsletter {
-    text-align: center;
-    padding: 20px 0;
-    background: var(--green);
-    color: var(--white);
-}
-
-.mail-input-field {
-    padding: 10px;
-    font-size: 18px;
-}
-
-.subscription-btn {
-    background: var(--white);
-    color: var(--green);
-    padding: 10px 20px;
-    border: none;
-    font-size: 18px;
-}
-
-.subscription-btn:hover {
-    box-shadow: 0px 0px 4px var(--light-white);
-    cursor: pointer;
-}
-
-.mail-input-field,
-.subscription-btn {
-    margin: 12px;
-}
-
-
-
-
-
 @media screen and (max-width: 575px) {
 
     .hero {
@@ -202,10 +165,14 @@
     ::ng-deep .p-carousel-viewport {
         width: 18rem !important;
     }
+
+    .mail-input-field {
+        width: 100%;
+        max-width: 18rem;
+    }
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
-
 
     .hero {
         height: 34rem;
@@ -265,7 +232,7 @@
 
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
     .benefit {
-        width: 17.5rem;
+        width: 17rem;
     }
 
     .benefit img {
@@ -273,9 +240,7 @@
         height: 18rem;
     }
 
-
     ::ng-deep .p-carousel-viewport {
         width: 60rem !important;
     }
-
 }

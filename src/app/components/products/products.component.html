@@ -1,1 +1,51 @@
-<p>products works!</p>
+<div class="products-container">
+  <h1>Our Products</h1>
+
+  <input class="searchBar" type="text" [(ngModel)]="searchQuery" (input)="searchProducts()"
+    placeholder="Search by name or price...">
+
+
+  <div class="filter-bar flex justify-content-center">
+    <select [(ngModel)]="selectedCategory" (change)="filterProducts()">
+      <option value="">All Categories</option>
+      <option value="soap">Soaps</option>
+      <option value="shampoo">Shampoos</option>
+    </select>
+
+    <select [(ngModel)]="selectedSort" (change)="sortProducts()">
+      <option value="low-to-high">Price: Low to High</option>
+      <option value="high-to-low">Price: High to Low</option>
+    </select>
+
+    <!-- <p-dropdown [options]="productSortOptions" [(ngModel)]="selectedSort" optionLabel="type"
+      placeholder="Sort products" (onChange)="sortProducts()"></p-dropdown> -->
+
+  </div>
+
+  <div class="product-grid">
+    <p *ngIf="!paginatedProducts.length">No products available!</p>
+    <div class="product-card cursor-pointer" *ngFor="let product of paginatedProducts" routerLink="/product-details">
+      <img [src]="product.image" alt="{{ product.name }}">
+
+      <div class="product-details">
+        <h3>{{ product.name }}</h3>
+        <p>₹{{ product.price }}</p>
+
+        <span *ngIf="product?.offer" class="offer-badge">
+          {{ product.offer }}% OFF
+        </span>
+
+        <div class="product-card-footer">
+          <button class="product-card-button cursor-pointer" (click)="buyNow(product)">Buy Now</button>
+          <button class="product-card-button cursor-pointer" (click)="addToCart(product)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <button class="cursor-pointer" (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button class="cursor-pointer" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>

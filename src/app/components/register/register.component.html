@@ -1,0 +1,49 @@
+<div class="register-container">
+    <section class="register-box">
+        <h2>Create Your Account</h2>
+
+        <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+            <input type="text" formControlName="fullName" placeholder="Full Name">
+            <div class="error" *ngIf="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched">
+                Name must be at least 3 characters.
+            </div>
+
+            <input type="email" formControlName="email" placeholder="Email Address">
+            <div class="error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                Enter a valid email.
+            </div>
+
+            <input type="password" formControlName="password" placeholder="Password">
+            <div class="error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+                Password must be at least 6 characters.
+            </div>
+
+            <input type="password" formControlName="confirmPassword" placeholder="Confirm Password">
+            <div class="error"
+                *ngIf="registerForm.get('confirmPassword')?.value !== registerForm.get('password')?.value && registerForm.get('confirmPassword')?.touched">
+                Passwords do not match.
+            </div>
+
+            <input type="text" formControlName="phone" placeholder="Phone Number (Optional)">
+            <div class="error" *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+                Enter a valid 10-digit phone number.
+            </div>
+
+            <textarea formControlName="address" placeholder="Address (Optional)"></textarea>
+
+
+            <label class="checkbox-label">
+                <input class="tearms-checkbox" type="checkbox" formControlName="terms"> I agree to the <a href="#">Terms
+                    & Conditions</a>
+            </label>
+            <div class="error" *ngIf="registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched">
+                You must accept the terms.
+            </div>
+
+
+            <button class="cursor-pointer" type="submit" [disabled]="registerForm.invalid">Register</button>
+        </form>
+
+        <p class="login-link">Already have an account? <a routerLink="/login">Login</a></p>
+    </section>
+</div>

@@ -1,0 +1,114 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // height: 100vh;
+    background: var(--light-white);
+    margin: 4rem 0;
+}
+
+.register-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 28rem;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: var(--grey);
+}
+
+input,
+textarea {
+    width: 80%;
+    min-width: 80%;
+    max-width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+textarea {
+    min-height: 4rem;
+    max-height: 8rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.tearms-checkbox {
+    width: 20px;
+    min-width: 20px;
+    max-width: 20px;
+}
+
+button {
+    background: var(--green);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    text-align: left;
+}
+
+.login-link {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+a {
+    color: #508C41;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+@media screen and (max-width: 323px) {
+    .register-box {
+        width: 100%;
+        margin: 0 12px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (min-width: 324px) and (max-width: 576px) {
+    .register-box {
+        width: 100%;
+        margin: 0 20px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+}

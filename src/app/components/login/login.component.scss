@@ -1,0 +1,109 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    // background: #F5F5F5;
+}
+
+.login-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 26rem;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: var(--grey);
+}
+
+.input-group {
+    position: relative;
+    margin-top: 15px;
+}
+
+input {
+    width: 22.3rem;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.valid {
+    color: var(--green);
+    font-size: 18px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.invalid {
+    color: red;
+    font-size: 18px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    text-align: left;
+}
+
+button {
+    background: var(--green);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.forgot-password,
+.signup {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+a {
+    color: var(--green);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+
+@media screen and (max-width: 576px) {
+
+    .login-box {
+        width: 100%;
+        margin: 8px;
+        padding: 20px;
+    }
+
+    input {
+        width: 100%;
+    }
+}

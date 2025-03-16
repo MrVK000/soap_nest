@@ -1,0 +1,50 @@
+<div class="account-container">
+    <section class="account-box">
+        <h2>My Account</h2>
+
+        <form [formGroup]="accountForm">
+            <label>Full Name</label>
+            <input type="text" formControlName="fullName" [readonly]="!isEditing">
+
+            <label>Email</label>
+            <input type="email" formControlName="email" readonly>
+
+            <label>Phone Number</label>
+            <input type="text" formControlName="phone" [readonly]="!isEditing">
+
+            <label>Address</label>
+            <textarea formControlName="address" [readonly]="!isEditing"></textarea>
+
+            <button class="cursor-pointer" type="button" (click)="toggleEdit()">
+                {{ isEditing ? 'Cancel' : 'Edit Profile' }}
+            </button>
+            <button class="cursor-pointer" type="button" (click)="saveChanges()" *ngIf="isEditing">Save Changes</button>
+        </form>
+
+        <div class="password-section">
+            <button class="cursor-pointer" type="button" (click)="togglePasswordChange()">
+                {{ isChangingPassword ? 'Cancel' : 'Change Password' }}
+            </button>
+
+            <form [formGroup]="passwordForm" *ngIf="isChangingPassword">
+                <label>Old Password</label>
+                <input type="password" formControlName="oldPassword">
+
+                <label>New Password</label>
+                <input type="password" formControlName="newPassword">
+
+                <label>Confirm Password</label>
+                <input type="password" formControlName="confirmPassword">
+
+                <button class="cursor-pointer" type="button" (click)="changePassword()">Update Password</button>
+            </form>
+        </div>
+
+        <h3>Order History</h3>
+        <ul class="order-history">
+            <li *ngFor="let order of orderHistory">
+                <strong>Order #{{ order.id }}</strong> - {{ order.date }} - {{ order.total | currency }}
+            </li>
+        </ul>
+    </section>
+</div>

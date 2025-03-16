@@ -14,6 +14,10 @@ export class AppComponent {
 
   
   ngOnInit(): void {
+    // document.documentElement.style.setProperty('--lavendar', '#e6e6fa');
+    // document.documentElement.style.setProperty('--gold', '#d4af37');
+    // document.documentElement.style.setProperty('--pink', '#ffb0d0');
+    document.documentElement.style.setProperty('--grey', '#808080');
     document.documentElement.style.setProperty('--light-green', '#76A857');
     document.documentElement.style.setProperty('--white', '#FFFFFF');
     document.documentElement.style.setProperty('--light-white', '#FAFAF5');
