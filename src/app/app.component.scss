@@ -1,39 +1,54 @@
+:host ::ng-deep router-outlet+* {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 .header-wrapper {
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 999;
+}
+
+.content-wrapper {
+    max-width: 100rem;
 }
 
 // .footer-wrapper {
-//     position: fixed;
+//     position: sticky;
 //     bottom: 0;
-//     z-index: 9999;
-//     height: fit-content;
+//     z-index: 8888;
+//     // height: fit-content;
 // }
 
 
 
-@media screen and (max-width: 575px) {
+// @media screen and (max-width: 575px) {
 
-    .footer-wrapper {
-        position: relative;
-        bottom: 0;
-        z-index: 9999;
-    }
-}
+//     .footer-wrapper {
+//         position: relative;
+//         bottom: 0;
+//     }
+// }
 
-@media screen and (min-width: 576px) and (max-width: 767px) {
-    .footer-wrapper {
-        position: relative;
-        bottom: 0;
-        z-index: 9999;
-    }
-}
+// @media screen and (min-width: 576px) and (max-width: 767px) {
+//     .footer-wrapper {
+//         position: relative;
+//         bottom: 0;
+//     }
+// }
 
-@media screen and (min-width: 768px) and (max-width: 863px) {
-    .footer-wrapper {
-        position: relative;
-        bottom: 0;
-        z-index: 9999;
-    }
-}
+// @media screen and (min-width: 768px) and (max-width: 863px) {
+//     .footer-wrapper {
+//         position: relative;
+//         bottom: 0;
+//     }
+// }

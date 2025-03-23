@@ -1,0 +1,46 @@
+<div class="my-orders-container">
+    <h2>My Orders</h2>
+    <div class="my-orders-wrapper">
+        <div class="filters flex flex-column align-items-center">
+
+            <div class="date-field-wrapper">
+                <label>Date: </label>
+                <input class="date-filter cursor-pointer" type="date" [(ngModel)]="startDate"> to
+                <input class="date-filter cursor-pointer" type="date" [(ngModel)]="endDate">
+            </div>
+
+            <div class="status-field-wrapper">
+                <label>Status: </label>
+                <select class="status-filter cursor-pointer" (change)="filterByStatus($event)">
+                    <option value="">All</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+
+            <button class="filter-btn cursor-pointer" (click)="filterByDate()">Filter</button>
+            <small>*Note:- Use the filter options to filter the orders</small>
+        </div>
+
+        <div *ngFor="let order of paginatedOrders" class="order-card">
+            <p><strong>Order ID:</strong> {{ order.orderId }}</p>
+            <p><strong>Date:</strong> {{ order.orderDate }}</p>
+            <p><strong>Total:</strong> ₹{{ order.totalAmount }}</p>
+            <p><strong>Payment:</strong> {{ order.paymentMethod }}</p>
+            <p><strong>Status:</strong> <span [ngClass]="getStatusClass(order.status)">{{ order.status }}</span></p>
+
+            <div class="view-order-btn-wrapper flex justify-content-center">
+                <button class="cursor-pointer" (click)="viewOrderDetails(order.orderId)">View Details</button>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button class="cursor-pointer" (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+            <span>Page {{ currentPage }}</span>
+            <button class="cursor-pointer" (click)="nextPage()"
+                [disabled]="(currentPage * itemsPerPage) >= filteredOrders.length">Next</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<div class="account-container w-full">
+    <section class="account-box">
+        <h2>My Account</h2>
+
+        <form [formGroup]="accountForm">
+            <label>Full Name</label>
+            <input type="text" formControlName="fullName" [readonly]="!isEditing">
+            <p class="error"
+                [ngStyle]="isEditing && accountForm.controls['fullName'].invalid && accountForm.controls['fullName'].touched?{}:{'visibility':'hidden'}">
+                Full name must be at least 3 characters long.
+            </p>
+
+            <label>Email</label>
+            <input type="email" formControlName="email" readonly>
+            <p class="error" [ngStyle]="false?{}:{'visibility':'hidden'}">E-mail is required</p>
+
+            <label>Phone Number</label>
+            <input type="text" formControlName="phone" [readonly]="!isEditing">
+            <p class="error"
+                [ngStyle]="isEditing && accountForm.controls['phone'].invalid && accountForm.controls['phone'].touched?{}:{'visibility':'hidden'}">
+                Enter a valid 10-digit phone number.
+            </p>
+
+            <label>Address</label>
+            <textarea class="textarea-field" formControlName="address" [readonly]="!isEditing"></textarea>
+            <p class="error"
+                [ngStyle]="isEditing && accountForm.controls['address'].invalid && accountForm.controls['address'].touched?{}:{'visibility':'hidden'}">
+                Please enter a valid address.
+            </p>
+
+            <button class="cursor-pointer" type="button" (click)="toggleEdit()">
+                {{ isEditing ? 'Cancel' : 'Edit Profile' }}
+            </button>
+            <button class="cursor-pointer" type="button" (click)="saveChanges()" *ngIf="isEditing"
+                [disabled]="accountForm.invalid">
+                Save Changes
+            </button>
+        </form>
+
+        <div class="password-section">
+            <button class="cursor-pointer" type="button" (click)="togglePasswordChange()">
+                {{ isChangingPassword ? 'Cancel' : 'Change Password' }}
+            </button>
+
+            <form [formGroup]="passwordForm" *ngIf="isChangingPassword">
+                <label>Old Password</label>
+                <input type="password" formControlName="oldPassword">
+                <p class="error"
+                    [ngStyle]="passwordForm.controls['oldPassword'].invalid && passwordForm.controls['oldPassword'].touched?{}:{'visibility':'hidden'}">
+                    Please enter your old password.
+                </p>
+
+                <label>New Password</label>
+                <input type="password" formControlName="newPassword">
+                <p class="error"
+                    [ngStyle]="passwordForm.controls['newPassword'].invalid && passwordForm.controls['newPassword'].touched?{}:{'visibility':'hidden'}">
+                    Password must be at least 6 characters long.
+                </p>
+
+                <label>Confirm Password</label>
+                <input type="password" formControlName="confirmPassword">
+                <p class="error"
+                    [ngStyle]="passwordForm.controls['confirmPassword'].invalid && passwordForm.controls['confirmPassword'].touched?{}:{'visibility':'hidden'}">
+                    Please confirm your password.
+                </p>
+                <p class="error"
+                    [ngStyle]="passwordForm.value.newPassword !== passwordForm.value.confirmPassword && passwordForm.controls['confirmPassword'].touched?{}:{'visibility':'hidden'}">
+                    Passwords do not match.
+                </p>
+
+                <button class="cursor-pointer" type="button" (click)="changePassword()"
+                    [disabled]="passwordForm.invalid">
+                    Update Password
+                </button>
+            </form>
+        </div>
+
+        <!-- <h3>Order History</h3>
+        <ul class="order-history">
+            <li *ngFor="let order of orderHistory">
+                <strong>Order #{{ order.id }}</strong> - {{ order.date }} - {{ order.total | currency }}
+            </li>
+        </ul> -->
+    </section>
+</div>

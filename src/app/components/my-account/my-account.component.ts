@@ -1,22 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-myaccount',
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './myaccount.component.html',
-  styleUrl: './myaccount.component.scss'
+  imports: [CommonModule, ReactiveFormsModule, MatSnackBarModule],
+  templateUrl: './my-account.component.html',
+  styleUrl: './my-account.component.scss',
 })
 export class MyaccountComponent {
   isEditing = false;
   isChangingPassword = false;
 
   accountForm = new FormGroup({
-    fullName: new FormControl('John Doe', [Validators.required, Validators.minLength(3)]),
+    fullName: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('johndoe@example.com', [Validators.required, Validators.email]), // Read-only
-    phone: new FormControl('1234567890', [Validators.pattern('^[0-9]{10}$')]),
-    address: new FormControl('123 Greenway Street, Eco City')
+    phone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
+    address: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
 
   passwordForm = new FormGroup({
@@ -31,13 +32,20 @@ export class MyaccountComponent {
     { id: 103, date: 'March 8, 2025', total: 8.99 }
   ];
 
+  constructor(private snackBar: MatSnackBar) {
+    // this.snackBar.open('This is a snack bar!', 'Close', { duration: 2000 });
+    // this.accountForm.reset();
+  }
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
+    if (this.isEditing)
+      this.accountForm.markAsUntouched();
   }
 
   togglePasswordChange() {
     this.isChangingPassword = !this.isChangingPassword;
+    this.passwordForm.reset();
   }
 
   saveChanges() {

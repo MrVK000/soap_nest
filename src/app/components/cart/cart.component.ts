@@ -1,65 +1,50 @@
 import { SharedService } from './../../service/shared.service';
 import { Component } from '@angular/core';
 import { CART_ITEMS } from '../../data/data';
-import { Product } from '../../interfaces/interfaces';
+import { Cart, Product } from '../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { CartService } from '../../service/cart.service';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
 export class CartComponent {
-  cartItems: Product[] = CART_ITEMS;
+  cartItems: Cart[] = [];
 
-  filteredProducts: Product[] = [...this.cartItems];
+  filteredProducts: Cart[] = [...this.cartItems];
 
   searchQuery: string = '';
   currentPage: number = 1;
   itemsPerPage: number = 3;
   totalPages: number = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
 
-  constructor(private sharedService: SharedService) { }
+  // ngOnInit(): void {
+  //   this.sharedService.cartCount = this.cartItems.length;
+  // }
 
-  ngOnInit(): void {
-    this.sharedService.cartCount = this.cartItems.length;
+
+  constructor(private router: Router, private sharedService: SharedService, private cartService: CartService) {
+    this.cartItems = this.cartService.getCartItems();
+
   }
 
-
-  paginateProducts() {
-    this.totalPages = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    this.cartItems = this.filteredProducts.slice(startIndex, startIndex + this.itemsPerPage);
+  increaseQuantity(index: number) {
+    this.cartService.increaseQuantity(index);
   }
 
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.paginateProducts();
-    }
+  decreaseQuantity(index: number) {
+    this.cartService.decreaseQuantity(index);
   }
 
-  nextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.paginateProducts();
-    }
+  removeItem(index: number) {
+    this.cartService.removeItem(index);
   }
 
-
-
-  removeFromCart(product: Product) {
-    alert(`${product.name} added to cart!`);
+  getTotalPrice() {
+    return this.cartService.getTotalPrice().toFixed(2);
   }
-
-  buyNow(product: Product) {
-    alert(`Buying ${product.name}`);
-  }
-
-  buyCart() {
-    alert(`Buy all products in cart`);
-  }
-
 }

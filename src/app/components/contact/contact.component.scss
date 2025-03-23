@@ -1,19 +1,15 @@
 .contact-container {
-    padding: 50px;
-    text-align: center;
     font-family: 'Arial', sans-serif;
-    color: #4A4A4A;
-}
-
-.contact-form {
-    width: 40rem;
+    color: var(--grey);
+    text-align: center;
 }
 
 .hero {
     background: url('../../../../public/assets/backgrount images/banner_1.jpg') no-repeat center center/cover;
-    color: white;
+    color: var(--white);
     padding: 60px 20px;
     border-radius: 10px;
+    margin: 20px;
 }
 
 .hero h1 {
@@ -26,7 +22,16 @@
 }
 
 .contact-form {
-    margin-top: 30px;
+    width: 40rem;
+    margin-top: 3rem;
+}
+
+.contact-form h2 {
+    margin-bottom: 20px;
+}
+
+form {
+    height: 18rem;
 }
 
 .contact-form input,
@@ -34,7 +39,7 @@
     width: 80%;
     padding: 10px;
     margin-top: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--grey);
     border-radius: 5px;
     font-size: 16px;
 }
@@ -47,47 +52,42 @@
     max-width: 80%;
 }
 
-.contact-form button {
+.submit-btn {
     background: var(--green);
-    color: white;
-    padding: 10px 15px;
+    color: var(--white);
+    padding: 10px 14px;
     border: none;
     font-size: 16px;
-    margin-top: 10px;
     transition: all 0.2s;
+    margin: 4px;
+    border-radius: 4px;
 }
 
-.contact-form button:hover {
+.submit-btn:hover {
     background: var(--light-green);
 }
 
-.contact-form button:disabled {
-    background: #ccc;
+.submit-btn:disabled {
+    background: var(--grey);
     cursor: not-allowed;
 }
 
 .error {
-    color: red;
+    color: var(--red);
     font-size: 14px;
     margin-top: 5px;
+    float: left;
+    margin-left: 10%;
 }
 
 
 @media screen and (max-width: 575px) {
-    .contact-container {
-        padding: 12px;
-    }
-
     .contact-form {
         width: 100%;
     }
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
-    .contact-container {
-        padding: 20px;
-    }
-
     .contact-form {
         width: 100%;
     }

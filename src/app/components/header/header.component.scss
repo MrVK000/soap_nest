@@ -1,24 +1,37 @@
-// .header-wrapper {
-//     max-width: 100rem;
-// }
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--light-white);
-    padding: 8px 30px;
+.header-wrapper {
     border-bottom: 2px solid var(--green);
 }
 
+.navbar {
+    max-width: 100rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--logo-white);
+}
+
 .logo-wrapper {
-    width: 2rem;
+    width: 13rem;
+}
+
+.logo {
+    width: 3rem;
+    margin: 8px;
+}
+
+.title {
+    width: fit-content;
+    color: var(--green);
+}
+
+.title-span {
+    color: var(--light-green);
 }
 
 .nav-links a {
+    margin: 0 10px;
     text-decoration: none;
     color: var(--dark-green);
-    margin: 0 15px;
     font-size: 18px;
     font-weight: 600;
     transition: all 0.2s;
@@ -29,46 +42,73 @@
 }
 
 .nav-icon {
-    margin-right: 8px;
+    margin-right: 4px;
 }
 
-.cart-icon {
+.menu-btn,
+.close-btn,
+.login-btn,
+.cart-btn {
+    transition: all 0.2s;
+}
+
+.menu-btn,
+.login-btn,
+.close-btn {
+    background: none;
+}
+
+.menu-btn:hover,
+.login-btn:hover,
+.close-btn:hover,
+.cart-btn:hover {
+    color: var(--light-green);
+}
+
+.login-btn,
+.cart-btn {
     position: relative;
     font-size: 24px;
     text-decoration: none;
     color: var(--dark-green);
-    margin: 0px 28px;
-    transition: all 0.2s;
+    margin: 0px 10px 0 10px;
 }
 
-.cart-icon:hover {
-    color: var(--light-green);
-}
 
 .cart-count {
     position: absolute;
     top: -5px;
     right: -10px;
-    background: red;
-    color: white;
+    background: var(--red);
+    color: var(--white);
     font-size: 14px;
     font-weight: bold;
     border-radius: 50%;
     padding: 2px 6px;
 }
 
+.login-label {
+    display: none;
+}
+
 .menu-btn {
     font-size: 24px;
-    background: none;
     border: none;
     display: none;
+    margin-right: 20px;
+}
+
+.close-btn {
+    font-size: 20px;
+    border: none;
+    margin-bottom: 8px;
 }
 
 .sidebar {
     position: fixed;
     top: 0;
     right: -350px;
-    width: 250px;
+    width: 14rem;
     height: 100vh;
     z-index: 1003;
     background-color: var(--light-white);
@@ -83,7 +123,7 @@
 
 .sidebar a {
     display: block;
-    padding: 15px;
+    padding: 14px;
     text-decoration: none;
     color: var(--dark-green);
     font-size: 18px;
@@ -91,14 +131,7 @@
 
 .sidebar a:hover {
     background-color: var(--light-green);
-    color: white;
-}
-
-.close-btn {
-    font-size: 20px;
-    border: none;
-    background: none;
-    margin-bottom: 8px;
+    color: var(--white);
 }
 
 .overlay {
@@ -113,53 +146,45 @@
 
 
 @media screen and (max-width: 575px) {
-    .navbar {
-        padding: 8px 8px;
+    .nav-links {
+        display: none !important;
     }
 
-    .nav-links {
-        display: none;
+    .cart-btn {
+        margin: 0px 8px;
     }
 
     .menu-btn {
         display: block;
+        margin-right: 12px;
+    }
+
+    .sidebar {
+        width: 10rem;
     }
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
     .nav-links {
-        display: none;
+        display: none !important;
     }
 
     .menu-btn {
         display: block;
     }
+
+    .sidebar {
+        width: 10rem;
+    }
 }
+
 
 @media screen and (min-width: 768px) and (max-width: 863px) {
     .nav-links {
-        display: none;
+        display: none !important;
     }
 
     .menu-btn {
         display: block;
     }
 }
-
-@media screen and (min-width: 864px) and (max-width: 1023px) {}
-
-@media screen and (min-width: 1024px) and (max-width: 1439px) {}
-
-@media screen and (min-width: 1440px) and (max-width: 1919px) {}
-
-@media screen and (min-width: 1920px) and (max-width: 2559px) {}
-
-@media screen and (min-width: 2560px) and (max-width: 3139px) {}
-
-@media screen and (min-width: 3140px) and (max-width: 3839px) {}
-
-@media screen and (min-width: 3840px) and (max-width: 4519px) {}
-
-@media screen and (min-width: 4520px) and (max-width: 5119px) {}
-
-@media screen and (min-width: 5120px) {}

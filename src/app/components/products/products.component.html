@@ -1,11 +1,10 @@
-<div class="products-container">
+<div class="products-container flex flex-column align-items-center">
   <h1>Our Products</h1>
 
   <input class="searchBar" type="text" [(ngModel)]="searchQuery" (input)="searchProducts()"
     placeholder="Search by name or price...">
 
-
-  <div class="filter-bar flex justify-content-center">
+  <div class="filter-bar w-full flex justify-content-center">
     <select [(ngModel)]="selectedCategory" (change)="filterProducts()">
       <option value="">All Categories</option>
       <option value="soap">Soaps</option>

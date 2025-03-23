@@ -1,0 +1,131 @@
+h2 {
+  text-align: center;
+  margin: 20px;
+}
+
+.my-orders-wrapper {
+  background-color: var(--light-white);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 30rem;
+}
+
+.status-filter,
+.date-filter {
+  padding: 8px;
+  border-radius: 4px;
+  margin: 4px;
+  border: 2px solid var(--grey);
+}
+
+.status-filter {
+  width: 20rem;
+  margin-right: 16px;
+}
+
+.date-filter {
+  width: 8rem;
+  margin: 4px 0px;
+}
+
+.filter-btn {
+  margin: 12px;
+  width: 4rem;
+}
+
+small {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.order-card {
+  background-color: var(--white);
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+
+  p {
+    margin: 8px 0;
+  }
+}
+
+button {
+  background-color: var(--green);
+  color: var(--white);
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: var(--light-green);
+  }
+}
+
+.view-order-btn-wrapper button {
+  margin-top: 12px;
+}
+
+button:disabled {
+  background-color: var(--grey);
+  cursor: not-allowed;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+
+  button {
+    width: 6rem;
+  }
+}
+
+.cancelled,
+.pending,
+.shipped,
+.delivered,
+.cancelled {
+  padding: 2px;
+  margin: 2px;
+  border-radius: 4px;
+  color: white;
+}
+
+.pending {
+  background-color: orange;
+}
+
+.shipped {
+  background-color: blue;
+}
+
+.delivered {
+  background-color: green;
+}
+
+.cancelled {
+  background-color: red;
+}
+
+
+@media screen and (max-width: 576px) {
+
+  .my-orders-wrapper {
+    width: 17rem;
+    padding: 8px;
+  }
+
+
+  .status-filter {
+    width: 12rem;
+    margin-right: 16px;
+  }
+
+  .date-filter {
+    width: 4rem;
+    margin: 4px 0px;
+  }
+}

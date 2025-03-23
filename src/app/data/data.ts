@@ -1,17 +1,19 @@
-import { Benefit, FeaturedProduct, NavLink, Product, ResponsiveOption, Review } from "../interfaces/interfaces";
+import { Benefit, Cart, FeaturedProduct, NavLink, Product, ResponsiveOption, Review } from "../interfaces/interfaces";
 
 
 export const NAV_LINKS: NavLink[] = [
     { path: '/', label: 'Home', icon: 'fa-solid fa-house', },
     { path: '/products', label: 'Products', icon: 'fa-solid fa-bag-shopping', },
     { path: '/about', label: 'About Us', icon: 'fa-solid fa-leaf', },
-    { path: '/contact', label: 'Contact', icon: 'fa-solid fa-message', },
+    { path: '/my-orders', label: 'My Orders', icon: 'fa-solid fa-clipboard-list', },
+    // { path: '/contact', label: 'Contact', icon: 'fa-solid fa-message', },
     // { path: '/cart', label: 'Cart', icon: 'fa-solid fa-cart-shopping',},
-    { path: '/login', label: 'Login', icon: 'fa-solid fa-circle-user', }
+    { path: '/my-account', label: 'My Profile', icon: 'fa-solid fa-user',},
+    // { path: '/login', label: 'Login', icon: 'fa-solid fa-circle-user', }
 ];
 
 export const FEATURED_PRODUCTS: FeaturedProduct[] = [
-    { id: 1, name: 'Neam Soap', price: 249, image: 'assets/content_images/neam-soap-1.webp' },
+    { id: 1, name: 'Neem Soap', price: 249, image: 'assets/content_images/neem-soap-1.webp' },
     { id: 2, name: 'Aloe Vera Shampoo', price: 449, image: 'assets/content_images/aloe-vera-shampoo-1.jpg' },
     { id: 3, name: 'Coconut Soap', price: 349, image: 'assets/content_images/coconut-soap-1.webp' }
 ];
@@ -47,7 +49,7 @@ export const REVIEWS: Review[] = [
 ];
 
 export const PRODUCTS: Product[] = [
-    { id: 1, name: 'Neam Soap', category: 'soap', price: 329, offer: 10, image: 'assets/content_images/neam-soap-1.webp' },
+    { id: 1, name: 'Neem Soap', category: 'soap', price: 329, offer: 10, image: 'assets/content_images/neem-soap-1.webp' },
     { id: 2, name: 'Aloe Vera Shampoo', category: 'shampoo', price: 929, image: 'assets/content_images/aloe-vera-shampoo-1.jpg' },
     { id: 3, name: 'Coconut Soap', category: 'soap', price: 229, offer: 15, image: 'assets/content_images/coconut-soap-1.webp' },
     { id: 4, name: 'Papaya Soap', category: 'soap', price: 399, offer: 10, image: 'assets/content_images/papaya-soap-1.webp' },
@@ -60,17 +62,74 @@ export const PRODUCTS: Product[] = [
     { id: 11, name: 'Ginger Shampoo', category: 'shampoo', price: 649, image: 'assets/content_images/aloe-vera-shampoo-1.jpg' },
     { id: 12, name: 'Rosewood Soap', category: 'soap', price: 959, offer: 15, image: 'assets/content_images/sandalwood-soap-1.webp' },
     { id: 13, name: 'Goat Milk Soap', category: 'soap', price: 1299, offer: 10, image: 'assets/content_images/coconut-soap-1.webp' },
-    { id: 14, name: 'Neam Shampoo', category: 'shampoo', price: 749, image: 'assets/content_images/aloe-vera-shampoo-1.jpg' },
+    { id: 14, name: 'Neem Shampoo', category: 'shampoo', price: 749, image: 'assets/content_images/aloe-vera-shampoo-1.jpg' },
     { id: 15, name: 'Neroli Soap', category: 'soap', price: 699, offer: 10, image: 'assets/content_images/mango-soap-1.webp' },
 ];
 
-export const CART_ITEMS: Product[] = [
-    { id: 1, name: 'Neam Soap', category: 'soap', price: 329, offer: 10, image: 'assets/content_images/neam-soap-1.webp' },
-    { id: 2, name: 'Aloe Vera Shampoo', category: 'shampoo', price: 929, image: 'assets/content_images/aloe-vera-shampoo-1.jpg' },
-    { id: 3, name: 'Coconut Soap', category: 'soap', price: 229, offer: 15, image: 'assets/content_images/coconut-soap-1.webp' },
-    { id: 4, name: 'Papaya Soap', category: 'soap', price: 399, offer: 10, image: 'assets/content_images/papaya-soap-1.webp' },
-    { id: 5, name: 'Sandalwood Soap', category: 'soap', price: 1099, image: 'assets/content_images/sandalwood-soap-1.webp' },
+export const CART_ITEMS = [
+    {
+        productId: "HS7K83",
+        name: "Neem Soap",
+        category: "soap",
+        price: 329,
+        offer: 10, // 10% off
+        quantity: 2,
+        image: "assets/content_images/neem-soap-1.webp"
+    },
+    {
+        productId: "TX2B19",
+        name: "Lemon Soap",
+        category: "soap",
+        price: 549,
+        offer: 14, // 14% off
+        quantity: 1,
+        image: "assets/content_images/turmeric-soap-1.webp"
+    },
+    {
+        productId: "HS7K83",
+        name: "Neem Soap",
+        category: "soap",
+        price: 329,
+        offer: 10, // 10% off
+        quantity: 2,
+        image: "assets/content_images/neem-soap-1.webp"
+    },
+    {
+        productId: "TX2B19",
+        name: "Lemon Soap",
+        category: "soap",
+        price: 549,
+        offer: 14, // 14% off
+        quantity: 1,
+        image: "assets/content_images/turmeric-soap-1.webp"
+    },
+    {
+        productId: "HS7K83",
+        name: "Neem Soap",
+        category: "soap",
+        price: 329,
+        offer: 10, // 10% off
+        quantity: 2,
+        image: "assets/content_images/neem-soap-1.webp"
+    },
+    {
+        productId: "TX2B19",
+        name: "Lemon Soap",
+        category: "soap",
+        price: 549,
+        offer: 14, // 14% off
+        quantity: 1,
+        image: "assets/content_images/turmeric-soap-1.webp"
+    },
 ];
+
+// export const CART_ITEMS: Product[] = [
+//     { id: 1, name: 'Neem Soap', category: 'soap', price: 329, offer: 10, image: 'assets/content_images/neem-soap-1.webp' },
+//     { id: 2, name: 'Aloe Vera Shampoo', category: 'shampoo', price: 929, image: 'assets/content_images/aloe-vera-shampoo-1.jpg' },
+//     { id: 3, name: 'Coconut Soap', category: 'soap', price: 229, offer: 15, image: 'assets/content_images/coconut-soap-1.webp' },
+//     { id: 4, name: 'Papaya Soap', category: 'soap', price: 399, offer: 10, image: 'assets/content_images/papaya-soap-1.webp' },
+//     { id: 5, name: 'Sandalwood Soap', category: 'soap', price: 1099, image: 'assets/content_images/sandalwood-soap-1.webp' },
+// ];
 
 
 

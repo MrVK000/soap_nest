@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Benefit } from './../../interfaces/interfaces';
 import { Component } from '@angular/core';
+import { ContactComponent } from "../contact/contact.component";
 
 @Component({
   selector: 'app-about-us',
-  imports: [CommonModule],
+  imports: [CommonModule, ContactComponent],
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.scss'
 })

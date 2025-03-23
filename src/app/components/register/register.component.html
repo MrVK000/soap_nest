@@ -24,13 +24,15 @@
                 Passwords do not match.
             </div>
 
-            <input type="text" formControlName="phone" placeholder="Phone Number (Optional)">
+            <input type="text" formControlName="phone" placeholder="Phone Number">
             <div class="error" *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
                 Enter a valid 10-digit phone number.
             </div>
 
-            <textarea formControlName="address" placeholder="Address (Optional)"></textarea>
-
+            <textarea formControlName="address" placeholder="Address"></textarea>
+            <div class="error" *ngIf="registerForm.get('address')?.invalid && registerForm.get('address')?.touched">
+                Enter a valid address.
+            </div>
 
             <label class="checkbox-label">
                 <input class="tearms-checkbox" type="checkbox" formControlName="terms"> I agree to the <a href="#">Terms
@@ -39,7 +41,6 @@
             <div class="error" *ngIf="registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched">
                 You must accept the terms.
             </div>
-
 
             <button class="cursor-pointer" type="submit" [disabled]="registerForm.invalid">Register</button>
         </form>

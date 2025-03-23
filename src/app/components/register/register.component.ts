@@ -5,9 +5,9 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, CommonModule,RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
   registerForm = new FormGroup({
@@ -15,9 +15,9 @@ export class RegisterComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.pattern('^[0-9]{10}$')]),
-    address: new FormControl(''),
-    terms: new FormControl(false, Validators.requiredTrue)
+    phone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
+    address: new FormControl('', [Validators.required]),
+    terms: new FormControl(false, Validators.requiredTrue),
   });
 
   submitForm() {

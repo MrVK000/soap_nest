@@ -2,17 +2,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    // height: 100vh;
     background: var(--light-white);
-    margin: 4rem 0;
+    margin: 3rem 0;
 }
 
 .register-box {
-    background: white;
+    background: var(--white);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
     width: 28rem;
 }
 
@@ -24,12 +22,12 @@ h2 {
 
 input,
 textarea {
-    width: 80%;
-    min-width: 80%;
-    max-width: 80%;
+    width: 95%;
+    min-width: 95%;
+    max-width: 95%;
     padding: 10px;
     margin: 10px 0;
-    border: 2px solid #ccc;
+    border: 2px solid var(--grey);
     border-radius: 5px;
     font-size: 16px;
 }
@@ -43,32 +41,34 @@ textarea {
     display: flex;
     align-items: center;
     font-size: 14px;
-    margin: 10px 0;
+    margin-top: 0px;
 }
 
 .tearms-checkbox {
     width: 20px;
     min-width: 20px;
     max-width: 20px;
+    margin: 0;
 }
 
 button {
     background: var(--green);
-    color: white;
-    padding: 10px 15px;
+    color: var(--white);
+    padding: 10px 14px;
     border: none;
     font-size: 16px;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 4px;
+    margin-top: 30px;
 }
 
 button:disabled {
-    background: #ccc;
+    background: var(--light-white);
     cursor: not-allowed;
 }
 
 .error {
-    color: red;
+    color: var(--red);
     font-size: 14px;
     text-align: left;
 }
@@ -79,36 +79,44 @@ button:disabled {
 }
 
 a {
-    color: #508C41;
+    color: var(--green);
     text-decoration: none;
     font-weight: bold;
 }
 
 
-@media screen and (max-width: 323px) {
+@media screen and (max-width: 423px) {
+    .register-container {
+        margin: 2rem 0;
+    }
+
     .register-box {
-        width: 100%;
-        margin: 0 12px;
+        width: 16rem;
+        margin: 0 10px;
+        padding: 12px;
     }
 
     input,
     textarea {
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
+        min-width: 14.6rem;
+        max-width: 14.6rem;
     }
 }
 
-@media screen and (min-width: 324px) and (max-width: 576px) {
+@media screen and (min-width: 424px) and (max-width: 576px) {
+    .register-container {
+        margin: 2rem 0;
+    }
+
     .register-box {
-        width: 100%;
+        width: 20rem;
         margin: 0 20px;
+        padding: 20px;
     }
 
     input,
     textarea {
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
+        min-width: 18.6rem;
+        max-width: 18.6rem;
     }
 }

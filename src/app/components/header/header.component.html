@@ -1,30 +1,36 @@
 <div class="header w-full flex justify-content-center">
 
-    <div class="header-wrapper w-full">
-        <nav class="navbar">
+    <div class="header-wrapper w-full flex justify-content-center">
+        <nav class="navbar w-full">
             <!-- <div class="logo">🌿 SoapNest</div> -->
             <div class="logo-wrapper flex align-items-center">
-                <img class="logo w-full h-full cursor-pointer" src="assets/logo/logo-2.webp" alt="logo"
+                <img class="logo h-full cursor-pointer" src="assets/logo/logo-2.jpeg" alt="logo"
                     (click)="windowReload()">
-                <h1 class="cursor-pointer" (click)="windowReload()">SoapNest</h1>
+                <h1 class="title cursor-pointer" (click)="windowReload()">Green <span class="title-span">Glow</span>
+                </h1>
             </div>
 
 
             <div class="nav-icons flex">
-                <div class="nav-links">
+                <div class="nav-links flex align-items-center">
                     <a *ngFor="let link of navLinks" [routerLink]="link.path"><i class="nav-icon"
                             [class]="link.icon"></i>{{
                         link.label }}</a>
                 </div>
-                <a routerLink="/cart" class="cart-icon"><i class="fa-solid fa-cart-shopping"></i>
+                <a routerLink="/cart" class="cart-btn" matTooltip="Cart"><i class="fa-solid fa-cart-shopping"></i>
                     <span *ngIf="sharedService.cartCount > 0" class="cart-count">{{ sharedService.cartCount }}</span>
                 </a>
-                <button class="menu-btn cursor-pointer" (click)="toggleSidebar()">☰</button>
+                <a routerLink="/login" class="login-btn" matTooltip="Login"><i class="fa-solid fa-circle-user"></i>
+                    <span class="login-label">Login</span>
+                </a>
+                <button class="menu-btn cursor-pointer" (click)="toggleSidebar()"><i
+                        class="fa-solid fa-bars"></i></button>
             </div>
         </nav>
 
         <div class="sidebar" [class.open]="isSidebarOpen">
-            <button class="close-btn cursor-pointer" (click)="toggleSidebar()">✖</button>
+            <button class="close-btn cursor-pointer" (click)="toggleSidebar()"><i
+                    class="fa-solid fa-close"></i></button>
             <a *ngFor="let link of navLinks" [routerLink]="link.path" (click)="toggleSidebar()">
                 {{ link.label }}
             </a>

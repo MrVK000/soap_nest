@@ -1,0 +1,25 @@
+<div class="order-history-container">
+    <h2>Order History</h2>
+
+    <div *ngIf="orders.length > 0; else noOrders">
+        <div class="order-card" *ngFor="let order of orders">
+            <div class="order-header">
+                <p><strong>Order ID:</strong> {{ order.orderId }}</p>
+                <p><strong>Date:</strong> {{ order.date }}</p>
+            </div>
+
+            <div class="order-body">
+                <p><strong>Total Amount:</strong> ₹{{ order.totalAmount }}</p>
+                <p><strong>Status:</strong> <span class="status" [ngClass]="order.status">{{ order.status }}</span></p>
+            </div>
+
+            <button class="view-details-btn" (click)="viewOrder(order.orderId)">
+                View Details
+            </button>
+        </div>
+    </div>
+
+    <ng-template #noOrders>
+        <p class="no-orders-message">No past orders found.</p>
+    </ng-template>
+</div>

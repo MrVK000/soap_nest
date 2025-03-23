@@ -6,7 +6,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { provideAnimations, provideNoopAnimations } from '@angular/platform-browser/animations';
 import { PRODUCTS } from '../../data/data';
 import { Product } from '../../interfaces/interfaces';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -38,8 +38,11 @@ export class ProductsComponent {
     },
   ]
 
+  constructor(private router: Router) {
+  }
 
-  constructor() {
+
+  ngOnInit(): void {
     this.filterProducts();
   }
 
@@ -92,6 +95,6 @@ export class ProductsComponent {
   }
 
   buyNow(product: Product) {
-    alert(`${product.name} added to cart!`);
+    this.router.navigate(['/checkout'], { state: { data: [product] } });
   }
 }

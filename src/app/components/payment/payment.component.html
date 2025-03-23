@@ -1,0 +1,8 @@
+<div class="payment-container">
+    <h1>Secure Payment</h1>
+    <p>Order ID: <strong>{{ orderId }}</strong></p>
+    <p>Total Amount: <strong>₹{{ totalAmount }}</strong></p>
+
+    <button class="pay-btn cursor-pointer" (click)="completePayment()">Pay Now</button>
+    <button class="cancel-btn cursor-pointer" (click)="cancelPayment()">Cancel</button>
+</div>

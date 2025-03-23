@@ -1,4 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}/* You can add global styles to this file, and also import other style files */
 
 
 * {
@@ -85,7 +100,7 @@
     border-radius: 38px;
     border: 2px solid var(--palevioletred);
     background-color: var(--palevioletred);
-    color: #ffffff;
+    color: var(--white);
     font-size: 16px;
     // height: 3em;
     width: 10rem;
@@ -103,7 +118,7 @@
     position: relative;
     background: none;
     border: none;
-    color: #fff;
+    color: var(--white);
     font-size: 18px;
     cursor: pointer;
     margin: 20px 30px;
@@ -122,7 +137,7 @@
     height: 2px;
     position: absolute;
     transition: all 0.2s linear;
-    background: #fff;
+    background: var(--white);
   }
   
   .span-animate::before,
@@ -132,7 +147,7 @@
     height: 0;
     position: absolute;
     transition: all 0.2s linear;
-    background: #fff;
+    background: var(--white);
   }
   
   .button-animate:hover::before,
@@ -194,3 +209,5 @@
   
   
   
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,34 +1,37 @@
-<div class="contact-container">
-    <section class="hero">
-        <h1>Get in Touch</h1>
-        <p>We’d love to hear from you!</p>
-    </section>
+<div class="contact-container w-full flex justify-content-center">
+    <div class="contact-wrapper">
+        <section *ngIf="false" class="hero">
+            <h1>Get in Touch</h1>
+            <p>We’d love to hear from you!</p>
+        </section>
 
-    <section class="contact-form">
-        <h2>Send Us a Message</h2>
-        <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
+        <section class="contact-form">
+            <h2>Send Us a Message</h2>
+            <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
 
-            <div class="contact-wrapper">
-                <input type="text" formControlName="name" placeholder="Your Name">
-                <div class="error" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
-                    Name is required (min 3 characters).
+                <div class="contact-wrapper">
+                    <input type="text" formControlName="name" placeholder="Your Name">
+                    <div class="error"
+                        [ngStyle]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched?{}:{'visibility':'hidden'}">
+                        Name is required (min 3 characters).
+                    </div>
+
+                    <input type="email" formControlName="email" placeholder="Your Email">
+                    <div class="error"
+                        [ngStyle]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched?{}:{'visibility':'hidden'}">
+                        Enter a valid email.
+                    </div>
+
+                    <textarea formControlName="message" placeholder="Your Message"></textarea>
+                    <div class="error"
+                        [ngStyle]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched?{}:{'visibility':'hidden'}">
+                        Message must be atleast 10 characters.
+                    </div>
                 </div>
 
-                <input type="email" formControlName="email" placeholder="Your Email">
-                <div class="error" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
-                    Enter a valid email.
-                </div>
-
-                <textarea formControlName="message" placeholder="Your Message"></textarea>
-                <div class="error" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
-                    Message must be at least 10 characters long.
-                </div>
-            </div>
-
-            <button class="cursor-pointer" type="submit" [disabled]="contactForm.invalid">Send Message</button>
-        </form>
-    </section>
+            </form>
+            <button class="submit-btn cursor-pointer" type="submit" [disabled]="contactForm.invalid">Send
+                Message</button>
+        </section>
+    </div>
 </div>
-
-
-

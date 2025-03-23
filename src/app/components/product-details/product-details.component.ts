@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-details',
@@ -24,6 +25,8 @@ export class ProductDetailsComponent {
 
   quantity = 1;
 
+  constructor(private router: Router) { }
+
   increaseQuantity() {
     if (this.quantity < this.product.stock) {
       this.quantity++;
@@ -41,6 +44,9 @@ export class ProductDetailsComponent {
   }
 
   buyNow() {
-    alert(`Proceeding to checkout with ${this.quantity} ${this.product.name}.`);
+    console.log(">>>>> prod >> ", this.product);
+    this.router.navigate(['/checkout'], { state: { data: [this.product] } });
+
   }
+
 }

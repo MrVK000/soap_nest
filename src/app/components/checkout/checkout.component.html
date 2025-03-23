@@ -1,0 +1,58 @@
+<div class="checkout-container">
+    <h2>Checkout</h2>
+
+    <div class="checkout-wrapper">
+        <div class="product-list">
+            <div class="product-item" *ngFor="let product of products">
+                <img [src]="product.image" alt="{{ product.name }}">
+                <div>
+                    <h3>{{ product.name }}</h3>
+                    <p>Price: ₹{{ product.price }}</p>
+                </div>
+            </div>
+        </div>
+
+        <form [formGroup]="checkoutForm">
+            <label>Full Name</label>
+            <input formControlName="fullName" placeholder="Enter your name">
+            <div *ngIf="checkoutForm.controls['fullName'].invalid && checkoutForm.controls['fullName'].touched">
+                <p class="error">
+                    * Name is required
+                </p>
+            </div>
+
+            <label>Address</label>
+            <textarea formControlName="address" placeholder="Enter delivery address"></textarea>
+            <div *ngIf="checkoutForm.controls['address'].invalid && checkoutForm.controls['address'].touched">
+                <p class="error">
+                    * Address is required
+                </p>
+
+            </div>
+
+            <label>Phone Number</label>
+            <input formControlName="phone" placeholder="Enter phone number">
+            <div *ngIf="checkoutForm.controls['phone'].invalid && checkoutForm.controls['phone'].touched">
+                <p class="error">
+                    * Valid phone number is required
+                </p>
+            </div>
+
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <p>Subtotal: ₹{{ totalPrice }}</p>
+                <p>GST (18%): ₹{{ gst }}</p>
+                <p>Delivery Charge: ₹{{ deliveryCharge }}</p>
+                <h3>Total: ₹{{ grandTotal }}</h3>
+            </div>
+
+            <label>Payment Method</label>
+            <select formControlName="paymentMethod">
+                <option value="cod">Cash on Delivery</option>
+                <option value="online">Online Payment</option>
+            </select>
+
+            <button [disabled]="checkoutForm.invalid" (click)="placeOrder()">Place Order</button>
+        </form>
+    </div>
+</div>

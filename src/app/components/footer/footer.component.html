@@ -1,4 +1,4 @@
-<div class="footer w-full flex justify-content-center">
+<div *ngIf="false" class="footer w-full flex justify-content-center">
     <div class="footer-cover w-full flex justify-content-center align-items-center flex-column">
         <h2>Get Exclusive Offers</h2>
 
@@ -9,8 +9,52 @@
 
         <hr class="copyrights-divider">
         <div class="copyrights-container">
-            {{copyright}}
+            <p class="copyright">{{copyright}}</p>
         </div>
     </div>
 </div>
 
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="quick-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a routerLink="/about">About Us</a></li>
+                <li><a routerLink="/products">Products</a></li>
+                <li><a routerLink="/contact">Contact</a></li>
+                <li><a routerLink="/faq">FAQs</a></li>
+                <li><a routerLink="/terms">Terms & Conditions</a></li>
+                <li><a routerLink="/privacy">Privacy Policy</a></li>
+            </ul>
+        </div>
+
+        <div class="get-in-touch">
+            <h3>Get in Touch</h3>
+            <div class="social-icons">
+                <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://wa.me/your-number" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="tel:+1234567890"><i class="fas fa-phone"></i></a>
+                <a href="mailto:info@example.com"><i class="fas fa-envelope"></i></a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+                <a href="https://t.me/your-telegram" target="_blank"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-cover w-full flex justify-content-center align-items-center flex-column">
+            <h2>Get Exclusive Offers</h2>
+
+            <div class="subscription-wrapper flex">
+                <input class="mail-input-field" type="email" placeholder="Enter your email">
+                <button class="subscription-btn cursor-pointer">Subscribe</button>
+            </div>
+
+            <hr class="copyrights-divider">
+            <div class="copyrights-container">
+                <p class="copyright">{{copyright}}</p>
+            </div>
+        </div>
+    </div>
+</footer>

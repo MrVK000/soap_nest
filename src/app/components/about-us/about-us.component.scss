@@ -2,10 +2,9 @@
     padding: 50px;
     text-align: center;
     font-family: 'Arial', sans-serif;
-    color: #4A4A4A;
+    color: var(--grey);
 }
 
-/* Hero Section */
 .hero {
     background: url('../../../../public/assets/backgrount images/banner_1.jpg') no-repeat center center/cover;
     color: var(--white);
@@ -22,7 +21,6 @@
     margin-top: 10px;
 }
 
-/* Sections */
 .our-story,
 .why-choose,
 .contact {
@@ -30,18 +28,17 @@
 }
 
 h2 {
-    color: #508C41;
+    color: var(--green);
     font-size: 28px;
 }
 
-/* Why Choose Us */
 .features {
     gap: 30px;
     margin-top: 20px;
 }
 
 .feature {
-    background: #FAFAF5;
+    background: var(--light-white);
     padding: 20px;
     border-radius: 10px;
     width: 14rem;
@@ -60,12 +57,11 @@ h2 {
 
 .feature p {
     font-size: 16px;
-    color: #666;
+    color: var(--grey);
 }
 
-/* Contact Section */
 .contact {
-    background: #F0F8EA;
+    background: var(--light-white);
     padding: 20px;
     border-radius: 10px;
     margin-top: 30px;
@@ -73,10 +69,7 @@ h2 {
 
 .contact p {
     font-size: 18px;
-    color: #333;
 }
-
-
 
 
 @media screen and (max-width: 575px) {

@@ -3,10 +3,11 @@ import { Component, HostListener } from '@angular/core';
 import { NAV_LINKS } from '../../data/data';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, MatTooltipModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
