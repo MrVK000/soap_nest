@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from './../../interfaces/interfaces';
 import { Component } from '@angular/core';
-import { LoadingService } from '../../service/loading.service';
+import { LoadingService } from '../../services/loading.service';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

@@ -1,17 +1,13 @@
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 78vh;
-}
-
 .login-box {
     background: var(--white);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
-    width: 20rem;
+    max-width: 28rem;
+    width: 24rem;
+    min-width: 18rem;
+    margin: 4rem 0px;
 }
 
 h2 {
@@ -22,20 +18,17 @@ h2 {
 
 .input-group {
     position: relative;
-    margin-top: 14px;
 }
 
 input {
-    padding: 10px;
+    margin: 10px 0;
     border: 2px solid var(--grey);
     border-radius: 5px;
     font-size: 16px;
-    width: 93%;
 }
 
 .password-field {
     padding-right: 38px;
-    width: 84%;
 }
 
 .valid {
@@ -76,12 +69,12 @@ button {
     border: none;
     font-size: 16px;
     width: 100%;
-    border-radius: 5px;
-    margin-top: 20px;
+    border-radius: 4px;
+    margin: 20px 0;
 }
 
 button:disabled {
-    background: var(--light-white);
+    background: var(--grey);
     cursor: not-allowed;
 }
 
@@ -100,18 +93,12 @@ a {
 
 @media screen and (max-width: 576px) {
     .login-box {
-        width: 100%;
-        margin: 8px;
-        padding: 20px;
-    }
-
-    input {
-        width: 90%;
+        padding: 12px;
+        width: 18.8rem;
     }
 
     .password-field {
         padding-right: 34px;
-        width: 80%;
     }
 
     .toggle {

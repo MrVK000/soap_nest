@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoadingService } from '../../service/loading.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-loading',

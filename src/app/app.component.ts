@@ -3,7 +3,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { HeaderComponent } from "./components/header/header.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { LoadingComponent } from './components/loading/loading.component';
-import { LoadingService } from './service/loading.service';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',
@@ -38,6 +38,7 @@ export class AppComponent {
     // document.documentElement.style.setProperty('--green', '#508C41');
     document.documentElement.style.setProperty('--white', '#FFFFFF');
     document.documentElement.style.setProperty('--light-white', '#FAFAF5');
+    document.documentElement.style.setProperty('--blue', '#0169D9');
   }
 
 }

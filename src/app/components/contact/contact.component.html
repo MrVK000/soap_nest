@@ -1,15 +1,15 @@
 <div class="contact-container w-full flex justify-content-center">
-    <div class="contact-wrapper">
+    <div class="contact-wrapper w-full flex justify-content-center">
         <section *ngIf="false" class="hero">
             <h1>Get in Touch</h1>
             <p>We’d love to hear from you!</p>
         </section>
 
-        <section class="contact-form">
+        <section class="contact-form w-full">
             <h2>Send Us a Message</h2>
             <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
 
-                <div class="contact-wrapper">
+                <div class="contact-form-wrapper">
                     <input type="text" formControlName="name" placeholder="Your Name">
                     <div class="error"
                         [ngStyle]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched?{}:{'visibility':'hidden'}">

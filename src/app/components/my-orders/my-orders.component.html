@@ -1,15 +1,15 @@
 <div class="my-orders-container">
-    <h2>My Orders</h2>
+    <h1 class="page-title text-center">My Orders</h1>
     <div class="my-orders-wrapper">
         <div class="filters flex flex-column align-items-center">
 
-            <div class="date-field-wrapper">
+            <div *ngIf="false" class="date-field-wrapper">
                 <label>Date: </label>
                 <input class="date-filter cursor-pointer" type="date" [(ngModel)]="startDate"> to
                 <input class="date-filter cursor-pointer" type="date" [(ngModel)]="endDate">
             </div>
 
-            <div class="status-field-wrapper">
+            <div class="status-field-wrapper w-full">
                 <label>Status: </label>
                 <select class="status-filter cursor-pointer" (change)="filterByStatus($event)">
                     <option value="">All</option>
@@ -20,23 +20,36 @@
                 </select>
             </div>
 
-            <button class="filter-btn cursor-pointer" (click)="filterByDate()">Filter</button>
-            <small>*Note:- Use the filter options to filter the orders</small>
+            <button *ngIf="false" class="filter-btn cursor-pointer" (click)="filterByDate()">Filter</button>
+            <small *ngIf="false">*Note:- Use the filter options to filter the orders</small>
         </div>
 
         <div *ngFor="let order of paginatedOrders" class="order-card">
-            <p><strong>Order ID:</strong> {{ order.orderId }}</p>
-            <p><strong>Date:</strong> {{ order.orderDate }}</p>
-            <p><strong>Total:</strong> ₹{{ order.totalAmount }}</p>
-            <p><strong>Payment:</strong> {{ order.paymentMethod }}</p>
-            <p><strong>Status:</strong> <span [ngClass]="getStatusClass(order.status)">{{ order.status }}</span></p>
+
+            <div class="flex">
+                <div class="left-container">
+                    <p> <strong>Order ID: </strong> </p>
+                    <p> <strong>Date:</strong> </p>
+                    <p> <strong>Total:</strong> </p>
+                    <p> <strong>Payment:</strong> </p>
+                    <p> <strong>Status:</strong> </p>
+                </div>
+                <div class="right-container">
+                    <p> {{ order.orderId }} </p>
+                    <p> {{ order.orderDate }} </p>
+                    <p> ₹{{ order.totalAmount }} </p>
+                    <p> {{ order.paymentMethod }} </p>
+                    <p> <span [ngClass]="getStatusClass(order.status)"> {{ order.status }} </span>
+                    </p>
+                </div>
+            </div>
 
             <div class="view-order-btn-wrapper flex justify-content-center">
                 <button class="cursor-pointer" (click)="viewOrderDetails(order.orderId)">View Details</button>
             </div>
         </div>
 
-        <div class="pagination">
+        <div class="pagination flex justify-content-center align-items-center">
             <button class="cursor-pointer" (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
             <span>Page {{ currentPage }}</span>
             <button class="cursor-pointer" (click)="nextPage()"

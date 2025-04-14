@@ -5,6 +5,11 @@ export interface Product {
     price: number;
     offer?: number;
     image: string;
+    productId: string,
+    description: string,
+    discountPrice:number,
+    stock:number,
+    reviews: Review[] | []
 }
 export interface Cart {
     productId: string;
@@ -16,8 +21,9 @@ export interface Cart {
     image: string;
 }
 export interface Review {
-    name: string;
-    text: string;
+    user: string;
+    comment: string;
+    rating:number;
 }
 export interface ResponsiveOption {
     breakpoint: string;

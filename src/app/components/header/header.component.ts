@@ -1,9 +1,9 @@
-import { SharedService } from './../../service/shared.service';
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { NAV_LINKS } from '../../data/data';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +15,7 @@ export class HeaderComponent {
   navLinks = NAV_LINKS;
   isSidebarOpen = false;
 
-  constructor(public sharedService: SharedService) { }
+  constructor(public cartService: CartService, private router: Router) { }
 
 
   windowReload(): void {
@@ -24,6 +24,10 @@ export class HeaderComponent {
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  isActive(route: string): boolean {
+    return this.router.url === route;
   }
 
 }

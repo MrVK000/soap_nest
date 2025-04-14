@@ -1,12 +1,13 @@
-<div class="login-container">
-    <section class="login-box">
-        <h2>Login to Your Account</h2>
+<div class="login-container w-full flex justify-content-center align-items-center">
+    <section class="login-box w-full">
+        <h2 class="text-center">Login to Your Account</h2>
 
         <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
             <div class="input-group">
                 <input type="email" formControlName="email" placeholder="Email Address">
             </div>
-            <div class="error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            <div class="error"
+                [ngStyle]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched?{}:{'visibility':'hidden'}">
                 Enter a valid email.
             </div>
 
@@ -15,14 +16,15 @@
                     placeholder="Password">
                 <span class="toggle cursor-pointer" (click)="togglePassword()">{{ showPassword ? '🙉' : '🙈' }}</span>
             </div>
-            <div class="error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <div class="error"
+                [ngStyle]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched?{}:{'visibility':'hidden'}">
                 Password must be at least 6 characters.
             </div>
 
             <button type="submit" [disabled]="loginForm.invalid">Login</button>
         </form>
 
-        <p class="forgot-password cursor-pointer"><a href="#">Forgot Password?</a></p>
+        <p class="forgot-password cursor-pointer"><a href="#">Forgot Password? </a></p>
         <p class="signup cursor-pointer">New here? <a routerLink="/register">Create an account</a></p>
     </section>
 </div>

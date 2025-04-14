@@ -28,21 +28,45 @@
     color: var(--light-green);
 }
 
-.nav-links a {
-    margin: 0 10px;
+.nav-icons,
+.nav-links,
+.nav-links span {
+    height: 100%;
+}
+
+.nav-links a,
+.nav-links span {
+    margin: 0 8px;
     text-decoration: none;
     color: var(--dark-green);
     font-size: 18px;
     font-weight: 600;
     transition: all 0.2s;
+
+    &:hover {
+        color: var(--green);
+    }
 }
 
-.nav-links a:hover {
-    color: var(--light-green);
+.nav-links span {
+    margin: 0 6px;
 }
 
 .nav-icon {
     margin-right: 4px;
+}
+
+.active-page {
+    color: var(--white);
+    background-color: var(--green);
+
+    a {
+        color: var(--white);
+
+        &:hover {
+            color: var(--white);
+        }
+    }
 }
 
 .menu-btn,
@@ -62,7 +86,7 @@
 .login-btn:hover,
 .close-btn:hover,
 .cart-btn:hover {
-    color: var(--light-green);
+    color: var(--green);
 }
 
 .login-btn,
@@ -130,7 +154,7 @@
 }
 
 .sidebar a:hover {
-    background-color: var(--light-green);
+    background-color: var(--green);
     color: var(--white);
 }
 
@@ -160,7 +184,7 @@
     }
 
     .sidebar {
-        width: 10rem;
+        width: 12rem;
     }
 }
 
@@ -174,7 +198,7 @@
     }
 
     .sidebar {
-        width: 10rem;
+        width: 12rem;
     }
 }
 
@@ -186,5 +210,12 @@
 
     .menu-btn {
         display: block;
+    }
+}
+
+
+@media screen and (min-width: 864px) and (max-width: 1023px) {
+    .nav-links span {
+        margin: 0;
     }
 }

@@ -1,20 +1,19 @@
-.checkout-container {
-    max-width: 40rem;
-    margin: auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-    text-align: center;
-    margin: 20px;
-}
+// .checkout-container {
+//     max-width: 40rem;
+//     margin: 4rem 0;
+//     padding: 20px;
+//     padding-top: 0;
+//     border-radius: 8px;
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+// }
 
 .checkout-wrapper {
     background: var(--light-white);
-    padding: 8px;
-    // margin: 4px;
+    max-width: 40rem;
+    margin:0 8px 40px 8px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .product-list {
@@ -42,22 +41,24 @@ h2 {
 
 label {
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 input,
 textarea,
 select {
     width: 100%;
+    min-width: 100%;
+    max-width: 100%;
     padding: 8px;
-    margin-top: 5px;
+    margin: 5px 0 20px 0;
     border: 1px solid var(--grey);
     border-radius: 4px;
 }
 
-input,
 textarea {
-    width: 96%;
+    max-height: 8rem;
+    min-height: 4rem;
 }
 
 .error {
@@ -69,6 +70,11 @@ textarea {
     padding: 10px;
     margin: 10px 0;
     border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.order-summary p {
+    margin: 20px 0;
 }
 
 button {
@@ -78,8 +84,7 @@ button {
     color: var(--white);
     border: none;
     border-radius: 4px;
-    margin-top: 10px;
-    cursor: pointer;
+    margin: 12px 0;
     font-size: 16px;
 }
 
@@ -90,6 +95,7 @@ button:disabled {
 
 
 @media screen and (max-width: 380px) {
+
     input,
     textarea {
         width: 94%;

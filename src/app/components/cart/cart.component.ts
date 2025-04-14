@@ -1,10 +1,9 @@
-import { SharedService } from './../../service/shared.service';
+import { SharedService } from '../../services/shared.service';
 import { Component } from '@angular/core';
-import { CART_ITEMS } from '../../data/data';
 import { Cart, Product } from '../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { CartService } from '../../service/cart.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-cart',

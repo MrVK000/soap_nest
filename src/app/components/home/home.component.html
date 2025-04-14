@@ -14,7 +14,7 @@
                 <img [src]="product.image" alt="{{ product.name }}">
                 <h3>{{ product.name }}</h3>
                 <p>₹{{ product.price }}</p>
-                <a routerLink="/product-details"  class="btn">View Product</a>
+                <a routerLink="/product-details" class="btn">View Product</a>
             </div>
         </div>
     </div>
@@ -43,8 +43,8 @@
                 <ng-template let-review #item>
 
                     <div class="testimonial">
-                        <p>"{{ review.text }}"</p>
-                        <h4>- {{ review.name }}</h4>
+                        <p>"{{ review.user }}"</p>
+                        <h4>- {{ review.comment }}</h4>
                     </div>
 
                 </ng-template>

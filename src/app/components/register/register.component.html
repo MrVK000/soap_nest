@@ -1,46 +1,74 @@
-<div class="register-container">
-    <section class="register-box">
-        <h2>Create Your Account</h2>
+<div class="register-container w-full flex justify-content-center align-items-center">
+    <section class="register-box w-full">
+        <h2 class="text-center">Create Your Account</h2>
 
         <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
             <input type="text" formControlName="fullName" placeholder="Full Name">
-            <div class="error" *ngIf="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched">
+            <!-- <div class="error" *ngIf="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched">
+                Name must be at least 3 characters.
+            </div> -->
+            <div class="error"
+                [ngStyle]="registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched?{}:{'visibility':'hidden'}">
                 Name must be at least 3 characters.
             </div>
 
             <input type="email" formControlName="email" placeholder="Email Address">
-            <div class="error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+            <!-- <div class="error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                Enter a valid email.
+            </div> -->
+            <div class="error"
+                [ngStyle]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched?{}:{'visibility':'hidden'}">
                 Enter a valid email.
             </div>
 
             <input type="password" formControlName="password" placeholder="Password">
-            <div class="error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+            <!-- <div class="error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+                Password must be at least 6 characters.
+            </div> -->
+            <div class="error"
+                [ngStyle]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched?{}:{'visibility':'hidden'}">
                 Password must be at least 6 characters.
             </div>
 
             <input type="password" formControlName="confirmPassword" placeholder="Confirm Password">
-            <div class="error"
+            <!-- <div class="error"
                 *ngIf="registerForm.get('confirmPassword')?.value !== registerForm.get('password')?.value && registerForm.get('confirmPassword')?.touched">
+                Passwords do not match.
+            </div> -->
+            <div class="error"
+                [ngStyle]="registerForm.get('confirmPassword')?.value !== registerForm.get('password')?.value && registerForm.get('confirmPassword')?.touched?{}:{'visibility':'hidden'}">
                 Passwords do not match.
             </div>
 
             <input type="text" formControlName="phone" placeholder="Phone Number">
-            <div class="error" *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+            <!-- <div class="error" *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+                Enter a valid 10-digit phone number.
+            </div> -->
+            <div class="error"
+                [ngStyle]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched?{}:{'visibility':'hidden'}">
                 Enter a valid 10-digit phone number.
             </div>
 
             <textarea formControlName="address" placeholder="Address"></textarea>
-            <div class="error" *ngIf="registerForm.get('address')?.invalid && registerForm.get('address')?.touched">
+            <!-- <div class="error" *ngIf="registerForm.get('address')?.invalid && registerForm.get('address')?.touched">
+                Enter a valid address.
+            </div> -->
+            <div class="error"
+                [ngStyle]="registerForm.get('address')?.invalid && registerForm.get('address')?.touched?{}:{'visibility':'hidden'}">
                 Enter a valid address.
             </div>
 
-            <label class="checkbox-label">
+            <label class="checkbox-label flex align-items-center">
                 <input class="tearms-checkbox" type="checkbox" formControlName="terms"> I agree to the <a href="#">Terms
                     & Conditions</a>
             </label>
-            <div class="error" *ngIf="registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched">
+            <!-- <div class="error" *ngIf="registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched">
                 You must accept the terms.
-            </div>
+            </div> -->
+            <!-- <div class="error"
+                [ngStyle]="registerForm.get('terms')?.invalid && registerForm.get('terms')?.touched?{}:{'visibility':'hidden'}">
+                You must accept the terms.
+            </div> -->
 
             <button class="cursor-pointer" type="submit" [disabled]="registerForm.invalid">Register</button>
         </form>

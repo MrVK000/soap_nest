@@ -1,0 +1,60 @@
+<div id="invoice" class="invoice-wrapper">
+    <header>
+        <h1>Invoice</h1>
+        <p>Order ID: {{ order.id }}</p>
+        <p>Date: {{ order.date }}</p>
+    </header>
+
+    <section class="seller-buyer-info">
+        <div>
+            <h3>From:</h3>
+            <p>{{ company.name }}</p>
+            <p>{{ company.address }}</p>
+            <p>{{ company.phone }}</p>
+            <p>{{ company.email }}</p>
+        </div>
+
+        <div>
+            <h3>To:</h3>
+            <p>{{ order.customer.name }}</p>
+            <p>{{ order.customer.address }}</p>
+            <p>{{ order.customer.phone }}</p>
+            <p>{{ order.customer.email }}</p>
+        </div>
+    </section>
+
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of order.items; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ item.price }}</td>
+                <td>₹{{ item.quantity * item.price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <section class="totals">
+        <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
+        <p><strong>GST ({{ order.taxRate }}%):</strong> ₹{{ order.taxAmount }}</p>
+        <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p>
+        <p><strong>Grand Total:</strong> ₹{{ order.total }}</p>
+    </section>
+
+    <footer>
+        <p>Thank you for shopping with us!</p>
+        <p>Need help? Contact {{ company.support }}</p>
+    </footer>
+
+    <button (click)="downloadPDF()">Download Invoice</button>
+</div>

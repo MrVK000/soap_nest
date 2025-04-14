@@ -1,8 +1,10 @@
 <div class="products-container flex flex-column align-items-center">
-  <h1>Our Products</h1>
+  <h1 class="page-title text-center">Our Products</h1>
 
-  <input class="searchBar" type="text" [(ngModel)]="searchQuery" (input)="searchProducts()"
-    placeholder="Search by name or price...">
+  <div class="search-bar-wrapper w-full">
+    <input class="search-bar" type="text" [(ngModel)]="searchQuery" (input)="searchProducts()"
+      placeholder="Search by name or price...">
+  </div>
 
   <div class="filter-bar w-full flex justify-content-center">
     <select [(ngModel)]="selectedCategory" (change)="filterProducts()">
@@ -21,9 +23,9 @@
 
   </div>
 
-  <div class="product-grid">
+  <div class="product-grid flex flex-wrap justify-content-center">
     <p *ngIf="!paginatedProducts.length">No products available!</p>
-    <div class="product-card cursor-pointer" *ngFor="let product of paginatedProducts" routerLink="/product-details">
+    <div class="product-card" *ngFor="let product of paginatedProducts; let i = index">
       <img [src]="product.image" alt="{{ product.name }}">
 
       <div class="product-details">
@@ -34,9 +36,13 @@
           {{ product.offer }}% OFF
         </span>
 
+        <span class="add-cart-badge cursor-pointer">
+          <i class="fa-solid fa-cart-plus" (click)="addToCart(product)"></i>
+        </span>
+
         <div class="product-card-footer">
+          <button class="product-card-button cursor-pointer" (click)="viewProduct(product)">View</button>
           <button class="product-card-button cursor-pointer" (click)="buyNow(product)">Buy Now</button>
-          <button class="product-card-button cursor-pointer" (click)="addToCart(product)">Add to Cart</button>
         </div>
       </div>
     </div>

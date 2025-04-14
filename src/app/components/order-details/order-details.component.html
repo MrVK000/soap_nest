@@ -1,12 +1,90 @@
 <div class="order-details-container flex justify-content-center flex-column" *ngIf="order">
-    <h2>Order Details</h2>
+    <h1 class="page-title text-center">Order Details</h1>
     <div class="order-details-wrapper">
+        <div id="invoice" class="invoice-wrapper">
+            <header class="text-center">
+                <h1>Invoice</h1>
+                <p>Order ID: {{ order.orderId }}</p>
+                <p>Date: {{ order.date | date:'mediumDate' }}</p>
+            </header>
+        
+            <section class="payment-info">
+                <p><strong>Status:</strong> {{ order.status }}</p>
+                <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
+            </section>
+        
+            <section class="seller-buyer-info ">
+                <div>
+                    <h3>From:</h3>
+                    <p>{{ company.name }}</p>
+                    <p>{{ company.address }}</p>
+                    <p>{{ company.phone }}</p>
+                    <p>{{ company.email }}</p>
+                </div>
+        
+                <div>
+                    <h3>To:</h3>
+                    <p>{{ order.customer.name }}</p>
+                    <p>{{ order.customer.address }}</p>
+                    <p>{{ order.customer.phone }}</p>
+                    <p>{{ order.customer.email }}</p>
+                </div>
+            </section>
+        
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of order.items; index as i">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ item.price }}</td>
+                        <td>₹{{ item.quantity * item.price }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <section class="totals">
+                <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
+                <p><strong>GST ({{ order.taxRate }}%):</strong> ₹{{ order.taxAmount }}</p>
+                <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p>
+                <p><strong>Grand Total:</strong> ₹{{ order.totalAmount }}</p>
+            </section>
+        
+            <footer>
+                <p>Thank you for your order! 💚</p>
+                <p>For support: {{ company.support }}</p>
+            </footer>
+        
+        </div>
+
+        <div class="back-btn-wrapper flex justify-content-center">
+            <button class="invoice-button cursor-pointer" (click)="downloadInvoicePDF()">Download Invoice</button>
+            <button class="back-button cursor-pointer" (click)="goBack()">Back to Orders</button>
+        </div>
+    </div>
+</div>
+<!-- <div class="order-details-container flex justify-content-center flex-column" *ngIf="order">
+    <h1 class="page-title text-center">Order Details</h1>
+    <div class="order-details-wrapper">
+        <h2 class="text-center">Order</h2>
         <p><strong>Order ID:</strong> {{ order.orderId }}</p>
-        <p><strong>Date:</strong> {{ order.date }}</p>
+        <p><strong>Date:</strong> {{ order.date | date:'mediumDate' }}</p>
         <p><strong>Total Amount:</strong> ₹{{ order.totalAmount }}</p>
         <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
         <p><strong>Status:</strong> {{ order.status }}</p>
-        <p><strong>Delivery Address:</strong> {{ order.deliveryAddress }}</p>
+        <p><strong>Customer Name:</strong> {{ order.customer.name }}</p>
+        <p><strong>Customer Address:</strong> {{ order.customer.address }}</p>
+        <p><strong>Customer Phone:</strong> {{ order.customer.phone }}</p>
+        <p><strong>Customer E-mail:</strong> {{ order.customer.email }}</p>
 
         <h3>Items Ordered:</h3>
         <div class="items-list">
@@ -18,7 +96,75 @@
         </div>
 
         <div class="back-btn-wrapper flex justify-content-center">
+            <button class="invoice-button cursor-pointer" (click)="downloadInvoicePDF()">Download Invoice</button>
             <button class="back-button cursor-pointer" (click)="goBack()">Back to Orders</button>
         </div>
     </div>
+</div> -->
+
+
+<!-- Invoice Section -->
+<div *ngIf="false" id="invoice" class="invoice-wrapper">
+    <header>
+        <h1>Invoice</h1>
+        <p>Order ID: {{ order.orderId }}</p>
+        <p>Date: {{ order.date | date:'mediumDate' }}</p>
+    </header>
+
+    <section class="payment-info">
+        <p><strong>Status:</strong> ₹{{ order.status }}</p>
+        <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
+    </section>
+
+    <section class="seller-buyer-info ">
+        <div>
+            <h3>From:</h3>
+            <p>{{ company.name }}</p>
+            <p>{{ company.address }}</p>
+            <p>{{ company.phone }}</p>
+            <p>{{ company.email }}</p>
+        </div>
+
+        <div>
+            <h3>To:</h3>
+            <p>{{ order.customer.name }}</p>
+            <p>{{ order.customer.address }}</p>
+            <p>{{ order.customer.phone }}</p>
+            <p>{{ order.customer.email }}</p>
+        </div>
+    </section>
+
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of order.items; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>₹{{ item.price }}</td>
+                <td>₹{{ item.quantity * item.price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <section class="totals">
+        <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
+        <p><strong>GST ({{ order.taxRate }}%):</strong> ₹{{ order.taxAmount }}</p>
+        <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p>
+        <p><strong>Grand Total:</strong> ₹{{ order.totalAmount }}</p>
+    </section>
+
+    <footer>
+        <p>Thank you for your order! 💚</p>
+        <p>For support: {{ company.support }}</p>
+    </footer>
+
 </div>

@@ -1,22 +1,24 @@
-<div class="cart-container" *ngIf="cartItems.length > 0; else emptyCart">
-    <h2>Shopping Cart</h2>
+<div class="cart-container w-full" *ngIf="cartItems.length > 0; else emptyCart">
+    <h1 class="page-title text-center">Shopping Cart</h1>
 
-    <div class="cart-item flex align-items-center" *ngFor="let item of cartItems; let i = index">
-        <img [src]="item.image" [alt]="item.name" />
-        <div class="details-wrapper flex align-items-center justify-space-between">
-            <div class="product-detail">
-                <h3>{{ item.name }}</h3>
-                <p>Product code: {{ item.productId }}</p>
-            </div>
-            <div class="btn-wrapper flex">
-                <div class="quantity flex align-items-center">
-                    <button class="btn cursor-pointer" (click)="decreaseQuantity(i)">-</button>
-                    <span>{{ item?.quantity }}</span>
-                    <button class="btn cursor-pointer" (click)="increaseQuantity(i)">+</button>
+    <div class="item-wrapper">
+        <div class="cart-item flex align-items-center" *ngFor="let item of cartItems; let i = index">
+            <img [src]="item.image" [alt]="item.name" />
+            <div class="details-wrapper flex align-items-center justify-space-between">
+                <div class="product-detail">
+                    <h3>{{ item.name }}</h3>
+                    <p>Product code: {{ item.productId }}</p>
                 </div>
-                <button class="btn remove cursor-pointer" (click)="removeItem(i)">Remove</button>
+                <div class="btn-wrapper flex">
+                    <div class="quantity flex align-items-center">
+                        <button class="btn cursor-pointer" (click)="decreaseQuantity(i)">-</button>
+                        <span>{{ item?.quantity }}</span>
+                        <button class="btn cursor-pointer" (click)="increaseQuantity(i)">+</button>
+                    </div>
+                    <button class="btn remove cursor-pointer" (click)="removeItem(i)">Remove</button>
+                </div>
+                <h3>Price: ₹{{ item.price - (item.price * item.offer / 100) }}</h3>
             </div>
-            <h5>Price: ₹{{ item.price - (item.price * item.offer / 100) }}</h5>
         </div>
     </div>
 
@@ -27,6 +29,8 @@
 </div>
 
 <ng-template #emptyCart>
-    <h2>Your cart is empty 😢</h2>
-    <button class="btn cursor-pointer" routerLink="/products">Shop Now</button>
+    <span class="empty-cart-container flex flex-column align-items-center justify-content-center">
+        <h2>Your cart is empty 😢</h2>
+        <button class="shop-now-btn cursor-pointer" routerLink="/products">Shop Now</button>
+    </span>
 </ng-template>
