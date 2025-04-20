@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../interfaces/interfaces';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
+import { PRODUCTS } from '../../data/data';
+import { ApiService } from '../../services/api.service';
+import { appConfig } from '../../app.config';
 
 @Component({
   selector: 'app-product-details',
@@ -39,20 +42,32 @@ export class ProductDetailsComponent {
 
   reviewForm: FormGroup;
 
-  constructor(private router: Router, private cartService: CartService, private snackBar: MatSnackBar, private fb: FormBuilder) {
-    const state = this.router.getCurrentNavigation()?.extras.state;
-    console.log(">>>>> router >> ", state);
-    if (state && state['data']) {
-      this.product = state['data'][0];
-
-      // this.calculateTotal();
-    }
-
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private cartService: CartService, private snackBar: MatSnackBar, private fb: FormBuilder, private api: ApiService) {
+    this.product = this.fetchProductDetail(this.activatedRoute.snapshot.paramMap.get('id'));
 
     this.reviewForm = this.fb.group({
       comment: ['', Validators.required],
       rating: [0, Validators.required],
     });
+  }
+
+  fetchProductDetail(productId: string | null): Product {
+    if (productId) {
+      return this.api.getProducts().find((product) => product.productId == productId) as Product;
+    }
+    return {
+      id: 0,
+      name: "empty",
+      category: "empty",
+      price: 0,
+      offer: 0,
+      image: "empty",
+      productId: "empty",
+      description: "empty",
+      discountPrice: 0,
+      stock: 0,
+      reviews: [],
+    };
   }
 
 
@@ -69,21 +84,24 @@ export class ProductDetailsComponent {
   }
 
   addToCart() {
-    this.cartService.addToCart(this.product);
+    this.cartService.addToCart(this.product, this.quantity);
     this.snackBar.open('Item added to cart', 'Close', { duration: 2000 });
   }
 
   buyNow() {
-    console.log(">>>>> prod >> ", this.product);
+    // console.log(">>>>> prod >> ", this.product);
     this.router.navigate(['/checkout'], { state: { data: [this.product] } });
   }
 
   saveComment() {
-    console.log(">>>>> rev >> ", this.reviewForm.value);
     if (this.reviewForm.valid) {
-      console.log("Product Data:", this.reviewForm.value);
+      PRODUCTS.forEach((product) => {
+        if (product.id === this.product.id)
+          product.reviews.push({ ...this.reviewForm.value, user: "added_user" });
+      });
+      this.product = this.fetchProductDetail(this.activatedRoute.snapshot.paramMap.get('id'));
+      // console.log("Product Data:", this.reviewForm.value);
       this.snackBar.open('Comment Added Successfully', 'Close', { duration: 2000 });
-      // Here, we will call the API to save the product later
       this.closeAddReviewModal();
     } else {
       this.snackBar.open('Please fill all the fields', 'Close', { duration: 2000 });

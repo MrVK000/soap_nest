@@ -14,7 +14,7 @@
                 <img [src]="product.image" alt="{{ product.name }}">
                 <h3>{{ product.name }}</h3>
                 <p>₹{{ product.price }}</p>
-                <a routerLink="/product-details" class="btn">View Product</a>
+                <button class="product-card-button btn cursor-pointer" (click)="viewProduct(product)">View Product</button>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-<div class="checkout-container">
+<div class="checkout-container flex flex-column align-items-center">
     <h1 class="page-title text-center">Checkout</h1>
 
     <div class="checkout-wrapper">
@@ -13,29 +13,59 @@
         </div>
 
         <form [formGroup]="checkoutForm">
-            <label>Full Name</label>
-            <input formControlName="fullName" placeholder="Enter your name">
-            <div *ngIf="checkoutForm.controls['fullName'].invalid && checkoutForm.controls['fullName'].touched">
-                <p class="error">
-                    * Name is required
-                </p>
+            <div>
+                <label>Full Name</label>
+                <input formControlName="fullName" placeholder="Enter your name">
+                <div
+                    [ngStyle]="checkoutForm.controls['fullName'].invalid && checkoutForm.controls['fullName'].touched?{}:{'visibility':'hidden'}">
+                    <p class="error">
+                        * Name is required
+                    </p>
+                </div>
             </div>
 
-            <label>Address</label>
-            <textarea formControlName="address" placeholder="Enter delivery address"></textarea>
-            <div *ngIf="checkoutForm.controls['address'].invalid && checkoutForm.controls['address'].touched">
-                <p class="error">
-                    * Address is required
-                </p>
-
+            <div>
+                <label>Phone Number</label>
+                <input formControlName="phone" placeholder="Enter phone number">
+                <div
+                    [ngStyle]="checkoutForm.controls['phone'].invalid && checkoutForm.controls['phone'].touched?{}:{'visibility':'hidden'}">
+                    <p class="error">
+                        * Valid phone number is required
+                    </p>
+                </div>
             </div>
 
-            <label>Phone Number</label>
-            <input formControlName="phone" placeholder="Enter phone number">
-            <div *ngIf="checkoutForm.controls['phone'].invalid && checkoutForm.controls['phone'].touched">
-                <p class="error">
-                    * Valid phone number is required
-                </p>
+            <div>
+                <label>Address</label>
+                <textarea formControlName="address" placeholder="Enter delivery address"></textarea>
+                <div
+                    [ngStyle]="checkoutForm.controls['address'].invalid && checkoutForm.controls['address'].touched?{}:{'visibility':'hidden'}">
+                    <p class="error">
+                        * Address is required
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <label>State</label>
+                <input formControlName="state" placeholder="Enter your state">
+                <div
+                    [ngStyle]="checkoutForm.controls['state'].invalid && checkoutForm.controls['state'].touched?{}:{'visibility':'hidden'}">
+                    <p class="error">
+                        * Valid state is required
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <label>Pincode</label>
+                <input formControlName="pincode" placeholder="Enter your pincode">
+                <div
+                    [ngStyle]="checkoutForm.controls['pincode'].invalid && checkoutForm.controls['pincode'].touched?{}:{'visibility':'hidden'}">
+                    <p class="error">
+                        * Valid pincode is required
+                    </p>
+                </div>
             </div>
 
             <div class="order-summary">
@@ -45,12 +75,6 @@
                 <p>Delivery Charge: ₹{{ deliveryCharge }}</p>
                 <h3>Total: ₹{{ grandTotal }}</h3>
             </div>
-
-            <label>Payment Method</label>
-            <select formControlName="paymentMethod">
-                <option value="cod">Cash on Delivery</option>
-                <option value="online">Online Payment</option>
-            </select>
 
             <button [disabled]="checkoutForm.invalid" (click)="placeOrder()">Place Order</button>
         </form>

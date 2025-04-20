@@ -13,7 +13,6 @@
 h2 {
     margin-bottom: 20px;
     font-size: 24px;
-    color: var(--grey);
 }
 
 .input-group {
@@ -21,7 +20,7 @@ h2 {
 }
 
 input {
-    margin: 10px 0;
+    margin: 18px 0 0 0;
     border: 2px solid var(--grey);
     border-radius: 5px;
     font-size: 16px;
@@ -52,7 +51,7 @@ input {
 .toggle {
     position: absolute;
     right: 12px;
-    top: 50%;
+    top: 36px;
     transform: translateY(-50%);
 }
 
@@ -94,7 +93,8 @@ a {
 @media screen and (max-width: 576px) {
     .login-box {
         padding: 12px;
-        width: 18.8rem;
+        // width: 18.8rem;
+        max-width: 22rem;
     }
 
     .password-field {

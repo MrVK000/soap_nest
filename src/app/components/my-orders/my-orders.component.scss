@@ -6,7 +6,7 @@
   width: 30rem;
 }
 
-.filters{
+.filters {
   margin-bottom: 20px;
 }
 
@@ -43,7 +43,8 @@ small {
   }
 }
 
-.left-container {
+.left-container,
+.right-container {
   margin-right: 40px;
 }
 
@@ -84,7 +85,7 @@ button:disabled {
 .shipped,
 .delivered,
 .cancelled {
-  padding: 2px;
+  padding: 4px 8px;
   margin: 2px;
   border-radius: 4px;
   color: white;
@@ -110,7 +111,7 @@ button:disabled {
 @media screen and (max-width: 576px) {
 
   .my-orders-wrapper {
-    width: 18rem;
+    width: 22rem;
     padding: 8px;
   }
 

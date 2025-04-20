@@ -12,11 +12,11 @@ export const NAV_LINKS: NavLink[] = [
     // { path: '/login', label: 'Login', icon: 'fa-solid fa-circle-user', }
 ];
 
-export const FEATURED_PRODUCTS: FeaturedProduct[] = [
-    { id: 1, name: 'Neem Soap', price: 249, image: 'assets/content_images/neem-soap-1.webp' },
-    { id: 2, name: 'Aloe Vera Shampoo', price: 449, image: 'assets/content_images/aloe-vera-shampoo-1.jpg' },
-    { id: 3, name: 'Coconut Soap', price: 349, image: 'assets/content_images/coconut-soap-1.webp' }
-];
+// export const FEATURED_PRODUCTS: FeaturedProduct[] = [
+//     { id: 1, name: 'Neem Soap', price: 249, image: 'assets/content_images/neem-soap-1.webp' },
+//     { id: 2, name: 'Aloe Vera Shampoo', price: 449, image: 'assets/content_images/aloe-vera-shampoo-1.jpg' },
+//     { id: 3, name: 'Coconut Soap', price: 349, image: 'assets/content_images/coconut-soap-1.webp' }
+// ];
 
 export const BENEFITS: Benefit[] = [
     {

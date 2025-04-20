@@ -1,64 +1,52 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Cart, Product } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  public cartItems: any[] = [
+  public cartItems: Cart[] = [
     {
-      productId: "HS7K83",
-      name: "Neem Soap",
+      productId: "HS7683",
       category: "soap",
-      price: 329,
-      offer: 10, // 10% off
+      id: 7,
+      name: 'Coconut Soap',
+      image: 'assets/content_images/coconut-soap-1.webp',
+      description: 'Handmade organic soap with natural aloe vera extracts. Perfect for all skin types.',
+      price: 389,
+      offer: 4,
+      discountPrice: 373.44,
+      stock: 72,
+      reviews: [
+        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
+        { user: 'John', rating: 4, comment: 'Good product, but wish it was a bit bigger.' },
+        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
+        { user: 'John', rating: 4, comment: 'Good product, but wish it was a bit bigger.' },
+        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
+        { user: 'John', rating: 4, comment: 'Good product, but wish it was a bit bigger.' },
+        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
+        { user: 'John', rating: 4, comment: 'Good product, but wish it was a bit bigger.' },
+      ],
       quantity: 2,
-      image: "assets/content_images/neem-soap-1.webp"
     },
     {
-      productId: "TX2B19",
-      name: "Lemon Soap",
+      productId: "HS7783",
       category: "soap",
-      price: 549,
-      offer: 14, // 14% off
+      id: 8,
+      name: 'Papaya Soap',
+      image: 'assets/content_images/papaya-soap-1.webp',
+      description: 'Handmade organic soap with natural aloe vera extracts. Perfect for all skin types.',
+      price: 559,
+      offer: 2,
+      discountPrice: 547.82,
+      stock: 8,
+      reviews: [
+        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
+        { user: 'John', rating: 4, comment: 'Good product, but wish it was a bit bigger.' },
+        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
+      ],
       quantity: 1,
-      image: "assets/content_images/turmeric-soap-1.webp"
-    },
-    {
-      productId: "HS7K83",
-      name: "Neem Soap",
-      category: "soap",
-      price: 329,
-      offer: 10, // 10% off
-      quantity: 2,
-      image: "assets/content_images/neem-soap-1.webp"
-    },
-    {
-      productId: "TX2B19",
-      name: "Lemon Soap",
-      category: "soap",
-      price: 549,
-      offer: 14, // 14% off
-      quantity: 1,
-      image: "assets/content_images/turmeric-soap-1.webp"
-    },
-    {
-      productId: "HS7K83",
-      name: "Neem Soap",
-      category: "soap",
-      price: 329,
-      offer: 10, // 10% off
-      quantity: 2,
-      image: "assets/content_images/neem-soap-1.webp"
-    },
-    {
-      productId: "TX2B19",
-      name: "Lemon Soap",
-      category: "soap",
-      price: 549,
-      offer: 14, // 14% off
-      quantity: 1,
-      image: "assets/content_images/turmeric-soap-1.webp"
     },
   ];
 
@@ -76,12 +64,12 @@ export class CartService {
     this.cartCount.next(this.cartItems.length);
   }
 
-  addToCart(product: any) {
+  addToCart(product: Product, count: number) {
     let found = this.cartItems.find(item => item.productId === product.productId);
     if (found) {
-      found.quantity++;
+      found.quantity += count;
     } else {
-      this.cartItems.push({ ...product, quantity: 1 });
+      this.cartItems.push({ ...product, quantity: count });
     }
     this.calculateCartCount();
   }

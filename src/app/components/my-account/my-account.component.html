@@ -7,7 +7,7 @@
             <input type="text" formControlName="fullName" [readonly]="!isEditing">
             <p class="error"
                 [ngStyle]="isEditing && accountForm.controls['fullName'].invalid && accountForm.controls['fullName'].touched?{}:{'visibility':'hidden'}">
-                Full name must be at least 3 characters long.
+                Please enter a valid name.
             </p>
 
             <label>Email</label>

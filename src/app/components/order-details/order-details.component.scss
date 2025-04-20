@@ -40,9 +40,8 @@ header {
 }
 
 .seller-buyer-info {
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
 .seller-buyer-info div {
@@ -80,6 +79,19 @@ footer {
 
 @media screen and (max-width: 768px) {
     .order-details-wrapper {
-        width: auto;
+        width: 100%;
+        max-width: 22rem;
+    }
+
+    .invoice-wrapper {
+        padding: 12px;
+    }
+
+    .seller-buyer-info div {
+        width: 100%;
+    }
+
+    .product-table-wrapper{
+        overflow-x: scroll;
     }
 }

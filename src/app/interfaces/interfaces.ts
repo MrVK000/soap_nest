@@ -3,27 +3,32 @@ export interface Product {
     name: string;
     category: string;
     price: number;
-    offer?: number;
+    offer: number;
     image: string;
     productId: string,
     description: string,
-    discountPrice:number,
-    stock:number,
-    reviews: Review[] | []
+    discountPrice: number,
+    stock: number,
+    reviews: Review[]
 }
 export interface Cart {
-    productId: string;
+    id: number;
     name: string;
     category: string;
     price: number;
     offer: number;
-    quantity: number;
     image: string;
+    productId: string,
+    description: string,
+    discountPrice: number,
+    stock: number,
+    reviews: Review[],
+    quantity: number
 }
 export interface Review {
     user: string;
     comment: string;
-    rating:number;
+    rating: number;
 }
 export interface ResponsiveOption {
     breakpoint: string;
@@ -53,7 +58,6 @@ export interface Order {
     paymentMethod: string;
     status: string;
 }
-
 export interface OrderDetails {
     orderId: string;
     date: string;

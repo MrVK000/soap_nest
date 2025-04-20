@@ -27,7 +27,6 @@
 
 .product-title {
     font-size: 26px;
-    color: var(--grey);
 }
 
 p {
@@ -194,16 +193,6 @@ h3 {
     }
 }
 
-// .save-btn:disabled{
-//     background-color: var(--grey);
-// }
-
-
-// .save-btn:disabled {
-//     background: var(--grey) !important;
-//     cursor: not-allowed;
-// }
-
 .rating-field,
 .comment-field {
     margin: 8px 0;
@@ -211,13 +200,11 @@ h3 {
 
 ::ng-deep .p-rating-icon,
 ::ng-deep .p-rating-option-active .p-rating-icon {
-    width: 24px;
-    color: yellow !important;
-    // margin: 4px;
+    width: 24px !important;
+    color: var(--orange) !important;
 
     &:hover {
-        // background-color: yellow;
-        color: yellow !important;
+        color: var(--orange) !important;
     }
 }
 

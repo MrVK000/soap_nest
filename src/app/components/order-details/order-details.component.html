@@ -7,13 +7,13 @@
                 <p>Order ID: {{ order.orderId }}</p>
                 <p>Date: {{ order.date | date:'mediumDate' }}</p>
             </header>
-        
+
             <section class="payment-info">
                 <p><strong>Status:</strong> {{ order.status }}</p>
-                <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
+                <p><strong>Payment Method:</strong> Online Payment </p>
             </section>
-        
-            <section class="seller-buyer-info ">
+
+            <section class="seller-buyer-info flex justify-space-between">
                 <div>
                     <h3>From:</h3>
                     <p>{{ company.name }}</p>
@@ -21,7 +21,7 @@
                     <p>{{ company.phone }}</p>
                     <p>{{ company.email }}</p>
                 </div>
-        
+
                 <div>
                     <h3>To:</h3>
                     <p>{{ order.customer.name }}</p>
@@ -30,40 +30,42 @@
                     <p>{{ order.customer.email }}</p>
                 </div>
             </section>
-        
-            <table class="product-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Product</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of order.items; index as i">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.quantity }}</td>
-                        <td>₹{{ item.price }}</td>
-                        <td>₹{{ item.quantity * item.price }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        
+
+            <section class="product-table-wrapper">
+                <table *ngIf="!false" class="product-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of order.items; index as i">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>₹{{ item.price }}</td>
+                            <td>₹{{ item.quantity * item.price }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
             <section class="totals">
                 <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
                 <p><strong>GST ({{ order.taxRate }}%):</strong> ₹{{ order.taxAmount }}</p>
                 <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p>
                 <p><strong>Grand Total:</strong> ₹{{ order.totalAmount }}</p>
             </section>
-        
+
             <footer>
                 <p>Thank you for your order! 💚</p>
                 <p>For support: {{ company.support }}</p>
             </footer>
-        
+
         </div>
 
         <div class="back-btn-wrapper flex justify-content-center">

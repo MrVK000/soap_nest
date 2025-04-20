@@ -24,7 +24,7 @@
 
     <div class="cart-summary w-full">
         <h3>Total: ₹{{ getTotalPrice() }}</h3>
-        <button class="btn checkout cursor-pointer" routerLink="/checkout">Proceed to Checkout</button>
+        <button class="btn checkout cursor-pointer" (click)="goToCheckout()">Proceed to Checkout</button>
     </div>
 </div>
 

@@ -1,16 +1,7 @@
-// .checkout-container {
-//     max-width: 40rem;
-//     margin: 4rem 0;
-//     padding: 20px;
-//     padding-top: 0;
-//     border-radius: 8px;
-//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-// }
-
 .checkout-wrapper {
     background: var(--light-white);
-    max-width: 40rem;
-    margin:0 8px 40px 8px;
+    width: 34rem;
+    margin-bottom: 32px;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
@@ -39,21 +30,29 @@
     margin-right: 10px;
 }
 
-label {
-    font-weight: bold;
-    margin-top: 20px;
+form div {
+    margin-bottom: 20px;
 }
 
-input,
-textarea,
-select {
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    padding: 8px;
-    margin: 5px 0 20px 0;
-    border: 1px solid var(--grey);
-    border-radius: 4px;
+
+label {
+    font-weight: bold;
+}
+
+// input,
+// textarea,
+// select {
+//     width: 100%;
+//     min-width: 100%;
+//     max-width: 100%;
+//     padding: 8px;
+//     margin: 5px 0 20px 0;
+//     border: 1px solid var(--grey);
+//     border-radius: 4px;
+// }
+
+input{
+    margin-top: 8px;
 }
 
 textarea {
@@ -63,6 +62,7 @@ textarea {
 
 .error {
     color: var(--red);
+    font-size: 14px;
 }
 
 .order-summary {
@@ -83,7 +83,6 @@ button {
     background: var(--green);
     color: var(--white);
     border: none;
-    border-radius: 4px;
     margin: 12px 0;
     font-size: 16px;
 }
@@ -94,11 +93,9 @@ button:disabled {
 }
 
 
-@media screen and (max-width: 380px) {
-
-    input,
-    textarea {
-        width: 94%;
+@media screen and (max-width: 576px) {
+    .checkout-wrapper {
+        width: 22rem;
+        margin: 0 0 20px 0;
     }
-
 }

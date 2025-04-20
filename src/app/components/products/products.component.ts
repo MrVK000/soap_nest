@@ -104,12 +104,13 @@ export class ProductsComponent {
 
 
   addToCart(product: Product) {
-    this.cartService.addToCart(product);
+    this.cartService.addToCart(product, 1);
     this.snackBar.open('Item added to cart', 'Close', { duration: 2000 });
   }
 
   viewProduct(product: Product) {
-    this.router.navigate(['/product-details'], { state: { data: [product] } });
+    this.router.navigate(['/product-details', product.productId]);
+    // this.router.navigate(['/product-details'], { state: { data: [product] } });
   }
 
   buyNow(product: Product) {

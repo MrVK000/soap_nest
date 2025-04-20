@@ -7,7 +7,7 @@ import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
@@ -28,7 +28,6 @@ export class CartComponent {
 
   constructor(private router: Router, private sharedService: SharedService, private cartService: CartService) {
     this.cartItems = this.cartService.getCartItems();
-
   }
 
   increaseQuantity(index: number) {
@@ -45,5 +44,10 @@ export class CartComponent {
 
   getTotalPrice() {
     return this.cartService.getTotalPrice().toFixed(2);
+  }
+
+  goToCheckout() {
+    // console.log(">>>>> prod >> ", this.product);
+    this.router.navigate(['/checkout'], { state: { data: this.cartItems } });
   }
 }

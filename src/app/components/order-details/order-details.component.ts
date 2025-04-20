@@ -85,20 +85,13 @@ export class OrderDetailsComponent {
   };
 
   ngOnInit() {
-    // Assuming orderId is fetched and API returns order object
     this.fetchOrderDetails();
-    setTimeout(() => {
-
-      this.downloadInvoicePDF();
-    }, 2000);
   }
 
   fetchOrderDetails() {
-    // Replace with actual API call
     this.order = {
       orderId: 'ORD987654',
       date: new Date(),
-      paymentMethod: "Online Payment",
       status: "Shipped",
       customer: {
         name: 'Rahul Mehta',
