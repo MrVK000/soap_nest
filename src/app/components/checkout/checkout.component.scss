@@ -51,13 +51,9 @@ label {
 //     border-radius: 4px;
 // }
 
-input{
-    margin-top: 8px;
-}
-
+input,
 textarea {
-    max-height: 8rem;
-    min-height: 4rem;
+    margin-top: 8px;
 }
 
 .error {
