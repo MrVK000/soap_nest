@@ -1,3 +1,4 @@
+import { SharedService } from './../../services/shared.service';
 import { CommonModule } from '@angular/common';
 import { Benefit } from './../../interfaces/interfaces';
 import { Component } from '@angular/core';
@@ -27,4 +28,10 @@ export class AboutUsComponent {
       image: 'assets/content_images/handmade-soap-3.jpg',
     }
   ];
+
+  constructor(private sharedService: SharedService) { }
+
+  ngOnInit(): void {
+    this.sharedService.addSeo("About Green Glow - Our Story & Mission");
+  }
 }

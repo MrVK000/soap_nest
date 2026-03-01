@@ -1,9 +1,15 @@
+import { SharedService } from './../../services/shared.service';
+import { AuthService } from './../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from './../../interfaces/interfaces';
+import { Coupon, Product } from './../../interfaces/interfaces';
 import { Component } from '@angular/core';
-import { LoadingService } from '../../services/loading.service';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormArray, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApiService } from '../../services/api.service';
+import { Subject, takeUntil } from 'rxjs';
+
+declare var Razorpay: any;
 
 @Component({
   selector: 'app-checkout',
@@ -12,49 +18,284 @@ import { CommonModule } from '@angular/common';
   styleUrl: './checkout.component.scss'
 })
 export class CheckoutComponent {
-
+  private destroy$ = new Subject<void>();
+  statesList: string[] = [];
+  districtsList: string[] = [];
+  pincodesList: string[] = [];
   products: Product[] = [];
+  coupons: FormGroup;
+  couponDiscountPercentage!: number;
   totalPrice: number = 0;
   gst: number = 0;
   deliveryCharge: number = 50;
   grandTotal: string = '';
+  razorpayKey = 'YOUR_RAZORPAY_KEY_ID'; // Replace with your actual Razorpay Key ID
 
   checkoutForm = new FormGroup({
     fullName: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
     state: new FormControl('', [Validators.required]),
+    district: new FormControl('', [Validators.required]),
     pincode: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
+    paymentMethod: new FormControl('Online payment', [Validators.required]),
   });
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private snackbar: MatSnackBar, private api: ApiService, private authService: AuthService, public sharedService: SharedService, private fb: FormBuilder) {
     const state = this.router.getCurrentNavigation()?.extras.state;
+    if (!(state) || !(state['data'])) this.router.navigate(['/products']);
     if (state && state['data']) {
       this.products = state['data'];
-      console.log(">>>>> pro >> ", this.products);
-
       this.calculateTotal();
+    }
+
+    this.coupons = fb.group({
+      formArray: fb.array([])
+    })
+  }
+
+  ngOnInit() {
+    // this.loadRazorpayScript();
+    this.patchUserDetails();
+    this.getStates();
+    this.addCoupon();
+  }
+
+
+  get getCoupons(): FormArray {
+    return this.coupons.get("formArray") as FormArray;
+  }
+
+  get getCouponsCount(): number {
+    return (this.coupons.get("formArray") as FormArray).getRawValue().length;
+  }
+
+  getCouponVerificationStatus(i: number): boolean {
+    return ((this.coupons.get("formArray") as FormArray).at(i) as FormGroup)?.get('isVerified')?.value;
+  }
+
+  addCoupon() {
+    const coupon = this.fb.group({
+      code: [''],
+      isVerified: [false]
+    })
+    this.getCoupons.push(coupon);
+  }
+
+  removeCoupon(i: number) {
+    this.getCoupons.removeAt(i);
+  }
+
+  verifyCoupon(i: number) {
+    const coupon = this.getCoupons.at(i);
+    const couponCode = coupon.get('code')?.value?.trim();
+    if (!coupon.get('isVerified')?.value) {
+      if (this.getCoupons.valid && couponCode.length > 0) {
+        this.api.validateCouponCode(couponCode, parseFloat(this.grandTotal)).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+          coupon.get('isVerified')?.setValue(true);
+          this.grandTotal = res?.data?.discountedTotal.toFixed(2);
+          this.couponDiscountPercentage = res?.data?.discount.toFixed(2);
+          this.snackbar.open("Added coupon discount", "", { duration: 3000 })
+        }, (error) => {
+          let errorMessage = "Error while validating the coupon";
+          if (error?.error?.errors && error?.error?.errors?.length > 0)
+            errorMessage = error?.error?.errors[0]?.msg
+          else
+            errorMessage = error?.error?.message
+
+          this.snackbar.open(errorMessage, "", { duration: 3000 })
+          coupon.get('isVerified')?.setValue(false);
+        })
+      } else {
+        this.snackbar.open("Please use a valid coupon code");
+      }
     }
   }
 
   calculateTotal() {
-    this.totalPrice = this.products.reduce((sum, product) => sum + product.price, 0);
+    this.totalPrice = this.products.reduce((sum, product) => sum + parseFloat(product.price as unknown as string), 0);
     this.gst = this.totalPrice * 0.18;
     this.grandTotal = (this.totalPrice + this.gst + this.deliveryCharge).toFixed(2);
   }
 
-  placeOrder() {
-    if (this.checkoutForm.valid) {
-      
-      const orderId = 'ORD' + Math.floor(100000 + Math.random() * 900000);
-      this.router.navigate(['/payment'], { state: { orderId, totalAmount: this.grandTotal } });
-
-      // if (this.checkoutForm.value.paymentMethod === 'cod') {
-      //   this.router.navigate(['/order-success'], { state: { orderId } });
-      // } else {
-      //   this.router.navigate(['/payment'], { state: { orderId, totalAmount: this.grandTotal } });
-      // }
+  patchUserDetails() {
+    const user = this.authService.getUser();
+    if (this.authService.isLoggedIn() && user) {
+      this.checkoutForm.patchValue({
+        fullName: user?.name,
+        address: user?.address,
+        state: user?.state,
+        district: user?.district,
+        pincode: user?.pincode,
+        phone: user?.phone,
+      });
     }
+    this.checkoutForm.get("paymentMethod")?.disable();
   }
 
+  getStates() {
+    this.api.getStates().pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      this.statesList = res.data;
+      this.checkoutForm.patchValue({ state: this.statesList[0] });
+      this.getDistrictsByState(this.statesList[0]);
+    })
+  }
+
+  getDistrictsByState(state: string) {
+    this.api.getDistrictsByState(state).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      this.districtsList = res.data;
+      this.checkoutForm.patchValue({ district: this.districtsList[0] });
+      this.getPincodesByDistrict(this.districtsList[0]);
+    })
+  }
+
+  getPincodesByDistrict(district: string) {
+    this.api.getPincodesByDistrict(district).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      this.pincodesList = res.data;
+      this.checkoutForm.patchValue({ pincode: this.pincodesList[0] });
+    })
+  }
+
+  get state(): string {
+    return this.checkoutForm.get('state')?.value as unknown as string;
+  }
+
+  get district(): string {
+    return this.checkoutForm.get('district')?.value as unknown as string;
+  }
+
+  placeOrder(): void {
+    // const amount = 500; // INR
+
+    // this.api.makePayment(amount).pipe(takeUntil(this.destroy$)).subscribe((order: any) => {
+    //   const options = {
+    //     key: 'rzp_test_MfwSb09chePBvD', // from Razorpay dashboard
+    //     amount: order.amount,
+    //     currency: 'INR',
+    //     name: 'Test Store',
+    //     description: 'Test Transaction',
+    //     order_id: order.id,
+    //     handler: (response: any) => {
+    //       // optional: verify payment
+    //       this.verifyPayment(response);
+    //     },
+    //     prefill: {
+    //       name: 'Your Name',
+    //       email: 'you@example.com',
+    //       contact: '9999999999'
+    //     },
+    //     theme: {
+    //       color: '#3399ccff'
+    //     }
+    //   };
+    //   const rzp = new Razorpay(options);
+    //   rzp.open();
+    // });
+  }
+
+  verifyPayment(paymentResponse: any) {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = paymentResponse;
+    const verifyPaymentPayload = { razorpayOrderId: razorpay_order_id, razorpayPaymentId: razorpay_payment_id, razorpaySignature: razorpay_signature };
+    this.api.verifyPayment(verifyPaymentPayload).pipe(takeUntil(this.destroy$)).subscribe(res => {
+      this.snackbar.open("Payment Successful!", '', { duration: 3000 });
+    });
+  }
+
+
+  cancelOrder(): void {
+    this.sharedService.goBack();
+  }
+
+
+
+  // {
+  //   "amount": 50000,
+  //   "amount_due": 50000,
+  //   "amount_paid": 0,
+  //   "attempts": 0,
+  //   "created_at": 1754238616,
+  //   "currency": "INR",
+  //   "entity": "order",
+  //   "id": "order_R0vboXWoLzy303",
+  //   "notes": [],
+  //   "offer_id": null,
+  //   "receipt": "order_rcptid_1754238621646",
+  //   "status": "created"
+  // }
+
+
+
+
+
+
+
+
+  // placeOrder() {
+  //   if (this.checkoutForm.valid) {
+
+  //     const orderId = this.getOrderId();
+  //     const options = {
+  //       key: this.razorpayKey,
+  //       amount: parseFloat(this.grandTotal) * 100, // Convert to paise
+  //       currency: 'INR',
+  //       name: 'Eco-Friendly Store',
+  //       description: `Order #${orderId}`,
+  //       handler: (response: any) => {
+  //         this.router.navigate(['/order-success'], { state: { orderId: orderId } });
+  //       },
+  //       prefill: {
+  //         name: 'Customer Name',
+  //         email: 'customer@example.com',
+  //         contact: '9999999999'
+  //       },
+  //       theme: {
+  //         color: '#3399cc'
+  //       }
+  //     };
+
+  //     const rzp = new Razorpay(options);
+  //     rzp.open();
+  //   }
+  // }
+
+  getOrderId() {
+    return 'ORD' + Math.floor(100000 + Math.random() * 900000);
+  }
+
+  loadRazorpayScript() {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.defer = true;
+    document.body.appendChild(script);
+  }
+
+  completePayment() {
+    const orderId = this.getOrderId();
+    const options = {
+      key: this.razorpayKey,
+      amount: parseFloat(this.grandTotal) * 100, // Convert to paise
+      currency: 'INR',
+      name: 'Eco-Friendly Store',
+      description: `Order #${orderId}`,
+      handler: (response: any) => {
+        this.router.navigate(['/order-success'], { state: { orderId: orderId } });
+      },
+      prefill: {
+        name: 'Customer Name',
+        email: 'customer@example.com',
+        contact: '9999999999'
+      },
+      theme: {
+        color: '#3399cc'
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

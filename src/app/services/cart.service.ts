@@ -1,99 +1,111 @@
+import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Cart, Product } from '../interfaces/interfaces';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { CartItem, CartItemPayload, Product } from '../interfaces/interfaces';
+import { ApiService } from './api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  public cartItems: Cart[] = [
-    {
-      productId: "HS7683",
-      category: "soap",
-      id: 7,
-      name: 'Coconut Soap',
-      image: 'assets/content_images/coconut-soap-1.webp',
-      description: 'Handmade organic soap with natural aloe vera extracts. Perfect for all skin types.',
-      price: 389,
-      offer: 4,
-      discountPrice: 373.44,
-      stock: 72,
-      reviews: [
-        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
-        { user: 'John', rating: 4, comment: 'Good product, but wish it was a bit bigger.' },
-        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
-        { user: 'John', rating: 4, comment: 'Good product, but wish it was a bit bigger.' },
-        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
-        { user: 'John', rating: 4, comment: 'Good product, but wish it was a bit bigger.' },
-        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
-        { user: 'John', rating: 4, comment: 'Good product, but wish it was a bit bigger.' },
-      ],
-      quantity: 2,
-    },
-    {
-      productId: "HS7783",
-      category: "soap",
-      id: 8,
-      name: 'Papaya Soap',
-      image: 'assets/content_images/papaya-soap-1.webp',
-      description: 'Handmade organic soap with natural aloe vera extracts. Perfect for all skin types.',
-      price: 559,
-      offer: 2,
-      discountPrice: 547.82,
-      stock: 8,
-      reviews: [
-        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
-        { user: 'John', rating: 4, comment: 'Good product, but wish it was a bit bigger.' },
-        { user: 'Alice', rating: 5, comment: 'Amazing quality! My skin feels so fresh.' },
-      ],
-      quantity: 1,
-    },
-  ];
+  public cartItems: CartItem[] = [];
 
-  cartCount = new BehaviorSubject(0);
+  private cartCount = new BehaviorSubject(0);
+  // cartCount = new Subject<number>();
 
-  constructor() {
-    this.cartCount.next(this.cartItems.length);
+  constructor(private router: Router, private api: ApiService, private snackbar: MatSnackBar, private authService: AuthService) {
+    this.calculateCartCount();
   }
 
   getCartItems() {
-    return this.cartItems;
+    const user = this.authService.getUser();
+    if (!(user?.customerId) || !(this.authService.isLoggedIn())) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.api.getCartItemsByCustomerId(user.customerId).subscribe((res: any) => {
+      this.cartItems = res?.data?.map((cartItem: CartItem) => {
+        cartItem.image = "assets/content_images/" + cartItem.image + ((cartItem.image).slice(0, 1) === "1" ? ".webp" : ".jpg");
+        return cartItem;
+      });
+      this.calculateCartCount();
+    }, (err) => {
+      if ((err?.error?.error) === "Invalid or expired token.") {
+        this.router.navigate(['/login']);
+      }
+    })
   }
 
   calculateCartCount() {
     this.cartCount.next(this.cartItems.length);
   }
 
-  addToCart(product: Product, count: number) {
-    let found = this.cartItems.find(item => item.productId === product.productId);
-    if (found) {
-      found.quantity += count;
-    } else {
-      this.cartItems.push({ ...product, quantity: count });
+  addToCart(customerId: string, productId: string) {
+    const cartItemPayload: CartItemPayload = {
+      customerId,
+      productId,
+      quantity: 1
+    };
+    this.api.addToCart(cartItemPayload).subscribe((res) => {
+      this.getCartItems();
+      this.calculateCartCount();
+      this.snackbar.open('Item added to cart', '', { duration: 2000 });
+    });
+  }
+
+  increaseQuantity(cartItemId: number, quantity: number) {
+    const cartItemPayload: CartItemPayload = {
+      cartItemId,
+      quantity
+    };
+    this.api.updateCartItem(cartItemPayload).subscribe((res) => {
+      this.calculateCartCount();
+      this.getCartItems();
+      this.snackbar.open('Item updated successfully', '', { duration: 2000 });
+    }, (err) => {
+      this.snackbar.open(err?.errors[0].msg, '', { duration: 2000 });
+    });
+  }
+
+  decreaseQuantity(cartItemId: number, quantity: number) {
+    if (quantity < 1) {
+      this.snackbar.open('Quantity must be at least 1', '', { duration: 2000 });
+      return;
     }
-    this.calculateCartCount();
+    const cartItemPayload: CartItemPayload = {
+      cartItemId,
+      quantity
+    };
+    this.api.updateCartItem(cartItemPayload).subscribe((res) => {
+      this.calculateCartCount();
+      this.getCartItems();
+      this.snackbar.open('Item updated successfully', '', { duration: 2000 });
+    }, (err) => {
+      this.snackbar.open(err?.error.errors[0].msg, '', { duration: 2000 });
+    });
   }
 
-  increaseQuantity(index: number) {
-    this.cartItems[index].quantity++;
-    this.calculateCartCount();
-  }
-
-  decreaseQuantity(index: number) {
-    if (this.cartItems[index].quantity > 1) {
-      this.cartItems[index].quantity--;
-    } else {
-      this.cartItems.splice(index, 1);
-    }
-    this.calculateCartCount();
-  }
-
-  removeItem(index: number) {
-    this.cartItems.splice(index, 1);
-    this.calculateCartCount();
+  removeItem(cartItemId: number) {
+    this.api.removeCartItem(cartItemId.toString()).subscribe((res) => {
+      this.calculateCartCount();
+      this.getCartItems();
+      this.snackbar.open('Item updated successfully', '', { duration: 2000 });
+    });
   }
 
   getTotalPrice(): number {
     return this.cartItems.reduce((total, item) => total + (item.price - (item.price * item.offer / 100)) * item.quantity, 0);
+  }
+
+
+  get getCartCount(): number {
+    return this.cartCount.getValue();
+  }
+
+
+  resetCartCount() {
+    this.cartCount.next(0);
   }
 }

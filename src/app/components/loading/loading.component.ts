@@ -10,9 +10,9 @@ import { LoadingService } from '../../services/loading.service';
   styleUrl: './loading.component.scss'
 })
 export class LoadingComponent {
-  isLoading: Observable<boolean>;
+  isLoading$: Observable<boolean>;
 
   constructor(private loadingService: LoadingService) {
-    this.isLoading = this.loadingService.loader;
+    this.isLoading$ = this.loadingService.loader;
   }
 }

@@ -9,9 +9,25 @@
                 </h1>
             </div>
 
-
             <div class="nav-icons flex align-items-center">
-                <div class="nav-links flex align-items-center">
+
+                <span class="search-bar-wrapper flex">
+                    <input class="search-bar" type="text" [placeholder]="placeholderText" [(ngModel)]="searchTerm"
+                        (input)="onSearchChange()" (focus)="showSuggestions = true" (blure)="hideSuggestions()" />
+                    <span class="search-icon"><i class="pi pi-search"></i></span>
+
+                    <ul *ngIf="showSuggestions && suggestions.length" class="suggestion-list">
+                        <li class="cursor-pointer" *ngFor="let item of suggestions" (click)="selectSuggestion(item)">
+                            {{ item.name }}
+                        </li>
+                    </ul>
+                </span>
+
+                <i class="search-icon-btn cursor-pointer pi pi-search"></i>
+                <!-- <p-iconfield>
+                    <p-inputicon class="pi pi-search" />
+                </p-iconfield> -->
+                <div *ngIf="false" class="nav-links flex align-items-center">
                     <span class="flex align-items-center cursor-pointer"
                         [ngClass]="{'active-page': isActive(link.path)}" *ngFor="let link of navLinks"
                         [matTooltip]="link.label" [routerLink]="link.path">
@@ -19,22 +35,59 @@
                             <i class="nav-icon" [class]="link.icon"></i>{{link.label }}</a>
                     </span>
                 </div>
-                <a routerLink="/cart" class="cart-btn" matTooltip="Cart"><i class="fa-solid fa-cart-shopping"></i>
-                    <span *ngIf="cartService.cartCount.getValue()" class="cart-count">
-                        {{ cartService.cartCount.getValue() }}</span>
-                </a>
-                <a routerLink="/login" class="login-btn" matTooltip="Login"><i class="fa-solid fa-circle-user"></i>
+                <!-- <a routerLink="/cart" class="cart-btn" matTooltip="Cart"><i class="pi pi-shopping-cart"></i>
+                    <span *ngIf="cartService.getCartCount" class="cart-count">
+                        {{ cartService.getCartCount }}</span>
+                </a> -->
+                <!-- <a routerLink="/login" class="login-btn" matTooltip="Login"><i class="pi pi-user"></i>
                     <span class="login-label">Login</span>
-                </a>
-                <button class="menu-btn cursor-pointer" (click)="toggleSidebar()" matTooltip="Menu"><i
-                        class="fa-solid fa-bars"></i></button>
+                </a> -->
+
+                <button class="cart-btn" routerLink="/cart"><i class="pi pi-shopping-cart"></i><span
+                        class="cart-btn-label">Cart</span>
+                    <span *ngIf="cartService.getCartCount" class="cart-count">
+                        {{ cartService.getCartCount }}</span></button>
+
+                <mat-menu #menu="matMenu">
+                    <button class="menu-option" mat-menu-item routerLink="/login">
+                        <i class="pi pi-user"></i>
+                        <span>Login / Sign Up</span>
+                    </button>
+                    <button class="menu-option" mat-menu-item routerLink="/my-orders">
+                        <i class="pi pi-list"></i>
+                        <span>My Orders</span>
+                    </button>
+                    <button class="menu-option" mat-menu-item>
+                        <i class="pi pi-receipt"></i>
+                        <span>Coupons</span>
+                    </button>
+                    <button class="menu-option" mat-menu-item routerLink="/favorites">
+                        <i class="pi pi-heart"></i>
+                        <span>Favorites</span>
+                    </button>
+                    <button class="menu-option" mat-menu-item routerLink="/wishlist">
+                        <i class="pi pi-bookmark"></i>
+                        <span>My Wishlist</span>
+                    </button>
+                    <!-- <button class="menu-option" mat-menu-item routerLink="/about">
+                        <i class="pi pi-twitch"></i>
+                        <span>Contact / Help</span>
+                    </button> -->
+                    <button class="menu-option" mat-menu-item (click)="authService.logout()">
+                        <i class="pi pi-sign-out"></i>
+                        <span>Logout</span>
+                    </button>
+                </mat-menu>
+                <button class="profile-btn" [matMenuTriggerFor]="menu"><i class="pi pi-user"></i><span
+                        class="profile-btn-label">Profile</span></button>
+
+                <!-- <button class="menu-btn" (click)="toggleSidebar()" matTooltip="Menu"><i class="pi pi-bars"></i></button> -->
             </div>
         </nav>
 
 
         <div class="sidebar" [class.open]="isSidebarOpen">
-            <button class="close-btn cursor-pointer" (click)="toggleSidebar()"><i
-                    class="fa-solid fa-close"></i></button>
+            <button class="close-btn" (click)="toggleSidebar()"><i class="pi pi-times"></i></button>
             <a *ngFor="let link of navLinks" [routerLink]="link.path" (click)="toggleSidebar()">
                 {{ link.label }}
             </a>

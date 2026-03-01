@@ -1,16 +1,18 @@
+<section class="back-btn-wrapper w-full"><button class="back-btn" (click)="sharedService.goBack()">
+    <i class="pi pi-arrow-left"></i>Back</button></section>
 <div class="products-container flex flex-column align-items-center">
-  <h1 class="page-title text-center">Our Products</h1>
+  <h1 *ngIf="false" class="page-title text-center">Our Products</h1>
 
   <div class="search-bar-wrapper w-full">
     <input class="search-bar" type="text" [(ngModel)]="searchQuery" (input)="searchProducts()"
-      placeholder="Search by name or price...">
+      placeholder="Filter by name or price...">
   </div>
 
   <div class="filter-bar w-full flex justify-content-center">
     <select [(ngModel)]="selectedCategory" (change)="filterProducts()">
       <option value="">All Categories</option>
-      <option value="soap">Soaps</option>
-      <option value="shampoo">Shampoos</option>
+      <option value="Soap">Soaps</option>
+      <option value="Shampoo">Shampoos</option>
     </select>
 
     <select [(ngModel)]="selectedSort" (change)="sortProducts()">
@@ -26,7 +28,7 @@
   <div class="product-grid flex flex-wrap justify-content-center">
     <p *ngIf="!paginatedProducts.length">No products available!</p>
     <div class="product-card" *ngFor="let product of paginatedProducts; let i = index">
-      <img [src]="product.image" alt="{{ product.name }}">
+      <img [src]="product.image" loading="lazy" [alt]="product?.name">
 
       <div class="product-details">
         <h3>{{ product.name }}</h3>
@@ -36,21 +38,27 @@
           {{ product.offer }}% OFF
         </span>
 
-        <span class="add-cart-badge cursor-pointer">
-          <i class="fa-solid fa-cart-plus" (click)="addToCart(product)"></i>
+        <span class="add-cart-badge cursor-pointer" (click)="addToCart(product.productId)">
+          <i class="pi pi-cart-plus"></i>
+        </span>
+
+        <span class="favorite-badge cursor-pointer"
+          (click)="addOrRemoveFavorites(product.productId, product.favoriteItemId, product.isFavoriteItem)">
+          <!-- <span class="heart-fill">&hearts;</span> -->
+          <span class="heart"><i [ngClass]="product.isFavoriteItem ? 'pi pi-heart-fill' : 'pi pi-heart'"></i></span>
         </span>
 
         <div class="product-card-footer">
-          <button class="product-card-button cursor-pointer" (click)="viewProduct(product)">View</button>
-          <button class="product-card-button cursor-pointer" (click)="buyNow(product)">Buy Now</button>
+          <button class="product-card-button" (click)="viewProductDetails(product.productId)">View</button>
+          <button class="product-card-button" (click)="buyNow(product)">Buy Now</button>
         </div>
       </div>
     </div>
   </div>
 
   <div class="pagination">
-    <button class="cursor-pointer" (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+    <button class="" (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
     <span>Page {{ currentPage }} of {{ totalPages }}</span>
-    <button class="cursor-pointer" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    <button class="" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
   </div>
 </div>

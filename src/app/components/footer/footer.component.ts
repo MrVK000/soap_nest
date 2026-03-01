@@ -9,9 +9,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  copyright: string = "";
+  copyrightText: string = `Copyright© ${new Date().getFullYear()} Green Glow - All Rights Reserved.`;
 
-  ngOnInit(): void {
-    this.copyright = `Copyright reserved © ${new Date().getFullYear()}`
-  }
 }

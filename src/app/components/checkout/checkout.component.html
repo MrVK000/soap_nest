@@ -48,16 +48,30 @@
 
             <div>
                 <label>State</label>
-                <input formControlName="state" placeholder="Enter your state">
-                <div
-                    [ngStyle]="checkoutForm.controls['state'].invalid && checkoutForm.controls['state'].touched?{}:{'visibility':'hidden'}">
-                    <p class="error">
-                        * Valid state is required
-                    </p>
+                <select type="text" formControlName="state" placeholder="State" (change)="getDistrictsByState(state)">
+                    <option value="" *ngIf="statesList.length == 0" disabled selected>State list is
+                        unavailable</option>
+                    <option *ngFor="let state of statesList">{{ state }}</option>
+                </select>
+                <div class="error"
+                    [ngStyle]="statesList.length != 0 && (checkoutForm.get('state')?.invalid && checkoutForm.get('state')?.touched)?{}:{'visibility':'hidden'}">
+                    Enter a valid state.
                 </div>
             </div>
 
             <div>
+                <label>District</label>
+                <select type="text" formControlName="district" placeholder="District">
+                    <option value="" *ngIf="districtsList.length == 0" disabled selected>Please select a state</option>
+                    <option *ngFor="let district of districtsList">{{ district }}</option>
+                </select>
+                <div class="error"
+                    [ngStyle]="districtsList.length != 0 && (checkoutForm.get('district')?.invalid && checkoutForm.get('district')?.touched)?{}:{'visibility':'hidden'}">
+                    Enter a valid district.
+                </div>
+            </div>
+
+            <!-- <div>
                 <label>Pincode</label>
                 <input formControlName="pincode" placeholder="Enter your pincode">
                 <div
@@ -66,6 +80,53 @@
                         * Valid pincode is required
                     </p>
                 </div>
+            </div> -->
+
+            <div>
+                <label>Pincode</label>
+                <select type="text" formControlName="pincode" placeholder="Pincode">
+                    <option value="" *ngIf="pincodesList.length == 0" disabled selected>Please select a pincode
+                    </option>
+                    <option *ngFor="let pincode of pincodesList">{{ pincode }}</option>
+                </select>
+                <div class="error"
+                    [ngStyle]="pincodesList.length != 0 && (checkoutForm.get('pincode')?.invalid && checkoutForm.get('pincode')?.touched)?{}:{'visibility':'hidden'}">
+                    Enter a valid pincode.
+                </div>
+            </div>
+
+            <div>
+                <label>Payment Method</label>
+                <input formControlName="paymentMethod" placeholder="Select payment method">
+                <div
+                    [ngStyle]="checkoutForm.controls['paymentMethod'].invalid && checkoutForm.controls['paymentMethod'].touched?{}:{'visibility':'hidden'}">
+                    <p class="error">
+                        * Valid payment method is required
+                    </p>
+                </div>
+            </div>
+
+            <div class="coupon-section" [formGroup]="coupons">
+                <label>Gift Coupons:</label>
+                <div class="coupon-wrapper" formArrayName="formArray">
+                    <ng-container *ngFor="let coupon of getCoupons.controls; let i = index">
+                        <div [formGroupName]="i" class="w-full flex justify-content-center align-items-center">
+                            <input class="coupon-inputfield" type="text" formControlName="code"
+                                placeholder="Enter Coupon Code">
+                            <button class="verify-coupon"
+                                [ngClass]="getCouponVerificationStatus(i) ? 'verified-coupon' : ''"
+                                (click)="verifyCoupon(i)"><i class="pi pi-check"></i>{{
+                                getCouponVerificationStatus(i) ? 'Verified' : 'Verify' }}</button>
+                            <!-- <button class="remove-coupon" (click)="removeCoupon(i)"><i
+                                    class="pi pi-trash"></i>Remove</button> -->
+                        </div>
+                    </ng-container>
+
+                </div>
+                <!-- <button *ngIf="getCouponsCount === 0" class="add-coupon w-full" (click)="addCoupon()"><i
+                        class="pi pi-plus"></i>Add Coupon</button> -->
+                <!-- <button *ngIf="getCouponsCount > 0" class="apply-coupon w-full"><i class="pi pi-gift"></i>Apply
+                    Coupon</button> -->
             </div>
 
             <div class="order-summary">
@@ -73,10 +134,15 @@
                 <p>Subtotal: ₹{{ totalPrice }}</p>
                 <p>GST (18%): ₹{{ gst }}</p>
                 <p>Delivery Charge: ₹{{ deliveryCharge }}</p>
+                <p *ngIf="couponDiscountPercentage && couponDiscountPercentage > 0">Coupon Discount: ₹{{
+                    couponDiscountPercentage }}</p>
                 <h3>Total: ₹{{ grandTotal }}</h3>
             </div>
 
-            <button [disabled]="checkoutForm.invalid" (click)="placeOrder()">Place Order</button>
+            <div class="button-container">
+                <button class="cancel-btn w-full" (click)="cancelOrder()">Cancel Order</button>
+                <button class="submit-btn w-full" type="submit" (click)="placeOrder()">Place Order</button>
+            </div>
         </form>
     </div>
 </div>

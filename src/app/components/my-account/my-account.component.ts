@@ -32,8 +32,8 @@ export class MyaccountComponent {
     { id: 103, date: 'March 8, 2025', total: 8.99 }
   ];
 
-  constructor(private snackBar: MatSnackBar) {
-    // this.snackBar.open('This is a snack bar!', 'Close', { duration: 2000 });
+  constructor(private snackbar: MatSnackBar) {
+    // this.snackbar.open('This is a snack bar!', '', { duration: 2000 });
     // this.accountForm.reset();
   }
 

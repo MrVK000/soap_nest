@@ -1,8 +1,11 @@
 // import { html2pdf } from 'html2pdf.js';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderDetails } from '../../interfaces/interfaces';
+import { Order } from '../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../../services/api.service';
+import { SharedService } from '../../services/shared.service';
+import { Subject, takeUntil } from 'rxjs';
 
 declare var html2pdf: any;
 
@@ -13,69 +16,10 @@ declare var html2pdf: any;
   styleUrl: './order-details.component.scss'
 })
 export class OrderDetailsComponent {
-  // order: OrderDetails | null = null;
-  // orderId: string | null = null;
+  private destroy$ = new Subject<void>();
+  order: Order = {} as Order;
+  orderId: string;
 
-  constructor(private route: ActivatedRoute, private router: Router,) { }
-
-  // ngOnInit(): void {
-  //   // Get the orderId from the route params
-  //   // this.route.paramMap.subscribe(params => {
-  //   //   this.orderId = params.get('orderId');
-  //   //   if (this.orderId) {
-  //   //     this.fetchOrderDetails(this.orderId);
-  //   //   }
-  //   // });
-  //   this.order = {
-  //     "orderId": "ORD123456",
-  //     "date": "2025-03-21",
-  //     "totalAmount": 878,
-  //     "paymentMethod": "Online Payment",
-  //     "status": "Shipped",
-  //     "deliveryAddress": "John Doe, 123 Green Street, Sydhapet,  Chennai, India - 600001",
-  //     "items": [
-  //       {
-  //         "name": "Neem Soap",
-  //         "quantity": 1,
-  //         "price": 329
-  //       },
-  //       {
-  //         "name": "Lemon Soap",
-  //         "quantity": 1,
-  //         "price": 549
-  //       },
-  //       {
-  //         "name": "Neem Soap",
-  //         "quantity": 1,
-  //         "price": 329
-  //       },
-  //       {
-  //         "name": "Lemon Soap",
-  //         "quantity": 1,
-  //         "price": 549
-  //       },
-  //     ]
-  //   }
-
-  // }
-
-  // // fetchOrderDetails(orderId: string) {
-  // //   this.orderService.getOrderById(orderId).subscribe(
-  // //     (response) => {
-  // //       this.order = response;
-  // //     },
-  // //     (error) => {
-  // //       console.error('Error fetching order details:', error);
-  // //     }
-  // //   );
-  // // }
-
-  goBack() {
-    this.router.navigate(['/my-orders']);
-  }
-
-
-  order: any;
   company = {
     name: 'Green Glow',
     address: '123 Green Street, Bangalore, India',
@@ -84,62 +28,27 @@ export class OrderDetailsComponent {
     support: '+91 9876543210'
   };
 
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private api: ApiService, public sharedService: SharedService) {
+    if (!(this.activatedRoute?.snapshot?.paramMap?.get('id'))) this.router.navigate(['/orders']);
+    this.orderId = (this.activatedRoute?.snapshot?.paramMap?.get('id')) as string;
+  }
+
   ngOnInit() {
-    this.fetchOrderDetails();
+    this.getOrderDetails();
   }
 
-  fetchOrderDetails() {
-    this.order = {
-      orderId: 'ORD987654',
-      date: new Date(),
-      status: "Shipped",
-      customer: {
-        name: 'Rahul Mehta',
-        address: 'A-45, Green Lane, Pune',
-        phone: '+91 9988776655',
-        email: 'rahul@example.com'
-      },
-      items: [
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-        { name: 'Neem Soap', quantity: 2, price: 329 },
-        { name: 'Lemon Shampoo', quantity: 1, price: 549 },
-      ],
-      subtotal: 1207,
-      taxRate: 5,
-      taxAmount: 60.35,
-      deliveryCharge: 50,
-      totalAmount: 1317.35
-    };
+  getOrderDetails() {
+    this.api.getOrder(this.orderId).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      this.order = res?.data;
+    })
   }
-
 
   downloadInvoicePDF() {
     const element = document.getElementById('invoice');
     if (element) {
       const options = {
         margin: 10,
-        filename: `${this.order.orderId}-invoice.pdf`,
+        filename: `${this.order.orderNumber}-invoice.pdf`,
         html2canvas: {
           scale: 2,
           logging: true,
@@ -176,15 +85,8 @@ export class OrderDetailsComponent {
   //   }
   // }
 
-
-
-
-
-
-
-
-
-
-
-
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

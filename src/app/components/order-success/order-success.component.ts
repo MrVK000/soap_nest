@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-order-success',
@@ -10,11 +11,13 @@ import { Router } from '@angular/router';
 export class OrderSuccessComponent {
   orderId: string = '';
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private sharedService: SharedService) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     this.orderId = state?.['orderId'] || this.generateRandomOrderId();
   }
-
+  ngOnInit(): void {
+    this.sharedService.addSeo("Thank You for Your Order - Green Glow");
+  }
   generateRandomOrderId(): string {
     return 'ORD' + Math.floor(100000 + Math.random() * 900000);
   }

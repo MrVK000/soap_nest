@@ -42,7 +42,6 @@ export class PaymentComponent {
       name: 'Eco-Friendly Store',
       description: `Order #${this.orderId}`,
       handler: (response: any) => {
-        console.log('Payment Successful', response);
         this.router.navigate(['/order-success'], { state: { orderId: this.orderId } });
       },
       prefill: {

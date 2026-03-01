@@ -1,7 +1,10 @@
+import { AuthService } from './../../services/auth.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Order } from '../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../../services/api.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-order-history',
@@ -10,56 +13,30 @@ import { CommonModule } from '@angular/common';
   styleUrl: './order-history.component.scss'
 })
 export class OrderHistoryComponent {
-  orders: Order[] = [
-    {
-      orderId: 'ORD123456',
-      date: '2025-03-15',
-      totalAmount: 899,
-      paymentMethod: 'Online',
-      status: 'Delivered'
-    },
-    {
-      orderId: 'ORD789012',
-      date: '2025-03-10',
-      totalAmount: 459,
-      paymentMethod: 'COD',
-      status: 'Shipped'
-    },
-    {
-      orderId: 'ORD789012',
-      date: '2025-03-10',
-      totalAmount: 459,
-      paymentMethod: 'COD',
-      status: 'Cancelled'
-    },
-    {
-      orderId: 'ORD789012',
-      date: '2025-03-10',
-      totalAmount: 459,
-      paymentMethod: 'COD',
-      status: 'Pending'
-    },
-  ];
-
-  constructor(private router: Router) { }
+  private destroy$ = new Subject<void>();
+  orders: Order[] = [];
+  constructor(private router: Router, private api: ApiService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.fetchOrderHistory();
   }
 
   fetchOrderHistory() {
-    // this.orderService.getOrderHistory().subscribe(
-    //   (response) => {
-    //     this.orders = response;
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching order history:', error);
-    //   }
-    // );
+    const user = this.authService.getUser();
+    if (!(user?.customerId) || !(this.authService.isLoggedIn())) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.api.getOrdersByCustomerId(user.customerId).pipe(takeUntil(this.destroy$)).subscribe((res) => {
+    })
   }
 
   viewOrder(orderId: string) {
     this.router.navigate(['/order-details'], { state: { orderId } });
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

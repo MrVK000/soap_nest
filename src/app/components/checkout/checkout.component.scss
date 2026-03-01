@@ -61,6 +61,50 @@ textarea {
     font-size: 14px;
 }
 
+.coupon-wrapper {
+    margin-top: 12px;
+}
+
+.add-coupon,
+.apply-coupon {
+    margin: 4px 0;
+}
+
+.add-coupon {
+    background-color: var(--green);
+    color: var(--white);
+}
+
+.remove-coupon {
+    width: 8rem;
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.apply-coupon {
+    background-color: var(--orange);
+    color: var(--white);
+}
+
+.coupon-inputfield {
+    min-width: 0 !important;
+    margin: 0;
+}
+
+.verify-coupon {
+    width: 8rem;
+    background: var(--blue);
+    color: var(--white);
+}
+
+.verified-coupon {
+    background: var(--green);
+}
+
+.coupon-section button i {
+    margin-right: 8px;
+}
+
 .order-summary {
     background: var(--white);
     padding: 10px;
@@ -73,14 +117,14 @@ textarea {
     margin: 20px 0;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
+.submit-btn {
     background: var(--green);
     color: var(--white);
-    border: none;
-    margin: 12px 0;
-    font-size: 16px;
+}
+
+.cancel-btn {
+    background: var(--red);
+    color: var(--white);
 }
 
 button:disabled {
@@ -91,7 +135,12 @@ button:disabled {
 
 @media screen and (max-width: 576px) {
     .checkout-wrapper {
-        width: 22rem;
-        margin: 0 0 20px 0;
+        width: auto;
+        margin: 12px;
+        margin-top: 0;
+    }
+
+    .button-container {
+        flex-direction: column;
     }
 }

@@ -1,14 +1,16 @@
+import { SharedService } from './../../services/shared.service';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
 import { DropdownModule } from 'primeng/dropdown';
-import { provideAnimations, provideNoopAnimations } from '@angular/platform-browser/animations';
-import { Product } from '../../interfaces/interfaces';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { FavoriteItemPayload, Product } from '../../interfaces/interfaces';
 import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ApiService } from '../../services/api.service';
+import { Subject, takeUntil } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-products',
@@ -18,16 +20,14 @@ import { ApiService } from '../../services/api.service';
   providers: [provideAnimations()]
 })
 export class ProductsComponent {
-
-  products!: Product[];
-
+  private destroy$ = new Subject<void>();
+  products: Product[] = [];
   selectedCategory: string = '';
   selectedSort: string = 'low-to-high';
   filteredProducts!: Product[];
-
   searchQuery: string = '';
   currentPage: number = 1;
-  itemsPerPage: number = 3;
+  itemsPerPage: number = 12;
   totalPages: number = 0;
   paginatedProducts: Product[] = [];
 
@@ -40,28 +40,33 @@ export class ProductsComponent {
     },
   ]
 
-  constructor(private router: Router, private cartService: CartService, private snackBar: MatSnackBar, private api: ApiService) { }
-
+  constructor(private router: Router, private cartService: CartService, private snackbar: MatSnackBar, private api: ApiService, public sharedService: SharedService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    // this.api.getProducts().subscribe((res) => {
-    //   this.products = res;
-    //   console.log(">>>>> res >> ", res);
+    this.sharedService.addSeo("Shop Products - Green Glow");
+    const user = this.authService.getUser();
+    let customerId: string = '-';
+    if ((user?.customerId) && (this.authService.isLoggedIn())) {
+      customerId = user.customerId;
+    }
+    this.api.listProducts(customerId).pipe(takeUntil(this.destroy$)).subscribe((res) => {
+      this.products = res?.data;
 
-    //   this.filteredProducts = [...this.products];
+      if (this.products.length == 0) {
+        this.router.navigate(['/server-error']);
+      }
+      this.products = this.products.map((product: Product, i: number) => {
+        product.image = "assets/content_images/" + product.image + ((product.image).slice(0, 1) === "1" ? ".webp" : ".jpg");
+        return product;
+      });
+      this.filteredProducts = [...this.products];
 
-    //   this.filterProducts();
-    //   this.totalPages = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
-    // },
-    //   (error) => {
-    //     console.log("Error: ", error);
-    //   })
-
-
-    this.products = this.api.getProducts();
-    this.filteredProducts = [...this.products];
-    this.totalPages = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
-    this.filterProducts();
+      this.totalPages = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
+      this.filterProducts();
+    }, () => {
+      this.snackbar.open("Couldn't fetch the products", '', { duration: 3000 });
+      this.router.navigate(['/server-error']);
+    });
   }
 
   filterProducts() {
@@ -102,18 +107,54 @@ export class ProductsComponent {
     }
   }
 
-
-  addToCart(product: Product) {
-    this.cartService.addToCart(product, 1);
-    this.snackBar.open('Item added to cart', 'Close', { duration: 2000 });
+  addToCart(productId: string) {
+    const user = this.authService.getUser();
+    if (!(user?.customerId) || !(this.authService.isLoggedIn())) {
+      this.snackbar.open("Please Login First", '', { duration: 3000 });
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.cartService.addToCart(user.customerId, productId);
   }
 
-  viewProduct(product: Product) {
-    this.router.navigate(['/product-details', product.productId]);
-    // this.router.navigate(['/product-details'], { state: { data: [product] } });
+  addOrRemoveFavorites(productId: string, favoriteId: number, type: boolean) {
+    const user = this.authService.getUser();
+    if (!(user?.customerId) || !(this.authService.isLoggedIn())) {
+      this.snackbar.open("Please Login First", '', { duration: 3000 });
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    if (type) {
+      this.api.removeFavoritesItem(favoriteId).subscribe((res: any) => {
+        this.snackbar.open(res?.message, '', { duration: 2000 });
+      });
+    } else {
+      const addFavoritePayload: FavoriteItemPayload = {
+        customerId: user.customerId,
+        productId: productId
+      }
+      this.api.addToFavorites(addFavoritePayload).subscribe((res: any) => {
+        this.paginatedProducts.filter(product => {
+          if (product.favoriteItemId === favoriteId) {
+            product.isFavoriteItem = true;
+          }
+        })
+        this.snackbar.open(res?.message, '', { duration: 2000 });
+      });
+    }
+  }
+
+  viewProductDetails(productId: string) {
+    this.router.navigate(['/product-details', productId]);
   }
 
   buyNow(product: Product) {
     this.router.navigate(['/checkout'], { state: { data: [product] } });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

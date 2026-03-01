@@ -1,9 +1,11 @@
+import { AuthService } from './../../services/auth.service';
 import { SharedService } from '../../services/shared.service';
 import { Component } from '@angular/core';
-import { Cart, Product } from '../../interfaces/interfaces';
+import { Product } from '../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-cart',
@@ -12,34 +14,25 @@ import { CartService } from '../../services/cart.service';
   styleUrl: './cart.component.scss'
 })
 export class CartComponent {
-  cartItems: Cart[] = [];
 
-  filteredProducts: Cart[] = [...this.cartItems];
+  constructor(private router: Router, public sharedService: SharedService, public cartService: CartService) { }
 
-  searchQuery: string = '';
-  currentPage: number = 1;
-  itemsPerPage: number = 3;
-  totalPages: number = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
-
-  // ngOnInit(): void {
-  //   this.sharedService.cartCount = this.cartItems.length;
-  // }
-
-
-  constructor(private router: Router, private sharedService: SharedService, private cartService: CartService) {
-    this.cartItems = this.cartService.getCartItems();
+  ngOnInit(): void {
+    this.sharedService.addSeo("Your Cart - Green Glow");
+    this.cartService.getCartItems();
   }
 
-  increaseQuantity(index: number) {
-    this.cartService.increaseQuantity(index);
+
+  increaseQuantity(cartItemId: number, quantity: number) {
+    this.cartService.increaseQuantity(cartItemId, quantity + 1);
   }
 
-  decreaseQuantity(index: number) {
-    this.cartService.decreaseQuantity(index);
+  decreaseQuantity(cartItemId: number, quantity: number) {
+    this.cartService.decreaseQuantity(cartItemId, quantity - 1);
   }
 
-  removeItem(index: number) {
-    this.cartService.removeItem(index);
+  removeItem(cartItem: number) {
+    this.cartService.removeItem(cartItem);
   }
 
   getTotalPrice() {
@@ -47,7 +40,6 @@ export class CartComponent {
   }
 
   goToCheckout() {
-    // console.log(">>>>> prod >> ", this.product);
-    this.router.navigate(['/checkout'], { state: { data: this.cartItems } });
+    this.router.navigate(['/checkout'], { state: { data: this.cartService.cartItems } });
   }
 }

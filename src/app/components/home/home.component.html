@@ -1,25 +1,29 @@
 <div class="home">
     <div class="hero">
-        <div class="hero-content">
+        <div class="hero-content flex flex-column align-items-center">
             <h1 class="hero-title">Pure & Natural <br> Handmade Soaps & Shampoos</h1>
             <p>Eco-friendly, chemical-free, and made with love ❤️</p>
-            <a routerLink="/products" class="btn shop-now-btn">Shop Now</a>
+            <button class="shop-now-btn" routerLink="/products">Shop Now<i class="pi pi-arrow-right"></i></button>
         </div>
     </div>
 
+    @if (featuredProducts.length > 0) {
     <div class="featured-products">
         <h2>Featured Products</h2>
-        <div class="product-grid">
+        <div class="product-wrapper flex flex-wrap justify-content-center">
             <div class="product-card" *ngFor="let product of featuredProducts">
                 <img [src]="product.image" alt="{{ product.name }}">
                 <h3>{{ product.name }}</h3>
                 <p>₹{{ product.price }}</p>
-                <button class="product-card-button btn cursor-pointer" (click)="viewProduct(product)">View Product</button>
+                <button class="product-card-button" (click)="viewProduct(product)">View
+                    Product</button>
             </div>
         </div>
     </div>
+    }
 
-    <div *ngIf="!false" class="why-choose">
+
+    <div class="why-choose">
         <h2>Why Choose Our Products?</h2>
 
         <div class="benefits">
@@ -43,7 +47,7 @@
                 <ng-template let-review #item>
 
                     <div class="testimonial">
-                        <p>"{{ review.user }}"</p>
+                        <p>"{{ review.userName }}"</p>
                         <h4>- {{ review.comment }}</h4>
                     </div>
 

@@ -7,7 +7,7 @@
 
         <section class="contact-form w-full">
             <h2>Send Us a Message</h2>
-            <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
+            <form [formGroup]="contactForm">
 
                 <div class="contact-form-wrapper">
                     <input type="text" formControlName="name" placeholder="Your Name">
@@ -19,7 +19,13 @@
                     <input type="email" formControlName="email" placeholder="Your Email">
                     <div class="error"
                         [ngStyle]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched?{}:{'visibility':'hidden'}">
-                        Enter a valid email.
+                        Enter a valid Email.
+                    </div>
+
+                    <input type="text" formControlName="phoneNumber" placeholder="Your Phone Number">
+                    <div class="error"
+                        [ngStyle]="contactForm.get('phoneNumber')?.invalid && contactForm.get('phoneNumber')?.touched?{}:{'visibility':'hidden'}">
+                        Enter a valid Phone Number.
                     </div>
 
                     <textarea formControlName="message" placeholder="Your Message"></textarea>
@@ -30,7 +36,7 @@
                 </div>
 
             </form>
-            <button class="submit-btn cursor-pointer" type="submit" [disabled]="contactForm.invalid">Send
+            <button class="submit-btn" (click)="submitForm()" [disabled]="contactForm.invalid">Send
                 Message</button>
         </section>
     </div>

@@ -1,8 +1,8 @@
+import { AuthGuard } from './gaurds/auth.guard';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ProductsComponent } from './components/products/products.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
-import { ContactComponent } from './components/contact/contact.component';
 import { LoginComponent } from './components/login/login.component';
 import { CartComponent } from './components/cart/cart.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -15,6 +15,11 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
+import { InternalServerErrorComponent } from './components/internal-server-error/internal-server-error.component';
+import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
+import { ShippingAndReturnsComponent } from './components/shipping-and-returns/shipping-and-returns.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
 
 export const routes: Routes = [
     {
@@ -38,6 +43,18 @@ export const routes: Routes = [
         path: 'about',
         component: AboutUsComponent
     },
+    {
+        path: 'terms',
+        component: TermsAndConditionsComponent
+    },
+    {
+        path: 'shipping-returns',
+        component: ShippingAndReturnsComponent
+    },
+    {
+        path: 'privacy-policy',
+        component: PrivacyPolicyComponent
+    },
     // {
     //     path: 'contact',
     //     component: ContactComponent
@@ -52,15 +69,23 @@ export const routes: Routes = [
     },
     {
         path: 'my-account',
+        canActivate: [AuthGuard],
         component: MyaccountComponent
     },
     {
         path: 'my-orders',
+        canActivate: [AuthGuard],
         component: MyOrdersComponent
     },
     {
         path: 'cart',
+        canActivate: [AuthGuard],
         component: CartComponent
+    },
+    {
+        path: 'wishlist',
+        canActivate: [AuthGuard],
+        component: WishlistComponent
     },
     {
         path: 'checkout',
@@ -79,8 +104,13 @@ export const routes: Routes = [
     //     component: OrderHistoryComponent
     // },
     {
-        path: 'order-details',
+        path: 'order-details/:id',
+        canActivate: [AuthGuard],
         component: OrderDetailsComponent
+    },
+    {
+        path: 'server-error',
+        component: InternalServerErrorComponent
     },
     {
         path: '**',

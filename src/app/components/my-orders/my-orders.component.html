@@ -5,13 +5,13 @@
 
             <div *ngIf="false" class="date-field-wrapper">
                 <label>Date: </label>
-                <input class="date-filter cursor-pointer" type="date" [(ngModel)]="startDate"> to
-                <input class="date-filter cursor-pointer" type="date" [(ngModel)]="endDate">
+                <input class="date-filter" type="date" [(ngModel)]="startDate"> to
+                <input class="date-filter" type="date" [(ngModel)]="endDate">
             </div>
 
             <div class="status-field-wrapper w-full">
                 <label>Status: </label>
-                <select class="status-filter cursor-pointer" (change)="filterByStatus($event)">
+                <select class="status-filter" (change)="filterByStatus($event)">
                     <option value="">All</option>
                     <option value="Pending">Pending</option>
                     <option value="Shipped">Shipped</option>
@@ -20,7 +20,7 @@
                 </select>
             </div>
 
-            <button *ngIf="false" class="filter-btn cursor-pointer" (click)="filterByDate()">Filter</button>
+            <button *ngIf="false" class="filter-btn" (click)="filterByDate()">Filter</button>
             <small *ngIf="false">*Note:- Use the filter options to filter the orders</small>
         </div>
 
@@ -35,24 +35,24 @@
                     <p> <strong>Status:</strong> </p>
                 </div>
                 <div class="right-container">
-                    <p> {{ order.orderId }} </p>
-                    <p> {{ order.orderDate }} </p>
+                    <p> {{ order.orderNumber }} </p>
+                    <p> {{ order.createdAt | date}} </p>
                     <p> ₹{{ order.totalAmount }} </p>
-                    <p> {{ order.paymentMethod }} </p>
+                    <p> {{ order.paymentMode }} </p>
                     <p> <span [ngClass]="getStatusClass(order.status)"> {{ order.status }} </span>
                     </p>
                 </div>
             </div>
 
             <div class="view-order-btn-wrapper flex justify-content-center">
-                <button class="cursor-pointer" (click)="viewOrderDetails(order.orderId)">View Details</button>
+                <button (click)="viewOrderDetails(order.id)">View Details</button>
             </div>
         </div>
 
         <div class="pagination flex justify-content-center align-items-center">
-            <button class="cursor-pointer" (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+            <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
             <span>Page {{ currentPage }}</span>
-            <button class="cursor-pointer" (click)="nextPage()"
+            <button (click)="nextPage()"
                 [disabled]="(currentPage * itemsPerPage) >= filteredOrders.length">Next</button>
         </div>
     </div>

@@ -1,10 +1,19 @@
+<section class="back-btn-wrapper w-full"><button class="back-btn" (click)="sharedService.goBack()">
+    <i class="pi pi-arrow-left"></i>Back</button></section>
 <div class="product-details-container w-full flex justify-content-center align-items-center flex-column">
 
   <div class="product-wrapper">
 
-    <h1 class="page-title text-center">Product</h1>
+    <h1 *ngIf="false" class="page-title text-center">Product</h1>
     <div class=" product-card flex">
-      <img [src]="product.image" alt="{{ product.name }}">
+      <span class="flex">
+        <img [src]="product.image" alt="{{ product.name }}">
+
+        <span class="wishlist-icon cursor-pointer"
+          (click)="product.isWishlistItem ? removeFromWishlist() : addToWishlist()">
+          <span [ngClass]=" product.isWishlistItem ? 'pi pi-bookmark-fill' : 'pi pi-bookmark' "></span>
+        </span>
+      </span>
 
       <div class="product-info">
         <h2 class="product-title">{{ product.name }}</h2>
@@ -15,41 +24,44 @@
           <span class="new-price">₹{{ product.discountPrice }}</span>
         </h3>
 
+        <p *ngIf="product.rating">{{ product.rating }} <i class="rating-star-icon pi pi-star-fill"></i></p>
+
         <p *ngIf="product.stock > 10" class="stock">In Stock</p>
         <p *ngIf="product.stock > 0 && product.stock <= 10" class="stock blink">Only {{ product.stock }} left!</p>
         <p *ngIf="product.stock === 0" class="out-of-stock">Out of Stock</p>
 
         <div class="quantity-selector">
-          <button class="cursor-pointer" (click)="decreaseQuantity()">-</button>
+          <button class="flex justify-content-center align-items-center" (click)="decreaseQuantity()">-</button>
           <span>{{ quantity }}</span>
-          <button class="cursor-pointer" (click)="increaseQuantity()">+</button>
+          <button class="flex justify-content-center align-items-center" (click)="increaseQuantity()">+</button>
         </div>
 
         <div class="action-buttons">
-          <button class="cart-btn cursor-pointer" (click)="addToCart()">Add to Cart</button>
-          <button class="buy-btn cursor-pointer" (click)="buyNow()">Buy Now</button>
+          <button class="cart-btn" (click)="addToCart()">Add to Cart</button>
+          <button class="buy-btn" (click)="buyNow()">Buy Now</button>
         </div>
 
       </div>
     </div>
 
-    <section class="review-section-wrapper">
+    <div class="review-section-wrapper">
 
-      <header class="review-section-header flex justify-space-between align-items-center">
+      <div class="review-section-header flex justify-space-between align-items-center">
         <h2>Customer Reviews</h2>
-        <button class="comment-btn cursor-pointer" (click)="showAddReviewModal = true">Add Comments<i
+        <button class="comment-btn" (click)="showAddReviewModal = true">Add Comments<i
             class="fa-solid fa-plus"></i></button>
-      </header>
-      <div class="reviews" *ngIf="product.reviews.length > 0">
+      </div>
+      <div class="reviews" *ngIf="product && product.reviews && product.reviews.length > 0">
         <div *ngFor="let review of product.reviews" class="review">
-          <strong>{{ review.user }}</strong> ⭐{{ review?.rating }}/5
+          <strong>{{ review?.userName }}</strong> ⭐{{ review?.rating }}/5
           <p>{{ review?.comment }}</p>
         </div>
       </div>
 
-      <p class="text-center" *ngIf="product.reviews.length == 0">No reviews for this product yet!!</p>
+      <p class="text-center" *ngIf="product && product.reviews && product.reviews.length == 0">No reviews for this
+        product yet!!</p>
 
-    </section>
+    </div>
 
   </div>
 
@@ -70,8 +82,8 @@
       <p-rating class="rating-field" formControlName="rating" />
 
       <div class="modal-actions flex flex-row-reverse">
-        <button class="cancel-btn cursor-pointer" type="button" (click)="closeAddReviewModal()">Cancel</button>
-        <button class="save-btn cursor-pointer" type="submit" >Add</button>
+        <button class="cancel-btn" type="button" (click)="closeAddReviewModal()">Cancel</button>
+        <button class="save-btn" type="submit">Add</button>
       </div>
     </form>
   </div>

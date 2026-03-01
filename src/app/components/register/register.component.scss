@@ -4,7 +4,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
-    width: 24rem;
+    width: 58rem;
     margin: 4rem 8px;
 }
 
@@ -13,17 +13,32 @@ h2 {
     font-size: 24px;
 }
 
+.form>.w-full {
+    margin: 0 12px;
+}
+
+label {
+    margin: 12px 0 4px 0;
+    float: left;
+}
+
 input,
-textarea {
-    margin: 18px 0 0 0;
+textarea,
+select {
     border: 2px solid var(--grey);
     border-radius: 5px;
     font-size: 16px;
+    z-index: 2;
+}
+
+textarea {
+  max-height: 10rem;
 }
 
 .checkbox-label {
     font-size: 14px;
     margin-top: 12px;
+    width: inherit;
 }
 
 .tearms-checkbox {
@@ -31,6 +46,8 @@ textarea {
     min-width: 20px;
     max-width: 20px;
     margin: 0;
+    margin-right: 8px;
+    height: 20px;
 }
 
 .error {
@@ -42,11 +59,6 @@ textarea {
 button {
     background: var(--green);
     color: var(--white);
-    padding: 10px 14px;
-    border: none;
-    font-size: 16px;
-    width: 100%;
-    border-radius: 4px;
     margin: 20px 0;
 }
 
@@ -67,10 +79,59 @@ a {
 }
 
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 575px) {
     .register-box {
         padding: 12px;
-        // width: 18.8rem;
-        max-width: 22rem;
+        min-width: auto;
+        max-width: 20rem;
+    }
+
+    .form {
+        flex-direction: column;
+    }
+
+    .form>.w-full {
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+    .register-box {
+        padding: 20px;
+        max-width: 32rem;
+    }
+
+    .form {
+        flex-direction: column;
+    }
+
+    .form>.w-full {
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 863px) {
+    .register-box {
+        padding: 32px;
+        max-width: 42rem;
+    }
+
+    .form {
+        flex-direction: column;
+    }
+
+    .form>.w-full {
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 864px) and (max-width: 1023px) {
+    .register-box {
+        padding: 12px;
+        max-width: 48rem;
+    }
+
+    .form>.w-full {
+        margin: 0 12px;
     }
 }

@@ -4,8 +4,8 @@
         <div id="invoice" class="invoice-wrapper">
             <header class="text-center">
                 <h1>Invoice</h1>
-                <p>Order ID: {{ order.orderId }}</p>
-                <p>Date: {{ order.date | date:'mediumDate' }}</p>
+                <p>Order ID: {{ order.orderNumber }}</p>
+                <p>Date: {{ order.createdAt | date:'mediumDate' }}</p>
             </header>
 
             <section class="payment-info">
@@ -18,15 +18,15 @@
                     <h3>From:</h3>
                     <p>{{ company.name }}</p>
                     <p>{{ company.address }}</p>
-                    <p>{{ company.phone }}</p>
+                    <!-- <p>{{ company.phone }}</p> -->
                     <p>{{ company.email }}</p>
                 </div>
 
                 <div>
                     <h3>To:</h3>
                     <p>{{ order.customer.name }}</p>
-                    <p>{{ order.customer.address }}</p>
-                    <p>{{ order.customer.phone }}</p>
+                    <p>{{ order.shippingAddress }}</p>
+                    <!-- <p>{{ order.customer.phone }}</p> -->
                     <p>{{ order.customer.email }}</p>
                 </div>
             </section>
@@ -45,7 +45,7 @@
                     <tbody>
                         <tr *ngFor="let item of order.items; index as i">
                             <td>{{ i + 1 }}</td>
-                            <td>{{ item.name }}</td>
+                            <td>{{ item.productName }}</td>
                             <td>{{ item.quantity }}</td>
                             <td>₹{{ item.price }}</td>
                             <td>₹{{ item.quantity * item.price }}</td>
@@ -55,9 +55,9 @@
             </section>
 
             <section class="totals">
-                <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
+                <!-- <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
                 <p><strong>GST ({{ order.taxRate }}%):</strong> ₹{{ order.taxAmount }}</p>
-                <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p>
+                <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p> -->
                 <p><strong>Grand Total:</strong> ₹{{ order.totalAmount }}</p>
             </section>
 
@@ -69,8 +69,8 @@
         </div>
 
         <div class="back-btn-wrapper flex justify-content-center">
-            <button class="invoice-button cursor-pointer" (click)="downloadInvoicePDF()">Download Invoice</button>
-            <button class="back-button cursor-pointer" (click)="goBack()">Back to Orders</button>
+            <button class="invoice-button" (click)="downloadInvoicePDF()">Download Invoice</button>
+            <button class="back-button" (click)="sharedService.goBack()">Back to Orders</button>
         </div>
     </div>
 </div>
@@ -98,8 +98,8 @@
         </div>
 
         <div class="back-btn-wrapper flex justify-content-center">
-            <button class="invoice-button cursor-pointer" (click)="downloadInvoicePDF()">Download Invoice</button>
-            <button class="back-button cursor-pointer" (click)="goBack()">Back to Orders</button>
+            <button class="invoice-button" (click)="downloadInvoicePDF()">Download Invoice</button>
+            <button class="back-button" (click)="goBack()">Back to Orders</button>
         </div>
     </div>
 </div> -->
@@ -109,13 +109,13 @@
 <div *ngIf="false" id="invoice" class="invoice-wrapper">
     <header>
         <h1>Invoice</h1>
-        <p>Order ID: {{ order.orderId }}</p>
-        <p>Date: {{ order.date | date:'mediumDate' }}</p>
+        <p>Order ID: {{ order.orderNumber }}</p>
+        <p>Date: {{ order.createdAt | date:'mediumDate' }}</p>
     </header>
 
     <section class="payment-info">
         <p><strong>Status:</strong> ₹{{ order.status }}</p>
-        <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
+        <p><strong>Payment Method:</strong> {{ order.paymentMode }}</p>
     </section>
 
     <section class="seller-buyer-info ">
@@ -123,15 +123,15 @@
             <h3>From:</h3>
             <p>{{ company.name }}</p>
             <p>{{ company.address }}</p>
-            <p>{{ company.phone }}</p>
+            <!-- <p>{{ company.phone }}</p> -->
             <p>{{ company.email }}</p>
         </div>
 
         <div>
             <h3>To:</h3>
             <p>{{ order.customer.name }}</p>
-            <p>{{ order.customer.address }}</p>
-            <p>{{ order.customer.phone }}</p>
+            <p>{{ order.shippingAddress }}</p>
+            <!-- <p>{{ order }}</p> -->
             <p>{{ order.customer.email }}</p>
         </div>
     </section>
@@ -158,9 +158,9 @@
     </table>
 
     <section class="totals">
-        <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
+        <!-- <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
         <p><strong>GST ({{ order.taxRate }}%):</strong> ₹{{ order.taxAmount }}</p>
-        <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p>
+        <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p> -->
         <p><strong>Grand Total:</strong> ₹{{ order.totalAmount }}</p>
     </section>
 

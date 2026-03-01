@@ -1,0 +1,18 @@
+<div class="wishlist-container">
+  <h1 class="page-title text-center">My Wishlist</h1>
+
+  <div class="wishlist-wrapper flex flex-wrap justify-content-center" *ngIf="wishlist.length">
+    <div *ngFor="let item of wishlist">
+      <div class="product-card flex flex-column align-items-center">
+        <img class="product-img" [src]="item.image" [alt]="item.image">
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.description }}</p>
+        <button (click)="removeFromWishlist(item)">Remove<i class="pi pi-trash"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="wishlist.length === 0">
+    <p>Your wishlist is empty.</p>
+  </div>
+</div>

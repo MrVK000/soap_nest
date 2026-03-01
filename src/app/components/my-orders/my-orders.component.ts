@@ -2,6 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
+import { Order } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-my-orders',
@@ -10,27 +14,31 @@ import { Router } from '@angular/router';
   styleUrl: './my-orders.component.scss'
 })
 export class MyOrdersComponent {
-  myOrders = [
-    { orderId: "ORD123456", orderDate: "2025-03-20", totalAmount: 1200, paymentMethod: "Online Payment", status: "Shipped" },
-    { orderId: "ORD123457", orderDate: "2025-03-18", totalAmount: 780, paymentMethod: "Cash on Delivery", status: "Delivered" },
-    { orderId: "ORD123458", orderDate: "2025-03-22", totalAmount: 1500, paymentMethod: "Online Payment", status: "Pending" },
-    { orderId: "ORD123459", orderDate: "2025-03-19", totalAmount: 999, paymentMethod: "Cash on Delivery", status: "Cancelled" },
-    { orderId: "ORD123460", orderDate: "2025-03-21", totalAmount: 2000, paymentMethod: "Online Payment", status: "Pending" }
-  ];
-
-  filteredOrders = [...this.myOrders];
+  private destroy$ = new Subject<void>();
+  orders: Order[] = [];
+  filteredOrders = [...this.orders];
   startDate: string = '';
   endDate: string = '';
   selectedStatus: string = '';
-
-  // Pagination Variables
   currentPage = 1;
   itemsPerPage = 3;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private api: ApiService, private authService: AuthService) { }
 
-  ngOnInit() {
-    this.applyFilters();
+  ngOnInit(): void {
+    this.fetchOrderHistory();
+  }
+
+  fetchOrderHistory() {
+    const user = this.authService.getUser();
+    if (!(user?.customerId) || !(this.authService.isLoggedIn())) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.api.getOrdersByCustomerId(user.customerId).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      this.orders = res?.data;
+      this.applyFilters();
+    })
   }
 
   filterByStatus(value: Event) {
@@ -44,8 +52,8 @@ export class MyOrdersComponent {
   }
 
   applyFilters() {
-    this.filteredOrders = this.myOrders.filter(order => {
-      const orderDate = new Date(order.orderDate);
+    this.filteredOrders = this.orders.filter(order => {
+      const orderDate = new Date(order.createdAt);
       const withinDateRange =
         (!this.startDate || orderDate >= new Date(this.startDate)) &&
         (!this.endDate || orderDate <= new Date(this.endDate));
@@ -85,7 +93,12 @@ export class MyOrdersComponent {
     }
   }
 
-  viewOrderDetails(orderId: string) {
-    this.router.navigate(['/order-details'], { state: { orderId } });
+  viewOrderDetails(orderId: number) {
+    this.router.navigate(['/order-details', orderId]);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -28,17 +28,17 @@
                 Please enter a valid address.
             </p>
 
-            <button class="cursor-pointer" type="button" (click)="toggleEdit()">
+            <button type="button" (click)="toggleEdit()">
                 {{ isEditing ? 'Cancel' : 'Edit Profile' }}
             </button>
-            <button class="cursor-pointer" type="button" (click)="saveChanges()" *ngIf="isEditing"
+            <button type="button" (click)="saveChanges()" *ngIf="isEditing"
                 [disabled]="accountForm.invalid">
                 Save Changes
             </button>
         </form>
 
         <div class="password-section">
-            <button class="cursor-pointer" type="button" (click)="togglePasswordChange()">
+            <button type="button" (click)="togglePasswordChange()">
                 {{ isChangingPassword ? 'Cancel' : 'Change Password' }}
             </button>
 
@@ -68,7 +68,7 @@
                     Passwords do not match.
                 </p>
 
-                <button class="cursor-pointer" type="button" (click)="changePassword()"
+                <button type="button" (click)="changePassword()"
                     [disabled]="passwordForm.invalid">
                     Update Password
                 </button>
