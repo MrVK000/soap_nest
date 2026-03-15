@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-// import html2pdf from 'html2pdf.js';
 
 declare var html2pdf: any;
+
 @Component({
   selector: 'app-invoice',
   imports: [CommonModule],
@@ -20,7 +20,6 @@ export class InvoiceComponent {
   };
 
   ngOnInit() {
-    // Sample order; replace with actual data
     this.order = {
       id: 'INV123456',
       date: new Date(),
@@ -46,7 +45,7 @@ export class InvoiceComponent {
     const element = document.getElementById('invoice');
     const opt = {
       margin: 0.3,
-      filename: `${this.order.orderId}-invoice.pdf`,
+      filename: `${this.order.id}-invoice.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: {},
       jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
@@ -54,5 +53,3 @@ export class InvoiceComponent {
     html2pdf().from(element).set(opt).save();
   }
 }
-
-

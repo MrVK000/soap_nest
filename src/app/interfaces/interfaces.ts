@@ -117,6 +117,18 @@ export interface FavoriteItemPayload {
     productId?: string
 }
 
+export interface FavoriteItem {
+    id?: number,
+    customerId?: string,
+    productId?: string,
+    name: string,
+    description: string,
+    price: number,
+    offer: number,
+    discountPrice: number,
+    image: string
+}
+
 export interface WishlistItem {
     id?: number,
     customerId?: string,
@@ -124,7 +136,37 @@ export interface WishlistItem {
     name: string,
     description: string,
     price: number,
+    offer: number,
+    discountPrice: number,
     image: string
+}
+
+export interface CartSummary {
+  subtotal: number;
+  totalSavings: number;
+  total: number;
+  itemCount: number;
+}
+
+export interface CartSummaryItem {
+  cartItemId: number;
+  productId: string;
+  name: string;
+  category: string;
+  image: string;
+  description: string;
+  price: number;
+  offer: number;
+  discountPrice: number;
+  stock: number;
+  quantity: number;
+  itemTotal: number;
+}
+
+export interface CartSummaryResponse {
+  message: string;
+  summary: CartSummary;
+  items: CartSummaryItem[];
 }
 
 export interface Message {

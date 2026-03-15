@@ -1,148 +1,191 @@
-<div class="checkout-container flex flex-column align-items-center">
-    <h1 class="page-title text-center">Checkout</h1>
+<!-- HEADER -->
+<div class="co-header">
+  <p-button label="Back" icon="pi pi-arrow-left" [text]="true" severity="secondary"
+    (onClick)="sharedService.goBack()" />
+  <div class="co-header-text">
+    <h1>Checkout</h1>
+    <p>Complete your order below</p>
+  </div>
+</div>
 
-    <div class="checkout-wrapper">
-        <div class="product-list">
-            <div class="product-item" *ngFor="let product of products">
-                <img [src]="product.image" alt="{{ product.name }}">
-                <div>
-                    <h3>{{ product.name }}</h3>
-                    <p>Price: ₹{{ product.price }}</p>
-                </div>
-            </div>
+<div class="co-page">
+
+  <!-- LEFT: ORDER SUMMARY -->
+  <div class="co-summary">
+
+    <!-- PRODUCTS -->
+    <div class="summary-card">
+      <h3 class="card-title"><i class="pi pi-shopping-bag"></i> Order Items</h3>
+      <div class="product-list">
+        <div class="product-item" *ngFor="let product of products">
+          <img [src]="product.image" [alt]="product.name">
+          <div class="product-info">
+            <span class="product-name">{{ product.name }}</span>
+            <span class="product-category">{{ product.category }}</span>
+          </div>
+          <span class="product-price">₹{{ product.discountPrice || product.price }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- COUPON -->
+    <div class="summary-card" [formGroup]="coupons">
+      <h3 class="card-title"><i class="pi pi-tag"></i> Gift Coupon</h3>
+      <div formArrayName="formArray">
+        <ng-container *ngFor="let coupon of getCoupons.controls; let i = index">
+          <div [formGroupName]="i" class="coupon-row">
+            <p-iconfield class="coupon-input">
+              <p-inputicon class="pi pi-ticket" />
+              <input type="text" pInputText formControlName="code" placeholder="Enter coupon code"
+                [readonly]="getCouponVerificationStatus(i)">
+            </p-iconfield>
+            <p-button [label]="getCouponVerificationStatus(i) ? 'Applied' : 'Apply'"
+              [icon]="getCouponVerificationStatus(i) ? 'pi pi-check' : 'pi pi-arrow-right'"
+              [severity]="getCouponVerificationStatus(i) ? 'success' : 'info'"
+              [outlined]="!getCouponVerificationStatus(i)" (onClick)="verifyCoupon(i)" />
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- PRICE BREAKDOWN -->
+    <div class="summary-card">
+      <h3 class="card-title"><i class="pi pi-receipt"></i> Price Details</h3>
+      <div class="price-rows">
+        <div class="price-row">
+          <span>Subtotal</span>
+          <span>₹{{ totalPrice.toFixed(2) }}</span>
+        </div>
+        <div class="price-row">
+          <span>GST (18%)</span>
+          <span>₹{{ gst.toFixed(2) }}</span>
+        </div>
+        <div class="price-row">
+          <span>Delivery</span>
+          <span class="delivery-free">₹{{ deliveryCharge }}</span>
+        </div>
+        <div class="price-row discount" *ngIf="couponDiscountPercentage && couponDiscountPercentage > 0">
+          <span><i class="pi pi-tag"></i> Coupon Discount</span>
+          <span>- ₹{{ couponDiscountPercentage }}</span>
+        </div>
+        <p-divider />
+        <div class="price-row total">
+          <span>Grand Total</span>
+          <span>₹{{ grandTotal }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: DELIVERY FORM -->
+  <div class="co-form">
+    <div class="summary-card">
+      <h3 class="card-title"><i class="pi pi-map-marker"></i> Delivery Details</h3>
+
+      <form [formGroup]="checkoutForm">
+
+        <!-- Name + Phone -->
+        <div class="field-row">
+          <div class="field">
+            <label>Full Name</label>
+            <p-iconfield>
+              <p-inputicon class="pi pi-user" />
+              <input type="text" pInputText formControlName="fullName" placeholder="Your full name"
+                [class.ng-invalid]="checkoutForm.get('fullName')?.invalid && checkoutForm.get('fullName')?.touched"
+                [class.ng-dirty]="checkoutForm.get('fullName')?.touched">
+            </p-iconfield>
+            <small class="error-msg"
+              *ngIf="checkoutForm.get('fullName')?.invalid && checkoutForm.get('fullName')?.touched">
+              Name is required.
+            </small>
+          </div>
+
+          <div class="field">
+            <label>Phone Number</label>
+            <p-iconfield>
+              <p-inputicon class="pi pi-phone" />
+              <input type="text" pInputText formControlName="phone" placeholder="10-digit number"
+                (keydown)="onNumericKeydown($event)"
+                [class.ng-invalid]="checkoutForm.get('phone')?.invalid && checkoutForm.get('phone')?.touched"
+                [class.ng-dirty]="checkoutForm.get('phone')?.touched">
+            </p-iconfield>
+            <small class="error-msg" *ngIf="checkoutForm.get('phone')?.invalid && checkoutForm.get('phone')?.touched">
+              Enter a valid 10-digit number.
+            </small>
+          </div>
         </div>
 
-        <form [formGroup]="checkoutForm">
-            <div>
-                <label>Full Name</label>
-                <input formControlName="fullName" placeholder="Enter your name">
-                <div
-                    [ngStyle]="checkoutForm.controls['fullName'].invalid && checkoutForm.controls['fullName'].touched?{}:{'visibility':'hidden'}">
-                    <p class="error">
-                        * Name is required
-                    </p>
-                </div>
-            </div>
+        <!-- Address -->
+        <div class="field">
+          <label>Delivery Address</label>
+          <textarea pTextarea formControlName="address" placeholder="House no, Street, Area..." [autoResize]="false"
+            rows="2" [class.ng-invalid]="checkoutForm.get('address')?.invalid && checkoutForm.get('address')?.touched">
+          </textarea>
+          <small class="error-msg" *ngIf="checkoutForm.get('address')?.invalid && checkoutForm.get('address')?.touched">
+            Address is required.
+          </small>
+        </div>
 
-            <div>
-                <label>Phone Number</label>
-                <input formControlName="phone" placeholder="Enter phone number">
-                <div
-                    [ngStyle]="checkoutForm.controls['phone'].invalid && checkoutForm.controls['phone'].touched?{}:{'visibility':'hidden'}">
-                    <p class="error">
-                        * Valid phone number is required
-                    </p>
-                </div>
-            </div>
+        <!-- State + District + Pincode -->
+        <div class="field-row three-col">
+          <div class="field">
+            <label>State</label>
+            <p-select formControlName="state" [options]="statesList" placeholder="Select state" appendTo="body"
+              [checkmark]="true" (onChange)="getDistrictsByState(state)" styleClass="w-full" />
+            <small class="error-msg" *ngIf="checkoutForm.get('state')?.invalid && checkoutForm.get('state')?.touched">
+              Select a state.
+            </small>
+          </div>
 
-            <div>
-                <label>Address</label>
-                <textarea formControlName="address" placeholder="Enter delivery address"></textarea>
-                <div
-                    [ngStyle]="checkoutForm.controls['address'].invalid && checkoutForm.controls['address'].touched?{}:{'visibility':'hidden'}">
-                    <p class="error">
-                        * Address is required
-                    </p>
-                </div>
-            </div>
+          <div class="field">
+            <label>District</label>
+            <p-select formControlName="district" [options]="districtsList" placeholder="Select district" appendTo="body"
+              [checkmark]="true" (onChange)="getPincodesByDistrict(district)" styleClass="w-full" />
+            <small class="error-msg"
+              *ngIf="checkoutForm.get('district')?.invalid && checkoutForm.get('district')?.touched">
+              Select a district.
+            </small>
+          </div>
 
-            <div>
-                <label>State</label>
-                <select type="text" formControlName="state" placeholder="State" (change)="getDistrictsByState(state)">
-                    <option value="" *ngIf="statesList.length == 0" disabled selected>State list is
-                        unavailable</option>
-                    <option *ngFor="let state of statesList">{{ state }}</option>
-                </select>
-                <div class="error"
-                    [ngStyle]="statesList.length != 0 && (checkoutForm.get('state')?.invalid && checkoutForm.get('state')?.touched)?{}:{'visibility':'hidden'}">
-                    Enter a valid state.
-                </div>
-            </div>
+          <div class="field">
+            <label>Pincode</label>
+            <p-select formControlName="pincode" [options]="pincodesList" placeholder="Select pincode" appendTo="body"
+              [checkmark]="true" styleClass="w-full" />
+            <small class="error-msg"
+              *ngIf="checkoutForm.get('pincode')?.invalid && checkoutForm.get('pincode')?.touched">
+              Select a pincode.
+            </small>
+          </div>
+        </div>
 
-            <div>
-                <label>District</label>
-                <select type="text" formControlName="district" placeholder="District">
-                    <option value="" *ngIf="districtsList.length == 0" disabled selected>Please select a state</option>
-                    <option *ngFor="let district of districtsList">{{ district }}</option>
-                </select>
-                <div class="error"
-                    [ngStyle]="districtsList.length != 0 && (checkoutForm.get('district')?.invalid && checkoutForm.get('district')?.touched)?{}:{'visibility':'hidden'}">
-                    Enter a valid district.
-                </div>
-            </div>
+        <!-- Payment Method -->
+        <div class="field">
+          <label>Payment Method</label>
+          <div class="payment-method">
+            <i class="pi pi-credit-card"></i>
+            <span>Online Payment (Razorpay)</span>
+            <i class="pi pi-lock"></i>
+          </div>
+        </div>
 
-            <!-- <div>
-                <label>Pincode</label>
-                <input formControlName="pincode" placeholder="Enter your pincode">
-                <div
-                    [ngStyle]="checkoutForm.controls['pincode'].invalid && checkoutForm.controls['pincode'].touched?{}:{'visibility':'hidden'}">
-                    <p class="error">
-                        * Valid pincode is required
-                    </p>
-                </div>
-            </div> -->
+        <!-- ACTIONS -->
+        <div class="action-row">
+          <p-button label="Cancel" icon="pi pi-times" [outlined]="true" severity="danger" (onClick)="cancelOrder()"
+            styleClass="cancel-btn" />
+          <p-button label="Pay ₹{{ grandTotal }}" icon="pi pi-lock" iconPos="right" severity="success"
+            (onClick)="completePayment()" styleClass="pay-btn" />
+        </div>
 
-            <div>
-                <label>Pincode</label>
-                <select type="text" formControlName="pincode" placeholder="Pincode">
-                    <option value="" *ngIf="pincodesList.length == 0" disabled selected>Please select a pincode
-                    </option>
-                    <option *ngFor="let pincode of pincodesList">{{ pincode }}</option>
-                </select>
-                <div class="error"
-                    [ngStyle]="pincodesList.length != 0 && (checkoutForm.get('pincode')?.invalid && checkoutForm.get('pincode')?.touched)?{}:{'visibility':'hidden'}">
-                    Enter a valid pincode.
-                </div>
-            </div>
-
-            <div>
-                <label>Payment Method</label>
-                <input formControlName="paymentMethod" placeholder="Select payment method">
-                <div
-                    [ngStyle]="checkoutForm.controls['paymentMethod'].invalid && checkoutForm.controls['paymentMethod'].touched?{}:{'visibility':'hidden'}">
-                    <p class="error">
-                        * Valid payment method is required
-                    </p>
-                </div>
-            </div>
-
-            <div class="coupon-section" [formGroup]="coupons">
-                <label>Gift Coupons:</label>
-                <div class="coupon-wrapper" formArrayName="formArray">
-                    <ng-container *ngFor="let coupon of getCoupons.controls; let i = index">
-                        <div [formGroupName]="i" class="w-full flex justify-content-center align-items-center">
-                            <input class="coupon-inputfield" type="text" formControlName="code"
-                                placeholder="Enter Coupon Code">
-                            <button class="verify-coupon"
-                                [ngClass]="getCouponVerificationStatus(i) ? 'verified-coupon' : ''"
-                                (click)="verifyCoupon(i)"><i class="pi pi-check"></i>{{
-                                getCouponVerificationStatus(i) ? 'Verified' : 'Verify' }}</button>
-                            <!-- <button class="remove-coupon" (click)="removeCoupon(i)"><i
-                                    class="pi pi-trash"></i>Remove</button> -->
-                        </div>
-                    </ng-container>
-
-                </div>
-                <!-- <button *ngIf="getCouponsCount === 0" class="add-coupon w-full" (click)="addCoupon()"><i
-                        class="pi pi-plus"></i>Add Coupon</button> -->
-                <!-- <button *ngIf="getCouponsCount > 0" class="apply-coupon w-full"><i class="pi pi-gift"></i>Apply
-                    Coupon</button> -->
-            </div>
-
-            <div class="order-summary">
-                <h3>Order Summary</h3>
-                <p>Subtotal: ₹{{ totalPrice }}</p>
-                <p>GST (18%): ₹{{ gst }}</p>
-                <p>Delivery Charge: ₹{{ deliveryCharge }}</p>
-                <p *ngIf="couponDiscountPercentage && couponDiscountPercentage > 0">Coupon Discount: ₹{{
-                    couponDiscountPercentage }}</p>
-                <h3>Total: ₹{{ grandTotal }}</h3>
-            </div>
-
-            <div class="button-container">
-                <button class="cancel-btn w-full" (click)="cancelOrder()">Cancel Order</button>
-                <button class="submit-btn w-full" type="submit" (click)="placeOrder()">Place Order</button>
-            </div>
-        </form>
+      </form>
     </div>
+
+    <!-- SECURE BADGE -->
+    <div class="secure-badge">
+      <i class="pi pi-shield"></i>
+      <span>100% Secure Checkout — Your data is encrypted and protected</span>
+    </div>
+
+  </div>
+
 </div>

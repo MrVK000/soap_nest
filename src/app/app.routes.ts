@@ -12,7 +12,6 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
-import { OrderHistoryComponent } from './components/order-history/order-history.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { InternalServerErrorComponent } from './components/internal-server-error/internal-server-error.component';
@@ -20,6 +19,8 @@ import { TermsAndConditionsComponent } from './components/terms-and-conditions/t
 import { ShippingAndReturnsComponent } from './components/shipping-and-returns/shipping-and-returns.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
+import { InvoiceComponent } from './components/invoice/invoice.component';
 
 export const routes: Routes = [
     {
@@ -86,6 +87,11 @@ export const routes: Routes = [
         path: 'wishlist',
         canActivate: [AuthGuard],
         component: WishlistComponent
+    },
+    {
+        path: 'favorites',
+        canActivate: [AuthGuard],
+        component: FavoritesComponent
     },
     {
         path: 'checkout',

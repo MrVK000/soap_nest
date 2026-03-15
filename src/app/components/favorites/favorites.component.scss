@@ -1,13 +1,13 @@
-.wl-page {
+.fav-page {
   min-height: 100vh;
-  background: #f4f7f4;
+  background: #fafaf7;
   padding-bottom: 4rem;
   width: 100%;
 }
 
 // ── Header ────────────────────────────────────────────────────────────────────
 
-.wl-header {
+.fav-header {
   background: linear-gradient(135deg, #1a5c30 0%, #258949 100%);
   padding: 1.2rem 2.5rem;
   display: flex;
@@ -24,7 +24,7 @@
 
     i {
       font-size: 1.2rem;
-      color: #5c6bc0;
+      color: #ffd54f;
     }
   }
 
@@ -38,7 +38,7 @@
   }
 }
 
-::ng-deep .wl-header .p-button {
+::ng-deep .fav-header .p-button {
   color: #fff !important;
   border-color: rgba(255, 255, 255, 0.4) !important;
 
@@ -49,7 +49,7 @@
 
 // ── Container ─────────────────────────────────────────────────────────────────
 
-.wl-container {
+.fav-container {
   max-width: 1200px;
   margin: 2.5rem auto;
   padding: 0 2rem;
@@ -57,42 +57,34 @@
 
 // ── Grid ──────────────────────────────────────────────────────────────────────
 
-.wl-grid {
+.fav-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.4rem;
 }
 
 @media (max-width: 1100px) {
-  .wl-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .fav-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .wl-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .fav-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 480px) {
-  .wl-grid {
-    grid-template-columns: 1fr;
-  }
+  .fav-grid { grid-template-columns: 1fr; }
 
-  .wl-container {
+  .fav-container {
     padding: 0 1rem;
     margin: 1.5rem auto;
   }
 
-  .wl-header {
-    padding: 1rem 1.2rem;
-  }
+  .fav-header { padding: 1rem 1.2rem; }
 }
 
 // ── Card ──────────────────────────────────────────────────────────────────────
 
-.wl-card {
+.fav-card {
   background: #fff;
   border-radius: 18px;
   overflow: hidden;
@@ -100,10 +92,12 @@
   transition: box-shadow 0.2s, transform 0.2s;
   display: flex;
   flex-direction: column;
+  border-top: 3px solid transparent;
 
   &:hover {
-    box-shadow: 0 8px 32px rgba(37, 137, 73, 0.16);
+    box-shadow: 0 8px 32px rgba(255, 193, 7, 0.18);
     transform: translateY(-3px);
+    border-top-color: #ffc107;
   }
 }
 
@@ -151,12 +145,12 @@
     transition: background 0.2s, transform 0.2s;
 
     i {
-      color: #5c6bc0;
+      color: #e53935;
       font-size: 0.9rem;
     }
 
     &:hover {
-      background: #e8eaf6;
+      background: #ffebee;
       transform: scale(1.1);
     }
   }
@@ -195,6 +189,7 @@
   align-items: center;
   gap: 8px;
   margin-top: 0.25rem;
+  flex-wrap: wrap;
 
   .price-current {
     font-size: 1.05rem;
@@ -206,6 +201,16 @@
     font-size: 0.82rem;
     color: #aaa;
     text-decoration: line-through;
+  }
+
+  .savings-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: #fff8e1;
+    color: #f57f17;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid #ffe082;
   }
 }
 
@@ -222,7 +227,7 @@
 
 // ── Empty ─────────────────────────────────────────────────────────────────────
 
-.empty-wl {
+.empty-fav {
   text-align: center;
   padding: 5rem 2rem;
 
@@ -230,7 +235,7 @@
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #e8eaf6, #ede7f6);
+    background: linear-gradient(135deg, #fff8e1, #fff3cd);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -238,7 +243,7 @@
 
     i {
       font-size: 2.5rem;
-      color: #5c6bc0;
+      color: #ffc107;
     }
   }
 
@@ -257,7 +262,7 @@
 
 // ── Loader ────────────────────────────────────────────────────────────────────
 
-.wl-loader {
+.fav-loader {
   display: flex;
   justify-content: center;
   gap: 6px;
@@ -268,31 +273,16 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: #258949;
+  background: #ffc107;
   animation: dotBounce 1.2s infinite ease-in-out;
 
-  &:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-
-  &:nth-child(3) {
-    animation-delay: 0.4s;
-  }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.4s; }
 }
 
 @keyframes dotBounce {
-
-  0%,
-  80%,
-  100% {
-    transform: scale(0.6);
-    opacity: 0.4;
-  }
-
-  40% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
 }
 
 .all-loaded {
@@ -304,20 +294,18 @@
   .line {
     flex: 1;
     height: 1px;
-    background: #d4e8d4;
+    background: #ffe082;
   }
 
   .text {
     font-size: 0.82rem;
-    color: #258949;
+    color: #f57f17;
     font-weight: 600;
     white-space: nowrap;
     display: flex;
     align-items: center;
     gap: 5px;
 
-    i {
-      font-size: 0.85rem;
-    }
+    i { font-size: 0.85rem; }
   }
 }

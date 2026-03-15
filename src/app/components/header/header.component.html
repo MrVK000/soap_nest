@@ -1,99 +1,97 @@
-<div class="header w-full flex justify-content-center">
+<header class="header">
+  <div class="navbar">
 
-    <div class="header-wrapper w-full flex justify-content-center">
-        <nav class="navbar w-full">
-            <!-- <div class="logo">🌿 SoapNest</div> -->
-            <div class="logo-wrapper flex align-items-center">
-                <img class="logo h-full cursor-pointer" src="assets/logo/logo-2.jpeg" alt="logo" routerLink="/home">
-                <h1 class="title cursor-pointer" routerLink="/home">Green <span class="title-span">Glow</span>
-                </h1>
-            </div>
-
-            <div class="nav-icons flex align-items-center">
-
-                <span class="search-bar-wrapper flex">
-                    <input class="search-bar" type="text" [placeholder]="placeholderText" [(ngModel)]="searchTerm"
-                        (input)="onSearchChange()" (focus)="showSuggestions = true" (blure)="hideSuggestions()" />
-                    <span class="search-icon"><i class="pi pi-search"></i></span>
-
-                    <ul *ngIf="showSuggestions && suggestions.length" class="suggestion-list">
-                        <li class="cursor-pointer" *ngFor="let item of suggestions" (click)="selectSuggestion(item)">
-                            {{ item.name }}
-                        </li>
-                    </ul>
-                </span>
-
-                <i class="search-icon-btn cursor-pointer pi pi-search"></i>
-                <!-- <p-iconfield>
-                    <p-inputicon class="pi pi-search" />
-                </p-iconfield> -->
-                <div *ngIf="false" class="nav-links flex align-items-center">
-                    <span class="flex align-items-center cursor-pointer"
-                        [ngClass]="{'active-page': isActive(link.path)}" *ngFor="let link of navLinks"
-                        [matTooltip]="link.label" [routerLink]="link.path">
-                        <a>
-                            <i class="nav-icon" [class]="link.icon"></i>{{link.label }}</a>
-                    </span>
-                </div>
-                <!-- <a routerLink="/cart" class="cart-btn" matTooltip="Cart"><i class="pi pi-shopping-cart"></i>
-                    <span *ngIf="cartService.getCartCount" class="cart-count">
-                        {{ cartService.getCartCount }}</span>
-                </a> -->
-                <!-- <a routerLink="/login" class="login-btn" matTooltip="Login"><i class="pi pi-user"></i>
-                    <span class="login-label">Login</span>
-                </a> -->
-
-                <button class="cart-btn" routerLink="/cart"><i class="pi pi-shopping-cart"></i><span
-                        class="cart-btn-label">Cart</span>
-                    <span *ngIf="cartService.getCartCount" class="cart-count">
-                        {{ cartService.getCartCount }}</span></button>
-
-                <mat-menu #menu="matMenu">
-                    <button class="menu-option" mat-menu-item routerLink="/login">
-                        <i class="pi pi-user"></i>
-                        <span>Login / Sign Up</span>
-                    </button>
-                    <button class="menu-option" mat-menu-item routerLink="/my-orders">
-                        <i class="pi pi-list"></i>
-                        <span>My Orders</span>
-                    </button>
-                    <button class="menu-option" mat-menu-item>
-                        <i class="pi pi-receipt"></i>
-                        <span>Coupons</span>
-                    </button>
-                    <button class="menu-option" mat-menu-item routerLink="/favorites">
-                        <i class="pi pi-heart"></i>
-                        <span>Favorites</span>
-                    </button>
-                    <button class="menu-option" mat-menu-item routerLink="/wishlist">
-                        <i class="pi pi-bookmark"></i>
-                        <span>My Wishlist</span>
-                    </button>
-                    <!-- <button class="menu-option" mat-menu-item routerLink="/about">
-                        <i class="pi pi-twitch"></i>
-                        <span>Contact / Help</span>
-                    </button> -->
-                    <button class="menu-option" mat-menu-item (click)="authService.logout()">
-                        <i class="pi pi-sign-out"></i>
-                        <span>Logout</span>
-                    </button>
-                </mat-menu>
-                <button class="profile-btn" [matMenuTriggerFor]="menu"><i class="pi pi-user"></i><span
-                        class="profile-btn-label">Profile</span></button>
-
-                <!-- <button class="menu-btn" (click)="toggleSidebar()" matTooltip="Menu"><i class="pi pi-bars"></i></button> -->
-            </div>
-        </nav>
-
-
-        <div class="sidebar" [class.open]="isSidebarOpen">
-            <button class="close-btn" (click)="toggleSidebar()"><i class="pi pi-times"></i></button>
-            <a *ngFor="let link of navLinks" [routerLink]="link.path" (click)="toggleSidebar()">
-                {{ link.label }}
-            </a>
-        </div>
-
-        <div class="overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>
+    <!-- LOGO -->
+    <div class="logo-wrap" routerLink="/home">
+      <img src="assets/logo/logo-2.jpeg" alt="Green Glow" class="logo-img">
+      <span class="logo-text">Green <span class="logo-accent">Glow</span></span>
     </div>
 
-</div>
+    <!-- NAV LINKS (desktop) -->
+    <nav class="nav-links">
+      <a *ngFor="let link of navLinks" [routerLink]="link.path" [class.active]="isActive(link.path)">
+        <i [class]="link.icon"></i> {{ link.label }}
+      </a>
+    </nav>
+
+    <!-- SEARCH -->
+    <div class="search-wrap">
+      <p-iconfield>
+        <p-inputicon class="pi pi-search" />
+        <input type="text" pInputText [placeholder]="placeholderText" [(ngModel)]="searchTerm"
+          (input)="onSearchChange()" (focus)="showSuggestions = true" (blur)="hideSuggestions()">
+      </p-iconfield>
+      <ul *ngIf="showSuggestions && suggestions.length" class="suggestion-list">
+        <li *ngFor="let item of suggestions" (click)="selectSuggestion(item)">
+          <i class="pi pi-search"></i> {{ item.name }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- RIGHT ACTIONS -->
+    <div class="actions">
+
+      <!-- CART -->
+      <p-button icon="pi pi-shopping-cart" [text]="true" severity="success" routerLink="/cart" styleClass="action-btn"
+        [badge]="cartService.getCartCount ? cartService.getCartCount.toString() : ''" badgeSeverity="danger" />
+
+      <!-- PROFILE POPOVER -->
+      <p-button icon="pi pi-user" [text]="true" severity="success" styleClass="action-btn"
+        (onClick)="profilePopover.toggle($event)" />
+
+      <p-popover #profilePopover>
+        <div class="profile-menu">
+          <div class="profile-menu-header">
+            <div class="profile-avatar"><i class="pi pi-user"></i></div>
+            <span>My Account</span>
+          </div>
+          <a class="profile-menu-item" routerLink="/my-account" (click)="profilePopover.hide()">
+            <i class="pi pi-user-edit"></i> My Account
+          </a>
+          <a class="profile-menu-item" routerLink="/login" (click)="profilePopover.hide()">
+            <i class="pi pi-sign-in"></i> Login / Sign Up
+          </a>
+          <a class="profile-menu-item" routerLink="/my-orders" (click)="profilePopover.hide()">
+            <i class="pi pi-list"></i> My Orders
+          </a>
+          <a class="profile-menu-item" routerLink="/favorites" (click)="profilePopover.hide()">
+            <i class="pi pi-heart"></i> Favorites
+          </a>
+          <a class="profile-menu-item" routerLink="/wishlist" (click)="profilePopover.hide()">
+            <i class="pi pi-bookmark"></i> My Wishlist
+          </a>
+          <div class="profile-menu-divider"></div>
+          <a class="profile-menu-item logout" (click)="authService.logout(); profilePopover.hide()">
+            <i class="pi pi-sign-out"></i> Logout
+          </a>
+        </div>
+      </p-popover>
+
+      <!-- MOBILE MENU BUTTON -->
+      <p-button icon="pi pi-bars" [text]="true" severity="success" styleClass="action-btn mobile-menu-btn"
+        (onClick)="toggleSidebar()" />
+    </div>
+
+  </div>
+</header>
+
+<!-- MOBILE DRAWER -->
+<p-drawer [(visible)]="isSidebarOpen" position="right" [style]="{ width: '16rem' }">
+  <ng-template pTemplate="header">
+    <span class="drawer-title">🌿 Green Glow</span>
+  </ng-template>
+  <nav class="drawer-nav">
+    <a *ngFor="let link of navLinks" [routerLink]="link.path" (click)="isSidebarOpen = false"
+      [class.active]="isActive(link.path)">
+      <i [class]="link.icon"></i> {{ link.label }}
+    </a>
+    <div class="drawer-divider"></div>
+    <a routerLink="/cart" (click)="isSidebarOpen = false"><i class="pi pi-shopping-cart"></i> Cart</a>
+    <a routerLink="/my-orders" (click)="isSidebarOpen = false"><i class="pi pi-list"></i> My Orders</a>
+    <a routerLink="/favorites" (click)="isSidebarOpen = false"><i class="pi pi-heart"></i> Favorites</a>
+    <a routerLink="/wishlist" (click)="isSidebarOpen = false"><i class="pi pi-bookmark"></i> Wishlist</a>
+    <a routerLink="/my-account" (click)="isSidebarOpen = false"><i class="pi pi-user-edit"></i> My Account</a>
+    <a routerLink="/login" (click)="isSidebarOpen = false"><i class="pi pi-sign-in"></i> Login</a>
+    <a (click)="authService.logout(); isSidebarOpen = false" class="logout"><i class="pi pi-sign-out"></i> Logout</a>
+  </nav>
+</p-drawer>

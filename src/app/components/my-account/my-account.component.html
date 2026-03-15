@@ -1,85 +1,207 @@
-<div class="account-container w-full">
-    <section class="account-box">
-        <h2 class="text-center">My Account</h2>
+<div class="account-page">
 
-        <form [formGroup]="accountForm">
-            <label>Full Name</label>
-            <input type="text" formControlName="fullName" [readonly]="!isEditing">
-            <p class="error"
-                [ngStyle]="isEditing && accountForm.controls['fullName'].invalid && accountForm.controls['fullName'].touched?{}:{'visibility':'hidden'}">
-                Please enter a valid name.
-            </p>
+    <!-- HEADER -->
+    <div class="account-header">
+        <div class="account-header-inner">
+            <p-button label="Back" icon="pi pi-arrow-left" [text]="true" severity="secondary"
+                (onClick)="sharedService.goBack()" />
+            <div class="header-title">
+                <i class="pi pi-user"></i>
+                <span>My Account</span>
+            </div>
+        </div>
+    </div>
 
-            <label>Email</label>
-            <input type="email" formControlName="email" readonly>
-            <p class="error" [ngStyle]="false?{}:{'visibility':'hidden'}">E-mail is required</p>
+    <div class="account-body">
 
-            <label>Phone Number</label>
-            <input type="text" formControlName="phone" [readonly]="!isEditing">
-            <p class="error"
-                [ngStyle]="isEditing && accountForm.controls['phone'].invalid && accountForm.controls['phone'].touched?{}:{'visibility':'hidden'}">
-                Enter a valid 10-digit phone number.
-            </p>
+        <!-- LEFT: PROFILE CARD -->
+        <div class="profile-card">
+            <div class="avatar">
+                <span>{{ getInitials() }}</span>
+            </div>
+            <h2 class="profile-name">{{ accountForm.get('fullName')?.value || user?.name || 'User' }}</h2>
+            <span class="profile-email">{{ user?.email }}</span>
 
-            <label>Address</label>
-            <textarea class="textarea-field" formControlName="address" [readonly]="!isEditing"></textarea>
-            <p class="error"
-                [ngStyle]="isEditing && accountForm.controls['address'].invalid && accountForm.controls['address'].touched?{}:{'visibility':'hidden'}">
-                Please enter a valid address.
-            </p>
+            <div class="profile-meta">
+                <div class="meta-item">
+                    <i class="pi pi-calendar"></i>
+                    <div>
+                        <span class="meta-label">Member Since</span>
+                        <span class="meta-value">{{ user?.createdAt | date:'MMM yyyy' }}</span>
+                    </div>
+                </div>
+                <div class="meta-item">
+                    <i class="pi pi-map-marker"></i>
+                    <div>
+                        <span class="meta-label">Location</span>
+                        <span class="meta-value">{{ user?.district || '—' }}, {{ user?.state || '—' }}</span>
+                    </div>
+                </div>
+                <div class="meta-item">
+                    <i class="pi pi-phone"></i>
+                    <div>
+                        <span class="meta-label">Phone</span>
+                        <span class="meta-value">{{ user?.phone || '—' }}</span>
+                    </div>
+                </div>
+            </div>
 
-            <button type="button" (click)="toggleEdit()">
-                {{ isEditing ? 'Cancel' : 'Edit Profile' }}
-            </button>
-            <button type="button" (click)="saveChanges()" *ngIf="isEditing"
-                [disabled]="accountForm.invalid">
-                Save Changes
-            </button>
-        </form>
-
-        <div class="password-section">
-            <button type="button" (click)="togglePasswordChange()">
-                {{ isChangingPassword ? 'Cancel' : 'Change Password' }}
-            </button>
-
-            <form [formGroup]="passwordForm" *ngIf="isChangingPassword">
-                <label>Old Password</label>
-                <input type="password" formControlName="oldPassword">
-                <p class="error"
-                    [ngStyle]="passwordForm.controls['oldPassword'].invalid && passwordForm.controls['oldPassword'].touched?{}:{'visibility':'hidden'}">
-                    Please enter your old password.
-                </p>
-
-                <label>New Password</label>
-                <input type="password" formControlName="newPassword">
-                <p class="error"
-                    [ngStyle]="passwordForm.controls['newPassword'].invalid && passwordForm.controls['newPassword'].touched?{}:{'visibility':'hidden'}">
-                    Password must be at least 6 characters long.
-                </p>
-
-                <label>Confirm Password</label>
-                <input type="password" formControlName="confirmPassword">
-                <p class="error"
-                    [ngStyle]="passwordForm.controls['confirmPassword'].invalid && passwordForm.controls['confirmPassword'].touched?{}:{'visibility':'hidden'}">
-                    Please confirm your password.
-                </p>
-                <p class="error"
-                    [ngStyle]="passwordForm.value.newPassword !== passwordForm.value.confirmPassword && passwordForm.controls['confirmPassword'].touched?{}:{'visibility':'hidden'}">
-                    Passwords do not match.
-                </p>
-
-                <button type="button" (click)="changePassword()"
-                    [disabled]="passwordForm.invalid">
-                    Update Password
+            <div class="profile-actions">
+                <a class="profile-link" routerLink="/my-orders">
+                    <i class="pi pi-list"></i> My Orders
+                </a>
+                <a class="profile-link" routerLink="/wishlist">
+                    <i class="pi pi-bookmark"></i> Wishlist
+                </a>
+                <a class="profile-link" routerLink="/favorites">
+                    <i class="pi pi-heart"></i> Favorites
+                </a>
+                <button class="profile-link logout" (click)="logout()">
+                    <i class="pi pi-sign-out"></i> Logout
                 </button>
-            </form>
+            </div>
         </div>
 
-        <!-- <h3>Order History</h3>
-        <ul class="order-history">
-            <li *ngFor="let order of orderHistory">
-                <strong>Order #{{ order.id }}</strong> - {{ order.date }} - {{ order.total | currency }}
-            </li>
-        </ul> -->
-    </section>
+        <!-- RIGHT: FORMS -->
+        <div class="forms-panel">
+
+            <!-- PROFILE FORM -->
+            <div class="form-card">
+                <div class="form-card-header">
+                    <div class="form-card-icon"><i class="pi pi-user-edit"></i></div>
+                    <div>
+                        <h3>Profile Information</h3>
+                        <p>Update your personal details</p>
+                    </div>
+                    <p-button [label]="isEditing ? 'Cancel' : 'Edit'"
+                        [icon]="isEditing ? 'pi pi-times' : 'pi pi-pencil'"
+                        [severity]="isEditing ? 'danger' : 'success'" [outlined]="true" size="small"
+                        (onClick)="toggleEdit()" styleClass="edit-btn" />
+                </div>
+
+                <form [formGroup]="accountForm">
+                    <div class="field-row">
+                        <div class="field">
+                            <label>Full Name</label>
+                            <p-iconfield>
+                                <p-inputicon class="pi pi-user" />
+                                <input pInputText type="text" formControlName="fullName" placeholder="Your full name"
+                                    [class.ng-invalid]="accountForm.get('fullName')?.invalid && accountForm.get('fullName')?.touched"
+                                    [class.ng-dirty]="accountForm.get('fullName')?.touched" />
+                            </p-iconfield>
+                            <small class="error-msg"
+                                *ngIf="accountForm.get('fullName')?.invalid && accountForm.get('fullName')?.touched">
+                                Name must be at least 2 characters.
+                            </small>
+                        </div>
+
+                        <div class="field">
+                            <label>Email Address</label>
+                            <p-iconfield>
+                                <p-inputicon class="pi pi-envelope" />
+                                <input pInputText type="email" formControlName="email" placeholder="Email" />
+                            </p-iconfield>
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label>Phone Number</label>
+                            <p-iconfield>
+                                <p-inputicon class="pi pi-phone" />
+                                <input pInputText type="text" formControlName="phone" placeholder="10-digit number"
+                                    maxlength="10" (keydown)="onNumericKeydown($event)"
+                                    [class.ng-invalid]="accountForm.get('phone')?.invalid && accountForm.get('phone')?.touched"
+                                    [class.ng-dirty]="accountForm.get('phone')?.touched" />
+                            </p-iconfield>
+                            <small class="error-msg"
+                                *ngIf="accountForm.get('phone')?.invalid && accountForm.get('phone')?.touched">
+                                Enter a valid 5-digit phone number.
+                            </small>
+                        </div>
+
+                        <div class="field">
+                            <label>Address</label>
+                            <textarea pTextarea formControlName="address" placeholder="Your address"
+                                [autoResize]="false" rows="1"
+                                [class.ng-invalid]="accountForm.get('address')?.invalid && accountForm.get('address')?.touched">
+              </textarea>
+                            <small class="error-msg"
+                                *ngIf="accountForm.get('address')?.invalid && accountForm.get('address')?.touched">
+                                Please enter a valid address.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-footer" *ngIf="isEditing">
+                        <p-button label="Save Changes" icon="pi pi-check" iconPos="right" severity="success"
+                            (onClick)="saveChanges()" [disabled]="accountForm.invalid" styleClass="save-btn" />
+                    </div>
+                </form>
+            </div>
+
+            <!-- PASSWORD FORM -->
+            <div class="form-card">
+                <div class="form-card-header">
+                    <div class="form-card-icon warn"><i class="pi pi-lock"></i></div>
+                    <div>
+                        <h3>Change Password</h3>
+                        <p>Keep your account secure</p>
+                    </div>
+                    <p-button [label]="isChangingPassword ? 'Cancel' : 'Change'"
+                        [icon]="isChangingPassword ? 'pi pi-times' : 'pi pi-key'"
+                        [severity]="isChangingPassword ? 'danger' : 'warn'" [outlined]="true" size="small"
+                        (onClick)="togglePasswordChange()" styleClass="edit-btn" />
+                </div>
+
+                <form [formGroup]="passwordForm" *ngIf="isChangingPassword">
+                    <div class="field">
+                        <label>Current Password</label>
+                        <p-password formControlName="oldPassword" placeholder="Enter current password"
+                            [feedback]="false" [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full"
+                            [class.ng-invalid]="passwordForm.get('oldPassword')?.invalid && passwordForm.get('oldPassword')?.touched" />
+                        <small class="error-msg"
+                            *ngIf="passwordForm.get('oldPassword')?.invalid && passwordForm.get('oldPassword')?.touched">
+                            Current password is required.
+                        </small>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label>New Password</label>
+                            <p-password formControlName="newPassword" placeholder="Min. 6 characters" [feedback]="true"
+                                [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full"
+                                [class.ng-invalid]="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched" />
+                            <small class="error-msg"
+                                *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
+                                Password must be at least 6 characters.
+                            </small>
+                        </div>
+
+                        <div class="field">
+                            <label>Confirm New Password</label>
+                            <p-password formControlName="confirmPassword" placeholder="Re-enter new password"
+                                [feedback]="false" [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full"
+                                [class.ng-invalid]="passwordForm.get('confirmPassword')?.value !== passwordForm.get('newPassword')?.value && passwordForm.get('confirmPassword')?.touched" />
+                            <small class="error-msg"
+                                *ngIf="passwordForm.get('confirmPassword')?.value !== passwordForm.get('newPassword')?.value && passwordForm.get('confirmPassword')?.touched">
+                                Passwords do not match.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <p-button label="Update Password" icon="pi pi-check" iconPos="right" severity="warn"
+                            (onClick)="changePassword()" [disabled]="passwordForm.invalid" styleClass="save-btn" />
+                    </div>
+                </form>
+
+                <div class="password-placeholder" *ngIf="!isChangingPassword">
+                    <i class="pi pi-shield"></i>
+                    <span>Your password is encrypted and secure. Click "Change" to update it.</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>

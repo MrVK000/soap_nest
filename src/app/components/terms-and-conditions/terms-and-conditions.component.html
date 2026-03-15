@@ -1,64 +1,173 @@
-<div class="terms-container">
-  <h1>Terms and Conditions</h1>
-  <p>Last updated: September 7, 2025</p>
+<!-- HERO -->
+<div class="tc-hero">
+  <div class="tc-hero-content">
+    <div class="tc-hero-icon"><i class="pi pi-file-edit"></i></div>
+    <h1>Terms & Conditions</h1>
+    <p>Please read these terms carefully before using Green Glow services.</p>
+    <span class="tc-updated"><i class="pi pi-calendar"></i> Last updated: September 7, 2025</span>
+  </div>
+  <div class="hero-circles">
+    <div class="hc hc1"></div>
+    <div class="hc hc2"></div>
+    <div class="hc hc3"></div>
+  </div>
+</div>
 
-  <section>
-    <h2>1. Introduction</h2>
-    <p>
-      Welcome to Green Glow. By accessing or using our website, you agree to be bound by these Terms and Conditions.
-      Please read them carefully before using our services.
-    </p>
-  </section>
+<!-- BODY -->
+<div class="tc-body">
 
-  <section>
-    <h2>2. Use of the Site</h2>
-    <p>
-      You may use our site only for lawful purposes. You must not misuse our website by knowingly introducing viruses,
-      trojans, or other malicious material.
-    </p>
-  </section>
+  <!-- SIDEBAR TOC -->
+  <aside class="tc-sidebar">
+    <div class="toc-card">
+      <h3><i class="pi pi-list"></i> Contents</h3>
+      <ul>
+        <li *ngFor="let s of sections" (click)="scrollTo(s.id)">
+          <span class="toc-num">{{ s.num }}</span>
+          <span>{{ s.title }}</span>
+        </li>
+      </ul>
+      <p-button label="Back" icon="pi pi-arrow-left" [text]="true" severity="success" styleClass="toc-back-btn"
+        (onClick)="sharedService.goBack()" />
+    </div>
+  </aside>
 
-  <section>
-    <h2>3. Intellectual Property</h2>
-    <p>
-      All content, trademarks, and data on this website, including software, databases, text, graphics, icons, and hyperlinks,
-      are the property of or licensed to Green Glow and are protected by copyright and other intellectual property laws.
-    </p>
-  </section>
+  <!-- CONTENT -->
+  <main class="tc-content">
 
-  <section>
-    <h2>4. Orders and Payments</h2>
-    <p>
-      All orders are subject to availability and confirmation. Prices are subject to change. Payments must be made via
-      accepted methods listed on the site.
-    </p>
-  </section>
+    <div class="tc-section" id="introduction">
+      <div class="section-header">
+        <div class="section-icon"><i class="pi pi-info-circle"></i></div>
+        <div>
+          <span class="section-num">01</span>
+          <h2>Introduction</h2>
+        </div>
+      </div>
+      <p>
+        Welcome to <strong>Green Glow</strong>. By accessing or using our website, you agree to be bound by these
+        Terms and Conditions. Please read them carefully before using our services. If you do not agree with any
+        part of these terms, you may not access the service.
+      </p>
+    </div>
 
-  <section>
-    <h2>5. Shipping & Returns</h2>
-    <p>
-      Shipping timelines and return policies are outlined on our Shipping & Returns page. Please review them before making a purchase.
-    </p>
-  </section>
+    <div class="tc-section" id="use-of-site">
+      <div class="section-header">
+        <div class="section-icon"><i class="pi pi-globe"></i></div>
+        <div>
+          <span class="section-num">02</span>
+          <h2>Use of the Site</h2>
+        </div>
+      </div>
+      <p>
+        You may use our site only for lawful purposes and in a way that does not infringe the rights of others.
+        You must not misuse our website by knowingly introducing viruses, trojans, worms, or other malicious material.
+      </p>
+      <ul class="tc-list">
+        <li><i class="pi pi-check-circle"></i> Use the site for personal, non-commercial purposes only</li>
+        <li><i class="pi pi-check-circle"></i> Do not attempt to gain unauthorized access to any part of the site</li>
+        <li><i class="pi pi-check-circle"></i> Do not transmit any unsolicited or unauthorized advertising material</li>
+      </ul>
+    </div>
 
-  <section>
-    <h2>6. Limitation of Liability</h2>
-    <p>
-      We are not liable for any indirect, incidental, or consequential damages arising from the use of our services or products.
-    </p>
-  </section>
+    <div class="tc-section" id="intellectual-property">
+      <div class="section-header">
+        <div class="section-icon"><i class="pi pi-shield"></i></div>
+        <div>
+          <span class="section-num">03</span>
+          <h2>Intellectual Property</h2>
+        </div>
+      </div>
+      <p>
+        All content, trademarks, and data on this website — including software, databases, text, graphics, icons,
+        and hyperlinks — are the property of or licensed to Green Glow and are protected by applicable intellectual
+        property laws. Unauthorized use is strictly prohibited.
+      </p>
+    </div>
 
-  <section>
-    <h2>7. Changes to Terms</h2>
-    <p>
-      We may update these terms at any time. Continued use of the site after changes constitutes acceptance of the new terms.
-    </p>
-  </section>
+    <div class="tc-section" id="orders-payments">
+      <div class="section-header">
+        <div class="section-icon"><i class="pi pi-credit-card"></i></div>
+        <div>
+          <span class="section-num">04</span>
+          <h2>Orders & Payments</h2>
+        </div>
+      </div>
+      <p>
+        All orders are subject to availability and confirmation of the order price. Prices are subject to change
+        without notice. Payments must be made via accepted methods listed on the site at the time of purchase.
+      </p>
+      <div class="tc-highlight">
+        <i class="pi pi-info-circle"></i>
+        <span>We reserve the right to refuse or cancel any order at our sole discretion.</span>
+      </div>
+    </div>
 
-  <section>
-    <h2>8. Contact Us</h2>
-    <p>
-      If you have any questions about these Terms, please contact us at <a href="mailto:support@example.com">support&#64;example.com</a>.
-    </p>
-  </section>
+    <div class="tc-section" id="shipping-returns">
+      <div class="section-header">
+        <div class="section-icon"><i class="pi pi-truck"></i></div>
+        <div>
+          <span class="section-num">05</span>
+          <h2>Shipping & Returns</h2>
+        </div>
+      </div>
+      <p>
+        Shipping timelines and return policies are outlined on our Shipping & Returns page. Please review them
+        carefully before making a purchase. Returns are accepted within 7 days of delivery for unopened products.
+      </p>
+    </div>
+
+    <div class="tc-section" id="limitation">
+      <div class="section-header">
+        <div class="section-icon"><i class="pi pi-exclamation-triangle"></i></div>
+        <div>
+          <span class="section-num">06</span>
+          <h2>Limitation of Liability</h2>
+        </div>
+      </div>
+      <p>
+        To the fullest extent permitted by law, Green Glow shall not be liable for any indirect, incidental,
+        special, consequential, or punitive damages arising from your use of our services or products, even if
+        we have been advised of the possibility of such damages.
+      </p>
+    </div>
+
+    <div class="tc-section" id="changes">
+      <div class="section-header">
+        <div class="section-icon"><i class="pi pi-refresh"></i></div>
+        <div>
+          <span class="section-num">07</span>
+          <h2>Changes to Terms</h2>
+        </div>
+      </div>
+      <p>
+        We reserve the right to modify these terms at any time. We will notify users of significant changes via
+        email or a prominent notice on our website. Continued use of the site after changes constitutes your
+        acceptance of the new terms.
+      </p>
+    </div>
+
+    <div class="tc-section" id="contact">
+      <div class="section-header">
+        <div class="section-icon"><i class="pi pi-envelope"></i></div>
+        <div>
+          <span class="section-num">08</span>
+          <h2>Contact Us</h2>
+        </div>
+      </div>
+      <p>If you have any questions about these Terms & Conditions, please reach out to us:</p>
+      <div class="contact-card">
+        <a href="mailto:support@greenglow.com" class="contact-item">
+          <i class="pi pi-envelope"></i>
+          <span>support&#64;greenglow.com</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- FOOTER NOTE -->
+    <div class="tc-footer-note">
+      <i class="pi pi-verified"></i>
+      <p>By using Green Glow, you acknowledge that you have read, understood, and agree to be bound by these Terms &
+        Conditions.</p>
+    </div>
+
+  </main>
 </div>

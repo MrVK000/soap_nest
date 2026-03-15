@@ -1,58 +1,118 @@
-<div class="about-container">
-    <section class="hero">
-        <h1>Pure. Natural. Handmade.</h1>
-        <p>Crafted with love, inspired by nature.</p>
-    </section>
+<div class="about-page">
 
-    <section class="our-story">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-badge">🌿 Our Story</span>
+      <h1>Pure. Natural. <span class="highlight">Handmade.</span></h1>
+      <p>Crafted with love, inspired by nature — every bar tells a story of care.</p>
+      <a class="btn-primary" routerLink="/products">Explore Our Products <i class="pi pi-arrow-right"></i></a>
+    </div>
+    <div class="scroll-hint"><i class="pi pi-angle-down"></i></div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <section class="stats-strip">
+    <div class="stat" *ngFor="let s of stats">
+      <span class="stat-number">{{ s.number }}</span>
+      <span class="stat-label">{{ s.label }}</span>
+    </div>
+  </section>
+
+  <!-- OUR STORY -->
+  <section class="story-section">
+    <div class="story-inner">
+      <div class="story-images">
+        <img class="img-main" src="assets/content_images/handmade-soap-2.jpg" alt="Handmade soap" />
+        <img class="img-accent" src="assets/content_images/natural-soap-2.webp" alt="Natural ingredients" />
+      </div>
+      <div class="story-text">
+        <span class="section-tag">Who We Are</span>
         <h2>Our Story</h2>
-        <p>Our journey began with a simple idea: to create natural, handmade soaps and shampoos that are kind to both
-            people and the planet. Every product is crafted with love, using only the finest organic ingredients.</p>
-    </section>
-
-    <section class="why-choose">
-        <h2>Why Choose Us?</h2>
-        <div class="features flex justify-content-center">
-
-            <!-- <div class="feature">
-                <img src="assets/eco-friendly-icon.svg" alt="Eco-Friendly">
-                <h3>Eco-Friendly</h3>
-                <p>We use sustainable, biodegradable ingredients.</p>
-            </div> -->
-
-            <div class="feature" *ngFor="let benefit of benefits">
-                <img [src]="benefit.image" [alt]="benefit.label">
-                <div class="feature-content">
-                    <h3>{{benefit.label}}</h3>
-                    <p>{{benefit.description}}</p>
-                </div>
-            </div>
-
+        <p>Green Glow was born from a simple belief — that what you put on your skin matters just as much as what you
+          put in your body. We started small, handcrafting soaps and shampoos in our kitchen using recipes passed down
+          through generations.</p>
+        <p>Today, every product we make is still handcrafted in small batches, using only certified organic ingredients.
+          No shortcuts. No compromises. Just pure, honest skincare.</p>
+        <div class="story-tags">
+          <span><i class="pi pi-check-circle"></i> Certified Organic</span>
+          <span><i class="pi pi-check-circle"></i> Small Batch</span>
+          <span><i class="pi pi-check-circle"></i> Cruelty Free</span>
         </div>
-        <!-- <div class="features">
-        <div class="feature">
-          <img src="assets/eco-friendly-icon.svg" alt="Eco-Friendly">
-          <h3>Eco-Friendly</h3>
-          <p>We use sustainable, biodegradable ingredients.</p>
-        </div>
-        <div class="feature">
-          <img src="assets/handmade-icon.svg" alt="Handmade">
-          <h3>Handmade with Love</h3>
-          <p>Each product is carefully crafted by artisans.</p>
-        </div>
-        <div class="feature">
-          <img src="assets/chemical-free-icon.svg" alt="No Chemicals">
-          <h3>100% Natural</h3>
-          <p>No harsh chemicals, only nature’s goodness.</p>
-        </div>
-      </div> -->
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <section *ngIf="false" class="contact">
-        <h2>Get in Touch</h2>
-        <p>Email: hellosoaps.com</p>
-        <p>Phone: +123 456 7890</p>
-    </section>
+  <!-- VALUES / WHY CHOOSE US -->
+  <section class="values-section">
+    <div class="values-inner">
+      <div class="section-header">
+        <span class="section-tag">Why Choose Us</span>
+        <h2>What Makes Us Different</h2>
+        <p>We believe great skincare starts with great ingredients and genuine care</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card" *ngFor="let benefit of benefits">
+          <div class="value-img-wrap">
+            <img [src]="benefit.image" [alt]="benefit.label" loading="lazy" />
+          </div>
+          <div class="value-body">
+            <h3>{{ benefit.label }}</h3>
+            <p>{{ benefit.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- INGREDIENTS STRIP -->
+  <section class="ingredients-section">
+    <div class="ingredients-inner">
+      <div class="section-header light">
+        <span class="section-tag">Our Ingredients</span>
+        <h2>Nature's Best, Nothing Less</h2>
+        <p>Every ingredient is carefully sourced and chosen for its skin-loving properties</p>
+      </div>
+      <div class="ingredients-grid">
+        <div class="ingredient-card" *ngFor="let ing of ingredients">
+          <div class="ing-icon">{{ ing.emoji }}</div>
+          <h4>{{ ing.name }}</h4>
+          <p>{{ ing.benefit }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION BANNER -->
+  <section class="mission-section">
+    <div class="mission-inner">
+      <div class="mission-text">
+        <span class="section-tag light">Our Mission</span>
+        <h2>Skincare That Cares for the Planet</h2>
+        <p>We're committed to zero-waste packaging, sustainable sourcing, and giving back to the communities that grow
+          our ingredients. Every purchase you make supports a greener tomorrow.</p>
+        <div class="mission-pillars">
+          <div class="pillar" *ngFor="let p of pillars">
+            <i [class]="p.icon"></i>
+            <span>{{ p.label }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="mission-image">
+        <img src="assets/content_images/eco-package-1.jpeg" alt="Eco packaging" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <section class="contact-section">
+    <div class="section-header">
+      <span class="section-tag">Get in Touch</span>
+      <h2>We'd Love to Hear From You</h2>
+      <p>Questions, feedback, or just want to say hello — we're here</p>
+    </div>
     <app-contact></app-contact>
+  </section>
+
 </div>

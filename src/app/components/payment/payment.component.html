@@ -1,8 +1,108 @@
-<div class="payment-container">
-    <h1 class="page-title text-center">Secure Payment</h1>
-    <p>Order ID: <strong>{{ orderId }}</strong></p>
-    <p>Total Amount: <strong>₹{{ totalAmount }}</strong></p>
+<div class="payment-page">
 
-    <button class="pay-btn" (click)="completePayment()">Pay Now</button>
-    <button class="cancel-btn" (click)="cancelPayment()">Cancel</button>
+  <!-- BG CIRCLES -->
+  <div class="bg-circle c1"></div>
+  <div class="bg-circle c2"></div>
+
+  <div class="payment-wrap">
+
+    <!-- LEFT: SUMMARY PANEL -->
+    <div class="summary-panel">
+
+      <div class="panel-header">
+        <div class="brand-logo">
+          <img src="assets/logo/logo-2.jpeg" alt="Green Glow" />
+          <span>Green Glow</span>
+        </div>
+        <span class="secure-tag"><i class="pi pi-lock"></i> Secure Checkout</span>
+      </div>
+
+      <div class="order-info">
+        <div class="order-info-row">
+          <span class="info-label"><i class="pi pi-hashtag"></i> Order ID</span>
+          <span class="info-value">{{ orderId }}</span>
+        </div>
+        <div class="order-info-row">
+          <span class="info-label"><i class="pi pi-credit-card"></i> Payment Method</span>
+          <span class="info-value">Razorpay</span>
+        </div>
+        <div class="order-info-row">
+          <span class="info-label"><i class="pi pi-map-marker"></i> Ships To</span>
+          <span class="info-value">India</span>
+        </div>
+      </div>
+
+      <div class="amount-box">
+        <span class="amount-label">Total Payable</span>
+        <span class="amount-value">₹{{ totalAmount }}</span>
+        <span class="amount-note">Inclusive of all taxes & charges</span>
+      </div>
+
+      <div class="trust-badges">
+        <div class="trust-item">
+          <i class="pi pi-shield"></i>
+          <span>256-bit SSL Encryption</span>
+        </div>
+        <div class="trust-item">
+          <i class="pi pi-verified"></i>
+          <span>PCI DSS Compliant</span>
+        </div>
+        <div class="trust-item">
+          <i class="pi pi-lock"></i>
+          <span>Secure & Private</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: ACTION PANEL -->
+    <div class="action-panel">
+
+      <div class="action-header">
+        <div class="payment-icon">
+          <i class="pi pi-wallet"></i>
+        </div>
+        <h1>Complete Your Payment</h1>
+        <p>You're one step away from placing your order. Click below to securely pay via Razorpay.</p>
+      </div>
+
+      <div class="razorpay-info">
+        <div class="razorpay-logo">
+          <i class="pi pi-credit-card"></i>
+          <span>Powered by <strong>Razorpay</strong></span>
+        </div>
+        <p>Supports UPI, Net Banking, Credit & Debit Cards, and Wallets</p>
+        <div class="payment-methods">
+          <span class="method-tag"><i class="pi pi-mobile"></i> UPI</span>
+          <span class="method-tag"><i class="pi pi-building"></i> Net Banking</span>
+          <span class="method-tag"><i class="pi pi-credit-card"></i> Cards</span>
+          <span class="method-tag"><i class="pi pi-wallet"></i> Wallets</span>
+        </div>
+      </div>
+
+      <div class="amount-summary">
+        <span>Amount to Pay</span>
+        <span class="pay-amount">₹{{ totalAmount }}</span>
+      </div>
+
+      <div class="action-buttons">
+        <button class="btn-pay" (click)="completePayment()">
+          <i class="pi pi-lock"></i>
+          Pay ₹{{ totalAmount }} Securely
+        </button>
+        <button class="btn-cancel" (click)="cancelPayment()">
+          <i class="pi pi-arrow-left"></i>
+          Go Back
+        </button>
+      </div>
+
+      <div class="bottom-note">
+        <i class="pi pi-info-circle"></i>
+        <span>By proceeding, you agree to our <a routerLink="/terms">Terms & Conditions</a> and <a routerLink="/privacy-policy">Privacy Policy</a></span>
+      </div>
+
+    </div>
+
+  </div>
+
 </div>

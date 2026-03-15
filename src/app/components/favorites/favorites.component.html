@@ -1,38 +1,37 @@
-<div class="wl-page">
+<div class="fav-page">
 
   <!-- HEADER -->
-  <div class="wl-header">
+  <div class="fav-header">
     <p-button label="Back" icon="pi pi-arrow-left" [text]="true" severity="secondary"
       (onClick)="sharedService.goBack()" />
     <div class="header-title">
-      <i class="pi pi-bookmark-fill"></i>
-      <span>My Wishlist</span>
-      <span class="item-count" *ngIf="wishlist.length > 0">{{ wishlist.length }} item{{ wishlist.length > 1 ? 's' : ''
-        }}</span>
+      <i class="pi pi-heart-fill"></i>
+      <span>My Favorites</span>
+      <span class="item-count" *ngIf="favorites.length > 0">{{ favorites.length }} item{{ favorites.length > 1 ? 's' : '' }}</span>
     </div>
   </div>
 
   <!-- CONTENT -->
-  <div class="wl-container">
+  <div class="fav-container">
 
     <!-- EMPTY STATE -->
-    <div class="empty-wl" *ngIf="!loading && wishlist.length === 0">
-      <div class="empty-icon"><i class="pi pi-bookmark"></i></div>
-      <h2>Your wishlist is empty</h2>
-      <p>Save items you love and come back to them anytime.</p>
+    <div class="empty-fav" *ngIf="!loading && favorites.length === 0">
+      <div class="empty-icon"><i class="pi pi-heart"></i></div>
+      <h2>No favorites yet</h2>
+      <p>Save the products you love and find them here instantly.</p>
       <p-button label="Explore Products" icon="pi pi-arrow-right" iconPos="right" severity="success"
         routerLink="/products" />
     </div>
 
     <!-- GRID -->
-    <div class="wl-grid" *ngIf="wishlist.length > 0">
-      <div class="wl-card" *ngFor="let item of wishlist">
+    <div class="fav-grid" *ngIf="favorites.length > 0">
+      <div class="fav-card" *ngFor="let item of favorites">
 
         <div class="card-image-wrap">
           <img [src]="item.image" [alt]="item.name" class="card-img" />
           <span class="offer-badge" *ngIf="+item.offer > 0">{{ item.offer }}% OFF</span>
-          <button class="remove-btn" (click)="removeFromWishlist(item)" title="Remove from wishlist">
-            <i class="pi pi-bookmark-fill"></i>
+          <button class="remove-btn" (click)="removeFromFavorites(item)" matTooltip="Remove from favorites" matTooltipPosition="above">
+            <i class="pi pi-heart-fill"></i>
           </button>
         </div>
 
@@ -43,6 +42,7 @@
           <div class="price-row">
             <span class="price-current">₹{{ item.discountPrice }}</span>
             <span class="price-original" *ngIf="+item.offer > 0">₹{{ item.price }}</span>
+            <span class="savings-badge" *ngIf="+item.offer > 0">Save {{ item.offer }}%</span>
           </div>
 
           <div class="card-actions">
@@ -55,14 +55,14 @@
     </div>
 
     <!-- LOADER -->
-    <div class="wl-loader" *ngIf="loading">
+    <div class="fav-loader" *ngIf="loading">
       <span class="dot"></span><span class="dot"></span><span class="dot"></span>
     </div>
 
     <!-- ALL LOADED -->
-    <div class="all-loaded" *ngIf="!loading && page >= totalPages && wishlist.length > 0">
+    <div class="all-loaded" *ngIf="!loading && page >= totalPages && favorites.length > 0">
       <span class="line"></span>
-      <span class="text"><i class="pi pi-check-circle"></i> All items loaded</span>
+      <span class="text"><i class="pi pi-check-circle"></i> All favorites loaded</span>
       <span class="line"></span>
     </div>
 

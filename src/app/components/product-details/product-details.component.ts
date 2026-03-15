@@ -1,31 +1,42 @@
 import { SharedService } from './../../services/shared.service';
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CartService } from '../../services/cart.service';
 import { Product, Review, WishlistItemPayload } from '../../interfaces/interfaces';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
+import { ButtonModule } from 'primeng/button';
+import { TextareaModule } from 'primeng/textarea';
+import { DialogModule } from 'primeng/dialog';
+import { TagModule } from 'primeng/tag';
 import { ApiService } from '../../services/api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule, ReactiveFormsModule, RatingModule],
+  imports: [CommonModule, ReactiveFormsModule, RatingModule, ButtonModule, TextareaModule, DialogModule, TagModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 }) export class ProductDetailsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  product: Product = {} as Product;
+  product: any = {};
+  productImages: string[] = [];
+  selectedImage: string = '';
   productId!: string;
   quantity = 1;
   showAddReviewModal: boolean = false;
   reviewForm: FormGroup;
+  reviews: any[] = [];
+  reviewsPage = 1;
+  reviewsTotalPages = 1;
+  reviewsLoading = false;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private cartService: CartService, private snackbar: MatSnackBar, private fb: FormBuilder, private apiService: ApiService, public sharedService: SharedService, private authService: AuthService) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private cartService: CartService, private snackbar: MatSnackBar, private fb: FormBuilder, private apiService: ApiService, public sharedService: SharedService, private authService: AuthService, private cdr: ChangeDetectorRef) {
     this.reviewForm = this.fb.group({
       comment: ['', Validators.required],
       rating: [0, Validators.required],
@@ -41,6 +52,7 @@ import { AuthService } from '../../services/auth.service';
       }
       this.productId = newProductId;
       this.updateProduct();
+      this.loadReviews(true);
     });
   }
 
@@ -50,11 +62,43 @@ import { AuthService } from '../../services/auth.service';
     this.apiService.getProductById(this.productId, customerId).pipe(takeUntil(this.destroy$)).subscribe((res) => {
       this.product = res.data;
       this.sharedService.addSeo(`${this.product.name} - Buy Now | Green Glow`);
-      this.product.image = "assets/content_images/" + this.product.image +
-        ((this.product.image).slice(0, 1) === "1" ? ".webp" : ".jpg");
+      this.productImages = (this.product.images ?? []).map((img: string) => environment.serverUrl + img);
+      this.selectedImage = this.productImages[0] ?? '';
+      this.cdr.markForCheck();
     }, () => {
       this.router.navigate(['/products']);
     });
+  }
+
+  selectImage(img: string) {
+    this.selectedImage = img;
+    this.cdr.markForCheck();
+  }
+
+  loadReviews(reset: boolean = false) {
+    if (this.reviewsLoading) return;
+    if (reset) {
+      this.reviewsPage = 1;
+      this.reviews = [];
+    }
+    this.reviewsLoading = true;
+    this.cdr.markForCheck();
+    this.apiService.getReviewsByProductId(this.productId, this.reviewsPage).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      this.reviews = reset ? (res.data ?? []) : [...this.reviews, ...(res.data ?? [])];
+      this.reviewsTotalPages = res.totalPages ?? 1;
+      this.reviewsLoading = false;
+      this.cdr.markForCheck();
+    }, () => {
+      this.reviewsLoading = false;
+      this.cdr.markForCheck();
+    });
+  }
+
+  loadMoreReviews() {
+    if (this.reviewsPage < this.reviewsTotalPages) {
+      this.reviewsPage++;
+      this.loadReviews();
+    }
   }
 
   increaseQuantity() {
@@ -140,9 +184,9 @@ import { AuthService } from '../../services/auth.service';
         reviewPayload.userName = user.name;
         reviewPayload.customerId = user.customerId;
       }
-      
+
       this.apiService.addReview(reviewPayload).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-        this.updateProduct();
+        this.loadReviews(true);
         this.snackbar.open('Comment Added Successfully', '', { duration: 2000 });
       },
         () => {

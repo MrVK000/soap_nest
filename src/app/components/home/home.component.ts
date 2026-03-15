@@ -3,13 +3,12 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { CarouselModule } from 'primeng/carousel';
-import { BENEFITS, RESPONSIVE_OPTIONS, REVIEWS } from '../../data/data';
+import { BENEFITS, RESPONSIVE_OPTIONS } from '../../data/data';
 import { ApiService } from '../../services/api.service';
-import { Product } from '../../interfaces/interfaces';
 import { SharedService } from '../../services/shared.service';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -20,41 +19,37 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent {
   private destroy$ = new Subject<void>();
-  featuredProducts: Product[] = [];
+  featuredProducts: any[] = [];
   responsiveOptions = RESPONSIVE_OPTIONS;
   benifits = BENEFITS;
-  reviews = REVIEWS;
+  reviews: any[] = [];
 
-  constructor(private api: ApiService, private router: Router, private snackbar: MatSnackBar, private sharedService: SharedService, private authService: AuthService) { }
+  constructor(private api: ApiService, private router: Router, private snackbar: MatSnackBar, private sharedService: SharedService) { }
 
   ngOnInit() {
     this.sharedService.addSeo("Green Glow - Handmade Soaps & Organic Shampoos");
     this.getFeaturedProducts();
+    this.getTopReviews();
   }
 
   getFeaturedProducts() {
-    const user = this.authService.getUser();
-    let customerId: string = '-';
-    if ((user?.customerId) && (this.authService.isLoggedIn())) {
-      customerId = user.customerId;
-    }
-    this.api.listProducts(customerId).pipe(takeUntil(this.destroy$)).subscribe((res) => {
-      this.featuredProducts = res?.data;
-      if (this.featuredProducts.length == 0) {
-        this.router.navigate(['/server-error']);
-      }
-      this.featuredProducts = this.featuredProducts.map((product: Product) => {
-        product.image = "assets/content_images/" + product.image + ((product.image).slice(0, 1) === "1" ? ".webp" : ".jpg");
-        return product;
-      });
-      this.featuredProducts = this.featuredProducts.filter((p, i) => i < 8);
-    }, (err) => {
+    this.api.getPublicFeaturedProducts().pipe(takeUntil(this.destroy$)).subscribe((res) => {
+      this.featuredProducts = (res?.data ?? []).map((product: any) => ({
+        ...product,
+        image: environment.serverUrl + product.images[0]
+      }));
+    }, () => {
       this.snackbar.open("Couldn't fetch the products", '', { duration: 3000 });
-      this.router.navigate(['/server-error']);
     });
   }
 
-  viewProduct(product: Product) {
+  getTopReviews() {
+    this.api.getTopReviews().pipe(takeUntil(this.destroy$)).subscribe((res) => {
+      this.reviews = res?.data ?? [];
+    });
+  }
+
+  viewProduct(product: any) {
     this.router.navigate(['/product-details', product.productId]);
   }
 

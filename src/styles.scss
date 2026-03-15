@@ -17,6 +17,29 @@
   --green: #258949;
   --light-green: #a8d243;
   --black: #000000;
+
+  /* PrimeNG theme overrides */
+  --p-body-background: #ffffff;
+  --p-surface-card: #ffffff;
+  --p-surface-overlay: #ffffff;
+  --p-surface-ground: #f7faf7;
+  --p-surface-section: #ffffff;
+  --p-surface-0: #ffffff;
+  --p-surface-50: #f7faf7;
+  --p-text-color: #1a2e1a;
+  --p-text-muted-color: #6b7c6b;
+  --p-primary-color: #258949;
+  --p-primary-contrast-color: #ffffff;
+  --p-select-option-selected-background: #e8f5e9;
+  --p-select-option-selected-color: #258949;
+  --p-select-option-focus-background: #f0f7f0;
+  --p-select-focus-border-color: #258949;
+  --p-select-hover-border-color: #258949;
+  --p-input-border-color: #e0e8e0;
+  --p-input-hover-border-color: #258949;
+  --p-focus-ring-color: rgba(37, 137, 73, 0.2);
+  --p-overlay-popover-background: #ffffff;
+  --p-overlay-popover-border-color: #e0e8e0;
 }
 
 html {

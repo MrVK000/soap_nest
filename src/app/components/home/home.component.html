@@ -1,66 +1,142 @@
 <div class="home">
-    <div class="hero">
-        <div class="hero-content flex flex-column align-items-center">
-            <h1 class="hero-title">Pure & Natural <br> Handmade Soaps & Shampoos</h1>
-            <p>Eco-friendly, chemical-free, and made with love ❤️</p>
-            <button class="shop-now-btn" routerLink="/products">Shop Now<i class="pi pi-arrow-right"></i></button>
-        </div>
-    </div>
 
-    @if (featuredProducts.length > 0) {
-    <div class="featured-products">
-        <h2>Featured Products</h2>
-        <div class="product-wrapper flex flex-wrap justify-content-center">
-            <div class="product-card" *ngFor="let product of featuredProducts">
-                <img [src]="product.image" alt="{{ product.name }}">
-                <h3>{{ product.name }}</h3>
-                <p>₹{{ product.price }}</p>
-                <button class="product-card-button" (click)="viewProduct(product)">View
-                    Product</button>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-badge">🌿 100% Natural & Organic</span>
+            <h1 class="hero-title">Pure Handmade <br><span class="hero-highlight">Soaps & Shampoos</span></h1>
+            <p class="hero-subtitle">Eco-friendly, chemical-free, and crafted with love for your skin and the planet.
+            </p>
+            <div class="hero-actions">
+                <button class="btn-primary" routerLink="/products">Shop Now <i class="pi pi-arrow-right"></i></button>
+                <button class="btn-outline" routerLink="/products">Explore Range</button>
             </div>
         </div>
-    </div>
-    }
+        <div class="hero-scroll-hint">
+            <i class="pi pi-angle-down"></i>
+        </div>
+    </section>
 
+    <!-- STATS STRIP -->
+    <section class="stats-strip">
+        <div class="stat">
+            <span class="stat-number">500+</span>
+            <span class="stat-label">Happy Customers</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Natural Ingredients</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+            <span class="stat-number">0</span>
+            <span class="stat-label">Harmful Chemicals</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+            <span class="stat-number">20+</span>
+            <span class="stat-label">Product Varieties</span>
+        </div>
+    </section>
 
-    <div class="why-choose">
-        <h2>Why Choose Our Products?</h2>
-
-        <div class="benefits">
-            <div class="benefit" *ngFor="let benefit of benifits">
-                <img [src]="benefit.image" [alt]="benefit.label">
-                <div class="benefit-content">
-                    <h3>{{benefit.label}}</h3>
-                    <p>{{benefit.description}}</p>
+    <!-- FEATURED PRODUCTS -->
+    @if (featuredProducts.length > 0) {
+    <section class="featured-products">
+        <div class="section-header">
+            <span class="section-tag">Our Collection</span>
+            <h2 class="section-title">Featured Products</h2>
+            <p class="section-subtitle">Handpicked favourites loved by our customers</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card" *ngFor="let product of featuredProducts" (click)="viewProduct(product)">
+                <div class="product-img-wrap">
+                    <img [src]="product.image" [alt]="product.name" loading="lazy">
+                    <div class="product-overlay">
+                        <button class="overlay-btn">View Product</button>
+                    </div>
+                    @if (product.offer && +product.offer > 0) {
+                    <span class="product-badge">{{ product.offer }}% OFF</span>
+                    }
+                </div>
+                <div class="product-info">
+                    <span class="product-category">{{ product.category }}</span>
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <div class="product-pricing">
+                        <span class="product-price">₹{{ product.discountPrice }}</span>
+                        @if (product.offer && +product.offer > 0) {
+                        <span class="product-original">₹{{ product.price }}</span>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="section-footer">
+            <button class="btn-primary" routerLink="/products">View All Products <i
+                    class="pi pi-arrow-right"></i></button>
+        </div>
+    </section>
+    }
 
-    </div>
-
-    <div *ngIf="!false" class="testimonials">
-        <h2>What Our Customers Say</h2>
-        <div class="carousel flex justify-content-center align-items-center">
-            <p-carousel [value]="reviews" [circular]="true" [responsiveOptions]="responsiveOptions"
-                autoplayInterval="3000">
-
-                <ng-template let-review #item>
-
-                    <div class="testimonial">
-                        <p>"{{ review.userName }}"</p>
-                        <h4>- {{ review.comment }}</h4>
+    <!-- WHY CHOOSE US -->
+    <section class="why-choose">
+        <div class="why-choose-inner">
+            <div class="section-header light">
+                <span class="section-tag">Why Us</span>
+                <h2 class="section-title">Why Choose Our Products?</h2>
+                <p class="section-subtitle">We believe in beauty that's good for you and the earth</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card" *ngFor="let benefit of benifits">
+                    <div class="benefit-img-wrap">
+                        <img [src]="benefit.image" [alt]="benefit.label" loading="lazy">
                     </div>
+                    <div class="benefit-body">
+                        <h3>{{ benefit.label }}</h3>
+                        <p>{{ benefit.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- TESTIMONIALS -->
+    @if (reviews.length > 0) {
+    <section class="testimonials">
+        <div class="section-header">
+            <span class="section-tag">Reviews</span>
+            <h2 class="section-title">What Our Customers Say</h2>
+            <p class="section-subtitle">Real stories from people who love our products</p>
+        </div>
+        <div class="carousel-wrap">
+            <p-carousel [value]="reviews" [circular]="true" [responsiveOptions]="responsiveOptions"
+                autoplayInterval="3500">
+                <ng-template let-review #item>
+                    <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <i class="pi pi-star-fill" *ngFor="let s of [1,2,3,4,5]"></i>
+                        </div>
+                        <p class="testimonial-comment">"{{ review.comment }}"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">{{ review.userName?.charAt(0) | uppercase }}</div>
+                            <span class="author-name">{{ review.userName }}</span>
+                        </div>
+                    </div>
                 </ng-template>
-
             </p-carousel>
         </div>
-    </div>
+    </section>
+    }
 
-    <!-- <div class="newsletter">
-        <h2>Get Exclusive Offers</h2>
-        <input class="mail-input-field" type="email" placeholder="Enter your email">
-        <button class="subscription-btn">Subscribe</button>
-    </div> -->
+    <!-- CTA BANNER -->
+    <section class="cta-banner">
+        <div class="cta-content">
+            <h2>Ready to Go Natural?</h2>
+            <p>Join hundreds of happy customers who've made the switch to pure, handmade goodness.</p>
+            <button class="btn-primary large" routerLink="/products">Shop the Collection <i
+                    class="pi pi-arrow-right"></i></button>
+        </div>
+    </section>
 
 </div>

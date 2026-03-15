@@ -1,172 +1,138 @@
-<div class="order-details-container flex justify-content-center flex-column" *ngIf="order">
-    <h1 class="page-title text-center">Order Details</h1>
-    <div class="order-details-wrapper">
-        <div id="invoice" class="invoice-wrapper">
-            <header class="text-center">
-                <h1>Invoice</h1>
-                <p>Order ID: {{ order.orderNumber }}</p>
-                <p>Date: {{ order.createdAt | date:'mediumDate' }}</p>
-            </header>
+<div class="od-page">
 
-            <section class="payment-info">
-                <p><strong>Status:</strong> {{ order.status }}</p>
-                <p><strong>Payment Method:</strong> Online Payment </p>
-            </section>
-
-            <section class="seller-buyer-info flex justify-space-between">
-                <div>
-                    <h3>From:</h3>
-                    <p>{{ company.name }}</p>
-                    <p>{{ company.address }}</p>
-                    <!-- <p>{{ company.phone }}</p> -->
-                    <p>{{ company.email }}</p>
-                </div>
-
-                <div>
-                    <h3>To:</h3>
-                    <p>{{ order.customer.name }}</p>
-                    <p>{{ order.shippingAddress }}</p>
-                    <!-- <p>{{ order.customer.phone }}</p> -->
-                    <p>{{ order.customer.email }}</p>
-                </div>
-            </section>
-
-            <section class="product-table-wrapper">
-                <table *ngIf="!false" class="product-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Price</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of order.items; index as i">
-                            <td>{{ i + 1 }}</td>
-                            <td>{{ item.productName }}</td>
-                            <td>{{ item.quantity }}</td>
-                            <td>₹{{ item.price }}</td>
-                            <td>₹{{ item.quantity * item.price }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section class="totals">
-                <!-- <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
-                <p><strong>GST ({{ order.taxRate }}%):</strong> ₹{{ order.taxAmount }}</p>
-                <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p> -->
-                <p><strong>Grand Total:</strong> ₹{{ order.totalAmount }}</p>
-            </section>
-
-            <footer>
-                <p>Thank you for your order! 💚</p>
-                <p>For support: {{ company.support }}</p>
-            </footer>
-
-        </div>
-
-        <div class="back-btn-wrapper flex justify-content-center">
-            <button class="invoice-button" (click)="downloadInvoicePDF()">Download Invoice</button>
-            <button class="back-button" (click)="sharedService.goBack()">Back to Orders</button>
-        </div>
+  <!-- HEADER -->
+  <div class="od-header">
+    <p-button label="Back" icon="pi pi-arrow-left" [text]="true" severity="secondary"
+      (onClick)="sharedService.goBack()" />
+    <div class="header-title">
+      <i class="pi pi-file-check"></i>
+      <span>Order Details</span>
     </div>
-</div>
-<!-- <div class="order-details-container flex justify-content-center flex-column" *ngIf="order">
-    <h1 class="page-title text-center">Order Details</h1>
-    <div class="order-details-wrapper">
-        <h2 class="text-center">Order</h2>
-        <p><strong>Order ID:</strong> {{ order.orderId }}</p>
-        <p><strong>Date:</strong> {{ order.date | date:'mediumDate' }}</p>
-        <p><strong>Total Amount:</strong> ₹{{ order.totalAmount }}</p>
-        <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
-        <p><strong>Status:</strong> {{ order.status }}</p>
-        <p><strong>Customer Name:</strong> {{ order.customer.name }}</p>
-        <p><strong>Customer Address:</strong> {{ order.customer.address }}</p>
-        <p><strong>Customer Phone:</strong> {{ order.customer.phone }}</p>
-        <p><strong>Customer E-mail:</strong> {{ order.customer.email }}</p>
+    <p-button label="Download Invoice" icon="pi pi-download" [outlined]="true" severity="secondary"
+      (onClick)="downloadInvoicePDF()" />
+  </div>
 
-        <h3>Items Ordered:</h3>
-        <div class="items-list">
-            <div class="item" *ngFor="let item of order.items">
-                <p><strong>{{ item.name }}</strong></p>
-                <p>Quantity: {{ item.quantity }}</p>
-                <p>Price: ₹{{ item.price }}</p>
-            </div>
-        </div>
+  <!-- LOADER -->
+  <div class="od-loader" *ngIf="loading">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
 
-        <div class="back-btn-wrapper flex justify-content-center">
-            <button class="invoice-button" (click)="downloadInvoicePDF()">Download Invoice</button>
-            <button class="back-button" (click)="goBack()">Back to Orders</button>
+  <div class="od-container" *ngIf="!loading && order.id" id="invoice">
+
+    <!-- TOP ROW: order meta + status -->
+    <div class="top-row">
+
+      <div class="meta-card">
+        <div class="meta-row">
+          <span class="meta-label"><i class="pi pi-hashtag"></i> Order Number</span>
+          <span class="meta-value order-num">{{ order.orderNumber }}</span>
         </div>
+        <div class="meta-row">
+          <span class="meta-label"><i class="pi pi-calendar"></i> Placed On</span>
+          <span class="meta-value">{{ order.createdAt | date:'dd MMM yyyy, hh:mm a' }}</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label"><i class="pi pi-credit-card"></i> Payment</span>
+          <span class="meta-value">{{ order.paymentMode }}</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label"><i class="pi pi-wallet"></i> Payment Status</span>
+          <p-tag [value]="order.paymentStatus" [severity]="order.paymentStatus === 'Completed' ? 'success' : 'warn'" />
+        </div>
+        <div class="meta-row">
+          <span class="meta-label"><i class="pi pi-box"></i> Order Status</span>
+          <p-tag [value]="order.status" [severity]="getStatusSeverity(order.status)"
+            [icon]="getStatusIcon(order.status)" />
+        </div>
+      </div>
+
+      <!-- STATUS TRACKER -->
+      <div class="tracker-card" *ngIf="order.status !== 'Cancelled'">
+        <h3 class="tracker-title"><i class="pi pi-map-marker"></i> Order Progress</h3>
+        <div class="tracker">
+          <div class="track-step" [class.active]="getStatusStep(order.status) >= 1"
+            [class.done]="getStatusStep(order.status) > 1">
+            <div class="step-dot"><i class="pi pi-shopping-bag"></i></div>
+            <span>Order Placed</span>
+          </div>
+          <div class="track-line" [class.filled]="getStatusStep(order.status) >= 2"></div>
+          <div class="track-step" [class.active]="getStatusStep(order.status) >= 2"
+            [class.done]="getStatusStep(order.status) > 2">
+            <div class="step-dot"><i class="pi pi-truck"></i></div>
+            <span>Shipped</span>
+          </div>
+          <div class="track-line" [class.filled]="getStatusStep(order.status) >= 3"></div>
+          <div class="track-step" [class.active]="getStatusStep(order.status) >= 3">
+            <div class="step-dot"><i class="pi pi-check-circle"></i></div>
+            <span>Delivered</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tracker-card cancelled-card" *ngIf="order.status === 'Cancelled'">
+        <i class="pi pi-times-circle"></i>
+        <span>This order has been cancelled</span>
+      </div>
+
     </div>
-</div> -->
 
+    <!-- MIDDLE ROW: from / to -->
+    <div class="address-row">
+      <div class="address-card">
+        <h3><i class="pi pi-building"></i> From</h3>
+        <p class="addr-name">{{ company.name }}</p>
+        <p>{{ company.address }}</p>
+        <p>{{ company.email }}</p>
+      </div>
+      <div class="address-card">
+        <h3><i class="pi pi-map-marker"></i> Shipping To</h3>
+        <p class="addr-name">{{ order.customer.name }}</p>
+        <p>{{ order.shippingAddress }}, {{ order.district }}</p>
+        <p>{{ order.state }} — {{ order.pincode }}</p>
+        <p>{{ order.customer.email }}</p>
+      </div>
+    </div>
 
-<!-- Invoice Section -->
-<div *ngIf="false" id="invoice" class="invoice-wrapper">
-    <header>
-        <h1>Invoice</h1>
-        <p>Order ID: {{ order.orderNumber }}</p>
-        <p>Date: {{ order.createdAt | date:'mediumDate' }}</p>
-    </header>
-
-    <section class="payment-info">
-        <p><strong>Status:</strong> ₹{{ order.status }}</p>
-        <p><strong>Payment Method:</strong> {{ order.paymentMode }}</p>
-    </section>
-
-    <section class="seller-buyer-info ">
-        <div>
-            <h3>From:</h3>
-            <p>{{ company.name }}</p>
-            <p>{{ company.address }}</p>
-            <!-- <p>{{ company.phone }}</p> -->
-            <p>{{ company.email }}</p>
-        </div>
-
-        <div>
-            <h3>To:</h3>
-            <p>{{ order.customer.name }}</p>
-            <p>{{ order.shippingAddress }}</p>
-            <!-- <p>{{ order }}</p> -->
-            <p>{{ order.customer.email }}</p>
-        </div>
-    </section>
-
-    <table class="product-table">
-        <thead>
+    <!-- ITEMS TABLE -->
+    <div class="items-card">
+      <h3 class="items-title"><i class="pi pi-list"></i> Items Ordered</h3>
+      <div class="items-table-wrap">
+        <table class="items-table">
+          <thead>
             <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Total</th>
+              <th>#</th>
+              <th>Product</th>
+              <th>Unit Price</th>
+              <th>Qty</th>
+              <th>Total</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <tr *ngFor="let item of order.items; index as i">
-                <td>{{ i + 1 }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>₹{{ item.price }}</td>
-                <td>₹{{ item.quantity * item.price }}</td>
+              <td class="idx">{{ i + 1 }}</td>
+              <td class="prod-name">
+                <div class="prod-avatar">{{ item.productName.charAt(0).toUpperCase() }}</div>
+                {{ item.productName }}
+              </td>
+              <td>₹{{ item.price }}</td>
+              <td>{{ item.quantity }}</td>
+              <td class="row-total">₹{{ item.totalPrice }}</td>
             </tr>
-        </tbody>
-    </table>
+          </tbody>
+        </table>
+      </div>
 
-    <section class="totals">
-        <!-- <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
-        <p><strong>GST ({{ order.taxRate }}%):</strong> ₹{{ order.taxAmount }}</p>
-        <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p> -->
-        <p><strong>Grand Total:</strong> ₹{{ order.totalAmount }}</p>
-    </section>
+      <div class="grand-total-row">
+        <span>Grand Total</span>
+        <span class="grand-total-val">₹{{ order.totalAmount }}</span>
+      </div>
+    </div>
 
-    <footer>
-        <p>Thank you for your order! 💚</p>
-        <p>For support: {{ company.support }}</p>
-    </footer>
+    <!-- FOOTER NOTE -->
+    <div class="od-footer-note">
+      <i class="pi pi-heart-fill"></i>
+      <span>Thank you for shopping with <strong>Green Glow</strong>! For support: {{ company.support }}</span>
+    </div>
 
+  </div>
 </div>

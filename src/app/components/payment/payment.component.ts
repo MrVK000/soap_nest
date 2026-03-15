@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 declare var Razorpay: any;
 
 @Component({
   selector: 'app-payment',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.scss'
 })

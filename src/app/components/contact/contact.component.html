@@ -1,43 +1,82 @@
-<div class="contact-container w-full flex justify-content-center">
-    <div class="contact-wrapper w-full flex justify-content-center">
-        <section *ngIf="false" class="hero">
-            <h1>Get in Touch</h1>
-            <p>We’d love to hear from you!</p>
-        </section>
+<div class="contact-wrap">
 
-        <section class="contact-form w-full">
-            <h2>Send Us a Message</h2>
-            <form [formGroup]="contactForm">
+    <!-- LEFT: INFO PANEL -->
+    <div class="info-panel">
+        <span class="section-tag">Contact Us</span>
+        <h2>We'd Love to <span class="highlight">Hear From You</span></h2>
+        <p>Have a question about our products, an order, or just want to say hello? Drop us a message and we'll get back
+            to you within 24 hours.</p>
 
-                <div class="contact-form-wrapper">
-                    <input type="text" formControlName="name" placeholder="Your Name">
-                    <div class="error"
-                        [ngStyle]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched?{}:{'visibility':'hidden'}">
-                        Name is required (min 3 characters).
-                    </div>
+        <div class="info-items">
+            <div class="info-item" *ngFor="let item of infoItems">
+                <div class="info-icon"><i [class]="item.icon"></i></div>
+                <div>
+                    <span class="info-label">{{ item.label }}</span>
+                    <span class="info-value">{{ item.value }}</span>
+                </div>
+            </div>
+        </div>
 
-                    <input type="email" formControlName="email" placeholder="Your Email">
-                    <div class="error"
-                        [ngStyle]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched?{}:{'visibility':'hidden'}">
-                        Enter a valid Email.
-                    </div>
+        <div class="social-row">
+            <a class="social-btn" href="#" title="Instagram"><i class="pi pi-instagram"></i></a>
+            <a class="social-btn" href="#" title="Facebook"><i class="pi pi-facebook"></i></a>
+            <a class="social-btn" href="#" title="Twitter"><i class="pi pi-twitter"></i></a>
+        </div>
+    </div>
 
-                    <input type="text" formControlName="phoneNumber" placeholder="Your Phone Number">
-                    <div class="error"
-                        [ngStyle]="contactForm.get('phoneNumber')?.invalid && contactForm.get('phoneNumber')?.touched?{}:{'visibility':'hidden'}">
-                        Enter a valid Phone Number.
-                    </div>
+    <!-- RIGHT: FORM -->
+    <div class="form-panel">
+        <form [formGroup]="contactForm" (ngSubmit)="submitForm()" novalidate>
 
-                    <textarea formControlName="message" placeholder="Your Message"></textarea>
-                    <div class="error"
-                        [ngStyle]="contactForm.get('message')?.invalid && contactForm.get('message')?.touched?{}:{'visibility':'hidden'}">
-                        Message must be atleast 10 characters.
-                    </div>
+            <div class="field-row">
+                <div class="field">
+                    <label>Your Name</label>
+                    <p-iconfield>
+                        <p-inputicon class="pi pi-user" />
+                        <input pInputText type="text" formControlName="name" placeholder="John Doe" />
+                    </p-iconfield>
+                    <small class="error" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+                        Name is required (min 2 characters).
+                    </small>
                 </div>
 
-            </form>
-            <button class="submit-btn" (click)="submitForm()" [disabled]="contactForm.invalid">Send
-                Message</button>
-        </section>
+                <div class="field">
+                    <label>Email Address</label>
+                    <p-iconfield>
+                        <p-inputicon class="pi pi-envelope" />
+                        <input pInputText type="email" formControlName="email" placeholder="you@example.com" />
+                    </p-iconfield>
+                    <small class="error" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+                        Enter a valid email address.
+                    </small>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Phone Number</label>
+                <p-iconfield>
+                    <p-inputicon class="pi pi-phone" />
+                    <input pInputText type="text" formControlName="phoneNumber" placeholder="10-digit number" maxlength="10" (keydown)="onNumericKeydown($event)" />
+                </p-iconfield>
+                <small class="error"
+                    *ngIf="contactForm.get('phoneNumber')?.invalid && contactForm.get('phoneNumber')?.touched">
+                    Enter a valid 10-digit phone number.
+                </small>
+            </div>
+
+            <div class="field">
+                <label>Your Message</label>
+                <textarea pTextarea formControlName="message" placeholder="Tell us how we can help you..."
+                    [autoResize]="true" rows="5"></textarea>
+                <small class="error" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+                    Message must be at least 10 characters.
+                </small>
+            </div>
+
+            <p-button type="submit" label="Send Message" icon="pi pi-send" iconPos="right" severity="success"
+                styleClass="submit-btn" [loading]="submitting" />
+
+        </form>
     </div>
+
 </div>

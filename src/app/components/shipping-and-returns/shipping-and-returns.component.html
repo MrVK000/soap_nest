@@ -1,52 +1,122 @@
-<div class="shipping-returns-container">
-  <h1>Shipping & Returns</h1>
-  <p>Last updated: September 7, 2025</p>
+<div class="sr-page">
 
-  <section>
-    <h2>Shipping Policy</h2>
-    <p>
-      We currently ship all orders within India using trusted courier services. Orders are processed within
-      1–2 business days. Delivery typically takes between 3–7 business days depending on your location.
-    </p>
+  <!-- HERO -->
+  <div class="sr-header">
+    <div class="sr-header-content">
+      <span class="header-badge">📦 Policies</span>
+      <h1>Shipping & Returns</h1>
+      <p>Everything you need to know about how we deliver and handle your orders</p>
+      <span class="last-updated">Last updated: September 7, 2025</span>
+    </div>
+  </div>
 
-    <p>
-      Shipping costs are calculated at checkout based on your location and order size. You will receive a tracking number
-      once your order has been shipped.
-    </p>
+  <!-- QUICK SUMMARY CARDS -->
+  <div class="summary-strip">
+    <div class="summary-card" *ngFor="let card of summaryCards">
+      <div class="summary-icon"><i [class]="card.icon"></i></div>
+      <div class="summary-text">
+        <strong>{{ card.title }}</strong>
+        <span>{{ card.desc }}</span>
+      </div>
+    </div>
+  </div>
 
-    <p><strong>Please ensure your delivery address is correct at the time of order to avoid any delays.</strong></p>
-  </section>
+  <!-- MAIN CONTENT -->
+  <div class="sr-container">
 
-  <section>
-    <h2>Returns & Exchanges</h2>
-    <p>
-      Due to hygiene and safety concerns, <strong>we do not accept returns or exchanges on any soap and shampoo products</strong>.
-      All sales are final.
-    </p>
+    <!-- SHIPPING POLICY -->
+    <div class="sr-section">
+      <div class="section-label">
+        <div class="label-icon"><i class="pi pi-truck"></i></div>
+        <h2>Shipping Policy</h2>
+      </div>
+      <div class="section-body">
+        <div class="info-grid">
+          <div class="info-tile" *ngFor="let tile of shippingTiles">
+            <i [class]="tile.icon"></i>
+            <strong>{{ tile.title }}</strong>
+            <span>{{ tile.desc }}</span>
+          </div>
+        </div>
+        <div class="notice-box">
+          <i class="pi pi-info-circle"></i>
+          <p>Please ensure your delivery address is correct at the time of order to avoid any delays or failed
+            deliveries.</p>
+        </div>
+      </div>
+    </div>
 
-    <p>
-      If your order arrives damaged or incorrect, please contact our support team within 48 hours of delivery at
-      <a href="mailto:support@example.com">support&#64;example.com</a> with your order number and clear photos of the issue.
-    </p>
+    <!-- RETURNS & EXCHANGES -->
+    <div class="sr-section">
+      <div class="section-label">
+        <div class="label-icon"><i class="pi pi-refresh"></i></div>
+        <h2>Returns & Exchanges</h2>
+      </div>
+      <div class="section-body">
+        <div class="alert-box">
+          <i class="pi pi-ban"></i>
+          <p>Due to hygiene and safety concerns, <strong>we do not accept returns or exchanges</strong> on any soap and
+            shampoo products. All sales are final.</p>
+        </div>
+        <p class="body-text">If your order arrives <strong>damaged or incorrect</strong>, please contact our support
+          team within <strong>48 hours</strong> of delivery with your order number and clear photos of the issue.</p>
+        <p class="body-text">We will review your case and may offer a <strong>replacement or store credit</strong> at
+          our discretion.</p>
+        <a href="mailto:support@greenglow.com" class="contact-link">
+          <i class="pi pi-envelope"></i> support&#64;greenglow.com
+        </a>
+      </div>
+    </div>
 
-    <p>
-      We will review your case and may offer a replacement or store credit at our discretion.
-    </p>
-  </section>
+    <!-- ORDER CANCELLATIONS -->
+    <div class="sr-section">
+      <div class="section-label">
+        <div class="label-icon"><i class="pi pi-times-circle"></i></div>
+        <h2>Order Cancellations</h2>
+      </div>
+      <div class="section-body">
+        <div class="steps-list">
+          <div class="step-item" *ngFor="let step of cancellationSteps; let i = index">
+            <div class="step-num">{{ i + 1 }}</div>
+            <div class="step-text">
+              <strong>{{ step.title }}</strong>
+              <span>{{ step.desc }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <section>
-    <h2>Order Cancellations</h2>
-    <p>
-      If you need to cancel your order, please contact us within 2 hours of placing it. Once an order is processed and shipped,
-      it cannot be canceled.
-    </p>
-  </section>
+    <!-- CONTACT -->
+    <div class="sr-section">
+      <div class="section-label">
+        <div class="label-icon"><i class="pi pi-headphones"></i></div>
+        <h2>Need Help?</h2>
+      </div>
+      <div class="section-body">
+        <p class="body-text">For any questions related to shipping or returns, our support team is happy to help.</p>
+        <div class="contact-cards">
+          <a href="mailto:support@greenglow.com" class="contact-card">
+            <i class="pi pi-envelope"></i>
+            <span>support&#64;greenglow.com</span>
+          </a>
+          <a href="tel:+919876543210" class="contact-card">
+            <i class="pi pi-phone"></i>
+            <span>+91 98765 43210</span>
+          </a>
+        </div>
+      </div>
+    </div>
 
-  <section>
-    <h2>Contact Us</h2>
-    <p>
-      For any questions related to shipping or returns, please email us at
-      <a href="mailto:support@example.com">support&#64;example.com</a>.
-    </p>
-  </section>
+  </div>
+
+  <!-- CTA -->
+  <div class="sr-cta">
+    <h2>Ready to Shop?</h2>
+    <p>Explore our range of handmade natural soaps and shampoos</p>
+    <a class="cta-btn" routerLink="/products">
+      Shop Now <i class="pi pi-arrow-right"></i>
+    </a>
+  </div>
+
 </div>

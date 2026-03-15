@@ -1,76 +1,393 @@
-.account-container {
+.account-page {
+  min-height: 100vh;
+  background: #f4f7f4;
+  padding-bottom: 4rem;
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.account-header {
+  background: linear-gradient(135deg, #1a5c30 0%, #258949 100%);
+  padding: 1.2rem 2.5rem;
+}
+
+.account-header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 
-.account-box {
-  background: var(--white);
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  width: 30rem;
-  margin: 4rem 0;
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  i {
+    font-size: 1.1rem;
+  }
 }
 
-label {
+::ng-deep .account-header .p-button {
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+  }
+}
+
+// ── Body ──────────────────────────────────────────────────────────────────────
+
+.account-body {
+  max-width: 1100px;
+  margin: 2.5rem auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+// ── Profile Card ──────────────────────────────────────────────────────────────
+
+.profile-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 20px rgba(37, 137, 73, 0.08);
+  text-align: center;
+  position: sticky;
+  top: 80px;
+}
+
+.avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1a5c30, #258949);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  box-shadow: 0 6px 20px rgba(37, 137, 73, 0.3);
+
+  span {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+}
+
+.profile-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1a2e1a;
+  margin: 0 0 0.3rem;
+}
+
+.profile-email {
+  font-size: 0.82rem;
+  color: #7a8e7a;
   display: block;
-  margin: 10px 0 5px;
-  font-weight: bold;
+  margin-bottom: 1.5rem;
+  word-break: break-all;
 }
 
-input,
-.textarea-field {
-  font-size: 16px;
+.profile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  background: #f7faf7;
+  border-radius: 14px;
+  padding: 1.1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
 }
 
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 
-button {
-  background: var(--green);
-  color: var(--white);
-  padding: 10px;
+  >i {
+    font-size: 0.95rem;
+    color: #258949;
+    width: 18px;
+    flex-shrink: 0;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+}
+
+.meta-label {
+  font-size: 0.7rem;
+  color: #9aaa9a;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.meta-value {
+  font-size: 0.85rem;
+  color: #1a2e1a;
+  font-weight: 600;
+}
+
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.profile-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #3a4e3a;
+  text-decoration: none;
+  background: transparent;
   border: none;
-  font-size: 16px;
-  width: 100%;
-  border-radius: 5px;
-  margin: 10px 0;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-align: left;
+
+  i {
+    font-size: 0.9rem;
+    color: #258949;
+  }
+
+  &:hover {
+    background: #e8f5e9;
+    color: #258949;
+  }
+
+  &.logout {
+    color: #e53935;
+    margin-top: 0.25rem;
+    border-top: 1px solid #f0f5f0;
+    padding-top: 0.9rem;
+
+    i {
+      color: #e53935;
+    }
+
+    &:hover {
+      background: #ffebee;
+    }
+  }
 }
 
-button:hover {
-  background: var(--light-green);
+// ── Forms Panel ───────────────────────────────────────────────────────────────
+
+.forms-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.password-section {
-  margin-top: 20px;
+// ── Form Card ─────────────────────────────────────────────────────────────────
+
+.form-card {
+  background: #fff;
+  border-radius: 22px;
+  padding: 1.8rem 2rem;
+  box-shadow: 0 4px 20px rgba(37, 137, 73, 0.08);
 }
 
-.order-history {
-  list-style: none;
-  padding: 0;
+.form-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid #f0f5f0;
+
+  >div:nth-child(2) {
+    flex: 1;
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #1a2e1a;
+      margin: 0 0 2px;
+    }
+
+    p {
+      font-size: 0.8rem;
+      color: #7a8e7a;
+      margin: 0;
+    }
+  }
 }
 
-.order-history li {
-  padding: 10px;
-  border-bottom: 1px solid var(--light-white);
+.form-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1a5c30, #258949);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 1rem;
+    color: #fff;
+  }
+
+  &.warn {
+    background: linear-gradient(135deg, #e65100, #ff8f00);
+  }
 }
 
-.error {
-  color: var(--red);
-  font-size: 14px;
-  margin-top: 5px;
+::ng-deep .edit-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-button:disabled {
-  background: var(--grey);
-  cursor: not-allowed;
+// ── Fields ────────────────────────────────────────────────────────────────────
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
 }
 
-@media screen and (max-width: 576px) {
-  .account-box {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    padding: 12px;
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #3a4e3a;
+  }
+
+  p-iconfield,
+  ::ng-deep p-password {
     width: 100%;
-    width: 22rem;
+  }
+
+  input[pInputText],
+  textarea[pTextarea] {
+    width: 100%;
+    border-radius: 10px;
+    border: 1.5px solid #e0e8e0;
+    font-size: 0.92rem;
+    background: #f7faf7;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      border-color: #258949;
+      box-shadow: 0 0 0 3px rgba(37, 137, 73, 0.1);
+      background: #fff;
+    }
+
+    &[readonly],
+    &:disabled {
+      background: #f0f5f0;
+      color: #7a8e7a;
+      cursor: not-allowed;
+    }
+  }
+
+  textarea[pTextarea] {
+    resize: none;
+    padding: 10px 14px;
+  }
+}
+
+.error-msg {
+  font-size: 0.78rem;
+  color: #e53935;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+}
+
+::ng-deep .save-btn {
+  border-radius: 50px !important;
+  padding: 0.6rem 1.8rem !important;
+  font-weight: 700 !important;
+}
+
+// ── Password Placeholder ──────────────────────────────────────────────────────
+
+.password-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #f7faf7;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  color: #7a8e7a;
+  font-size: 0.88rem;
+
+  i {
+    font-size: 1.1rem;
+    color: #258949;
+    flex-shrink: 0;
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 900px) {
+  .account-body {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-card {
+    position: static;
+  }
+
+  .profile-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .profile-link {
+      flex: 1;
+      min-width: 120px;
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .account-header {
+    padding: 1rem 1.2rem;
+  }
+
+  .account-body {
+    padding: 0 1rem;
+    margin: 1.5rem auto;
+  }
+
+  .form-card {
+    padding: 1.4rem 1.2rem;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
   }
 }

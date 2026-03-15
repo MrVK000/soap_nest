@@ -1,15 +1,18 @@
 import { ApiService } from './../../services/api.service';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NAV_LINKS } from '../../data/data';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { CartService } from '../../services/cart.service';
-import { MatMenuModule } from '@angular/material/menu';
 import { AuthService } from '../../services/auth.service';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { DrawerModule } from 'primeng/drawer';
+import { PopoverModule } from 'primeng/popover';
+import { BadgeModule } from 'primeng/badge';
+import { Popover } from 'primeng/popover';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
 import { FormsModule } from '@angular/forms';
@@ -17,28 +20,15 @@ import { Suggestion } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterModule, CommonModule, MatTooltipModule, MatMenuModule, InputIconModule, IconFieldModule, InputTextModule, FormsModule],
+  imports: [RouterModule, CommonModule, InputIconModule, IconFieldModule, InputTextModule, FormsModule, ButtonModule, DrawerModule, PopoverModule, BadgeModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  @ViewChild('profilePopover') profilePopover!: Popover;
   private destroy$ = new Subject<void>();
   navLinks = NAV_LINKS;
   isSidebarOpen = false;
-  items = [
-    {
-      items: [
-        {
-          label: 'Profile',
-          icon: 'pi pi-user'
-        },
-        {
-          label: 'Logout',
-          icon: 'pi pi-sign-out'
-        }
-      ]
-    }
-  ];
 
   searchTerm = '';
   suggestions: Suggestion[] = [];
@@ -46,7 +36,6 @@ export class HeaderComponent {
   private searchSubject = new Subject<string>();
   placeholderText = 'Search products';
   private currentWordIndex = 0;
-  private typingInterval: any;
   private deleting = false;
   private charIndex = 0;
   private timeoutRef: any;
@@ -55,7 +44,6 @@ export class HeaderComponent {
   constructor(public cartService: CartService, private router: Router, public authService: AuthService, private apiService: ApiService) {
     this.searchSubject.pipe(debounceTime(300), distinctUntilChanged(), switchMap(term => apiService.fetchSuggestions(term))).subscribe(res => {
       this.suggestions = res.data;
-
       this.showSuggestions = !!this.searchTerm.trim() && res.data.length > 0;
     });
   }
@@ -140,7 +128,6 @@ export class HeaderComponent {
   }
 
   ngOnDestroy() {
-    clearInterval(this.typingInterval);
     clearInterval(this.timeoutRef);
     this.destroy$.next();
     this.destroy$.complete();

@@ -1,33 +1,80 @@
-<div class="login-container w-full flex justify-content-center align-items-center">
-    <section class="login-box w-full">
-        <h2 class="text-center">Login to Your Account</h2>
+<div class="login-page">
 
-        <form [formGroup]="loginForm">
-            <div class="input-group">
-                <label class="cursor-pointer" for="email">Email</label>
-                <input id="email" type="email" formControlName="email" placeholder="Enter Your Email Address"
-                    autocomplete="email">
-            </div>
-            <div class="error"
-                [ngStyle]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched?{}:{'visibility':'hidden'}">
-                Enter a valid email.
-            </div>
+  <!-- LEFT PANEL: Branding -->
+  <div class="brand-panel">
+    <div class="brand-content">
+      <img src="assets/logo/logo-2.jpeg" alt="Green Glow" class="brand-logo">
+      <h1>Green <span>Glow</span></h1>
+      <p>Handmade with love, crafted for your skin. Pure, natural, and eco-friendly products for a healthier you.</p>
+      <div class="brand-features">
+        <div class="feature"><i class="pi pi-verified"></i> 100% Natural Ingredients</div>
+        <div class="feature"><i class="pi pi-heart"></i> Handcrafted with Care</div>
+        <div class="feature"><i class="pi pi-globe"></i> Eco-Friendly Packaging</div>
+      </div>
+    </div>
+    <div class="brand-circles">
+      <div class="circle c1"></div>
+      <div class="circle c2"></div>
+      <div class="circle c3"></div>
+    </div>
+  </div>
 
-            <div class="input-group">
-                <label class="cursor-pointer" for="password">Password</label>
-                <input id="password" class="password-field" [type]="showPassword ? 'text' : 'password'"
-                    formControlName="password" placeholder="Enter Your Password" autocomplete="current-password">
-                <span class="toggle cursor-pointer" (click)="togglePassword()">{{ showPassword ? '🙉' : '🙈' }}</span>
-            </div>
-            <div class="error"
-                [ngStyle]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched?{}:{'visibility':'hidden'}">
-                Password must be at least 6 characters.
-            </div>
+  <!-- RIGHT PANEL: Form -->
+  <div class="form-panel">
+    <div class="form-card">
 
-            <button class="w-full" type="submit" (click)="submitForm()" [disabled]="loginForm.invalid">Login</button>
-        </form>
+      <div class="form-header">
+        <div class="form-icon"><i class="pi pi-user"></i></div>
+        <h2>Welcome Back</h2>
+        <p>Sign in to your account to continue</p>
+      </div>
 
-        <p class="forgot-password cursor-pointer"><a href="#">Forgot Password? </a></p>
-        <p class="signup cursor-pointer">New here? <a routerLink="/register">Create an account</a></p>
-    </section>
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+
+        <!-- EMAIL -->
+        <div class="field">
+          <label for="email">Email Address</label>
+          <p-iconfield>
+            <p-inputicon class="pi pi-envelope" />
+            <input id="email" type="email" pInputText formControlName="email" placeholder="Enter your email"
+              autocomplete="email"
+              [class.ng-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+              [class.ng-dirty]="loginForm.get('email')?.touched">
+          </p-iconfield>
+          <small class="error-msg" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+            Please enter a valid email address.
+          </small>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="field">
+          <label for="password">Password</label>
+          <p-password id="password" formControlName="password" placeholder="Enter your password" [feedback]="false"
+            [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full"
+            [class.ng-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            autocomplete="current-password" />
+          <small class="error-msg" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            Password must be at least 6 characters.
+          </small>
+        </div>
+
+        <!-- FORGOT -->
+        <div class="forgot-row">
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <!-- SUBMIT -->
+        <p-button label="Sign In" icon="pi pi-sign-in" iconPos="right" type="submit" severity="success"
+          styleClass="w-full submit-btn" (onClick)="submitForm()" />
+
+      </form>
+
+      <div class="form-footer">
+        <span>Don't have an account?</span>
+        <a routerLink="/register">Create one</a>
+      </div>
+
+    </div>
+  </div>
+
 </div>

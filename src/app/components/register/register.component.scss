@@ -1,137 +1,383 @@
-.register-box {
-    background: var(--white);
-    padding: 30px;
+.register-page {
+  min-height: 100vh;
+  display: flex;
+}
+
+// ── Brand panel ───────────────────────────────────────────────────────────────
+
+.brand-panel {
+  width: 360px;
+  flex-shrink: 0;
+  background: linear-gradient(145deg, #1a5c30 0%, #258949 50%, #2ea55a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-content {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+}
+
+.brand-logo {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.brand-content h1 {
+  font-size: 2.4rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  line-height: 1;
+
+  span {
+    color: #a8d243;
+  }
+}
+
+.brand-content>p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 2rem;
+}
+
+.brand-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.brand-circles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.c1 {
+  width: 280px;
+  height: 280px;
+  bottom: -60px;
+  right: -80px;
+}
+
+.c2 {
+  width: 160px;
+  height: 160px;
+  top: -30px;
+  right: 40px;
+}
+
+.c3 {
+  width: 100px;
+  height: 100px;
+  top: 45%;
+  left: -20px;
+}
+
+// ── Form panel ────────────────────────────────────────────────────────────────
+
+.form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f7f4;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 760px;
+  background: #fff;
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 40px rgba(37, 137, 73, 0.1);
+  margin: 1rem 0;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-icon {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #258949, #4ec07a);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+
+  i {
+    font-size: 1.4rem;
+    color: #fff;
+  }
+}
+
+.form-header h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1a2e1a;
+  margin-bottom: 6px;
+}
+
+.form-header p {
+  font-size: 0.9rem;
+  color: #6b7c6b;
+  margin: 0;
+}
+
+// ── Fields ────────────────────────────────────────────────────────────────────
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  &.three-col {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #1a2e1a;
+  }
+
+  input[pInputText] {
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
+    height: 42px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    width: 58rem;
-    margin: 4rem 8px;
+    border: 1.5px solid #e0e8e0;
+    background: #f7faf7;
+    font-size: 0.9rem;
+    padding-left: 2.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #258949;
+      box-shadow: 0 0 0 3px rgba(37, 137, 73, 0.1);
+      background: #fff;
+    }
+
+    &.ng-invalid.ng-dirty {
+      border-color: #e53935;
+    }
+  }
+
+  textarea[pTextarea] {
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
+    height: 42px;
+    min-height: 42px;
+    border-radius: 10px;
+    border: 1.5px solid #e0e8e0;
+    background: #f7faf7;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    resize: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #258949;
+      box-shadow: 0 0 0 3px rgba(37, 137, 73, 0.1);
+      background: #fff;
+    }
+
+    &.ng-invalid.ng-dirty {
+      border-color: #e53935;
+    }
+  }
 }
 
-h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
+::ng-deep .field .p-password {
+  width: 100%;
+
+  .p-password-input {
+    width: 100%;
+    height: 42px;
+    border-radius: 10px;
+    border: 1.5px solid #e0e8e0;
+    background: #f7faf7;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      border-color: #258949;
+      box-shadow: 0 0 0 3px rgba(37, 137, 73, 0.1);
+      background: #fff;
+    }
+  }
+
+  &.ng-invalid.ng-dirty .p-password-input {
+    border-color: #e53935;
+  }
 }
 
-.form>.w-full {
-    margin: 0 12px;
+::ng-deep .field .p-select {
+  width: 100%;
+  height: 42px;
+  border-radius: 10px;
+  border: 1.5px solid #e0e8e0;
+  background: #f7faf7;
+
+  &:hover,
+  &.p-focus {
+    border-color: #258949;
+  }
+
+  .p-select-label {
+    font-size: 0.9rem;
+    padding: 10px 14px;
+  }
 }
 
-label {
-    margin: 12px 0 4px 0;
-    float: left;
+.error-msg {
+  color: #e53935;
+  font-size: 0.75rem;
 }
 
-input,
-textarea,
-select {
-    border: 2px solid var(--grey);
-    border-radius: 5px;
-    font-size: 16px;
-    z-index: 2;
+// ── Terms ─────────────────────────────────────────────────────────────────────
+
+.terms-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+
+  label {
+    font-size: 0.88rem;
+    color: #1a2e1a;
+    cursor: pointer;
+
+    a {
+      color: #258949;
+      font-weight: 700;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
-textarea {
-  max-height: 10rem;
+// ── Submit ────────────────────────────────────────────────────────────────────
+
+::ng-deep .submit-btn.p-button {
+  width: 100%;
+  height: 46px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
-.checkbox-label {
-    font-size: 14px;
-    margin-top: 12px;
-    width: inherit;
-}
+.form-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.88rem;
+  color: #6b7c6b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 
-.tearms-checkbox {
-    width: 20px;
-    min-width: 20px;
-    max-width: 20px;
-    margin: 0;
-    margin-right: 8px;
-    height: 20px;
-}
-
-.error {
-    color: var(--red);
-    font-size: 14px;
-    text-align: left;
-}
-
-button {
-    background: var(--green);
-    color: var(--white);
-    margin: 20px 0;
-}
-
-button:disabled {
-    background: var(--grey);
-    cursor: not-allowed;
-}
-
-.login-link {
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-a {
-    color: var(--green);
+  a {
+    color: #258949;
+    font-weight: 700;
     text-decoration: none;
-    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
+// ── Responsive ────────────────────────────────────────────────────────────────
 
-@media screen and (max-width: 575px) {
-    .register-box {
-        padding: 12px;
-        min-width: auto;
-        max-width: 20rem;
-    }
+@media (max-width: 900px) {
+  .brand-panel {
+    display: none;
+  }
 
-    .form {
-        flex-direction: column;
-    }
+  .form-panel {
+    background: linear-gradient(145deg, #1a5c30, #258949);
+  }
 
-    .form>.w-full {
-        margin: 0;
-    }
+  .form-card {
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  }
 }
 
-@media screen and (min-width: 576px) and (max-width: 767px) {
-    .register-box {
-        padding: 20px;
-        max-width: 32rem;
-    }
+@media (max-width: 640px) {
 
-    .form {
-        flex-direction: column;
-    }
+  .field-row,
+  .field-row.three-col {
+    grid-template-columns: 1fr;
+  }
 
-    .form>.w-full {
-        margin: 0;
-    }
-}
+  .form-card {
+    padding: 1.8rem 1.2rem;
+    border-radius: 18px;
+  }
 
-@media screen and (min-width: 768px) and (max-width: 863px) {
-    .register-box {
-        padding: 32px;
-        max-width: 42rem;
-    }
-
-    .form {
-        flex-direction: column;
-    }
-
-    .form>.w-full {
-        margin: 0;
-    }
-}
-
-@media screen and (min-width: 864px) and (max-width: 1023px) {
-    .register-box {
-        padding: 12px;
-        max-width: 48rem;
-    }
-
-    .form>.w-full {
-        margin: 0 12px;
-    }
+  .form-panel {
+    padding: 1rem;
+  }
 }

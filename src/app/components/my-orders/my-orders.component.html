@@ -1,59 +1,95 @@
-<div class="my-orders-container">
-    <h1 class="page-title text-center">My Orders</h1>
-    <div class="my-orders-wrapper">
-        <div class="filters flex flex-column align-items-center">
+<div class="orders-page">
 
-            <div *ngIf="false" class="date-field-wrapper">
-                <label>Date: </label>
-                <input class="date-filter" type="date" [(ngModel)]="startDate"> to
-                <input class="date-filter" type="date" [(ngModel)]="endDate">
-            </div>
+    <!-- HEADER -->
+    <div class="orders-header">
+        <p-button label="Back" icon="pi pi-arrow-left" [text]="true" severity="secondary"
+            (onClick)="sharedService.goBack()" />
+        <div class="header-title">
+            <i class="pi pi-list"></i>
+            <span>My Orders</span>
+        </div>
+    </div>
 
-            <div class="status-field-wrapper w-full">
-                <label>Status: </label>
-                <select class="status-filter" (change)="filterByStatus($event)">
-                    <option value="">All</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Shipped">Shipped</option>
-                    <option value="Delivered">Delivered</option>
-                    <option value="Cancelled">Cancelled</option>
-                </select>
-            </div>
+    <!-- TOOLBAR -->
+    <div class="orders-toolbar">
+        <div class="toolbar-inner">
+            <p-select [(ngModel)]="selectedStatus" [options]="statusOptions" optionLabel="label" optionValue="value"
+                placeholder="Filter by status" appendTo="body" [checkmark]="true" (onChange)="onStatusChange()"
+                styleClass="status-select" />
+            <span class="order-count" *ngIf="!loading">
+                {{ filteredOrders.length }} order{{ filteredOrders.length !== 1 ? 's' : '' }}
+            </span>
+        </div>
+    </div>
 
-            <button *ngIf="false" class="filter-btn" (click)="filterByDate()">Filter</button>
-            <small *ngIf="false">*Note:- Use the filter options to filter the orders</small>
+    <!-- ORDERS LIST -->
+    <div class="orders-container">
+
+        <!-- EMPTY STATE -->
+        <div class="empty-orders" *ngIf="!loading && filteredOrders.length === 0">
+            <div class="empty-icon"><i class="pi pi-inbox"></i></div>
+            <h2>No orders found</h2>
+            <p>You haven't placed any orders yet.</p>
+            <p-button label="Shop Now" icon="pi pi-arrow-right" iconPos="right" severity="success"
+                routerLink="/products" />
         </div>
 
-        <div *ngFor="let order of paginatedOrders" class="order-card">
+        <!-- ORDER CARDS -->
+        <div class="orders-grid">
+            <div class="order-card" *ngFor="let order of filteredOrders">
 
-            <div class="flex justify-space-between ">
-                <div class="left-container">
-                    <p> <strong>Order ID: </strong> </p>
-                    <p> <strong>Date:</strong> </p>
-                    <p> <strong>Total:</strong> </p>
-                    <p> <strong>Payment:</strong> </p>
-                    <p> <strong>Status:</strong> </p>
+                <!-- CARD HEADER -->
+                <div class="card-header">
+                    <div class="order-meta">
+                        <span class="order-number"><i class="pi pi-hashtag"></i> {{ order.orderNumber }}</span>
+                        <span class="order-date"><i class="pi pi-calendar"></i> {{ order.createdAt | date:'dd MMM yyyy'
+                            }}</span>
+                    </div>
+                    <p-tag [value]="order.status" [severity]="getStatusSeverity(order.status)"
+                        [icon]="getStatusIcon(order.status)" />
                 </div>
-                <div class="right-container">
-                    <p> {{ order.orderNumber }} </p>
-                    <p> {{ order.createdAt | date}} </p>
-                    <p> ₹{{ order.totalAmount }} </p>
-                    <p> {{ order.paymentMode }} </p>
-                    <p> <span [ngClass]="getStatusClass(order.status)"> {{ order.status }} </span>
-                    </p>
+
+                <!-- ITEMS -->
+                <div class="order-items">
+                    <div class="order-item" *ngFor="let item of order.items">
+                        <div class="item-avatar">{{ item.productName.charAt(0).toUpperCase() }}</div>
+                        <div class="item-info">
+                            <span class="item-name">{{ item.productName }}</span>
+                            <span class="item-qty">Qty: {{ item.quantity }}</span>
+                        </div>
+                        <span class="item-price">₹{{ item.totalPrice }}</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="view-order-btn-wrapper flex justify-content-center">
-                <button (click)="viewOrderDetails(order.id)">View Details</button>
+                <!-- CARD FOOTER -->
+                <div class="card-footer">
+                    <div class="footer-meta">
+                        <span class="payment-mode"><i class="pi pi-credit-card"></i> {{ order.paymentMode }}</span>
+                        <p-tag [value]="order.paymentStatus"
+                            [severity]="order.paymentStatus === 'Completed' ? 'success' : 'warn'" />
+                    </div>
+                    <div class="footer-right">
+                        <span class="total-label">Total</span>
+                        <span class="total-amount">₹{{ order.totalAmount }}</span>
+                        <p-button label="View Details" icon="pi pi-eye" [outlined]="true" severity="success"
+                            size="small" (onClick)="viewOrderDetails(order.id)" />
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <div class="pagination flex justify-content-center align-items-center">
-            <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
-            <span>Page {{ currentPage }}</span>
-            <button (click)="nextPage()"
-                [disabled]="(currentPage * itemsPerPage) >= filteredOrders.length">Next</button>
+        <!-- LOADER -->
+        <div class="orders-loader" *ngIf="loading">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
         </div>
+
+        <!-- ALL LOADED -->
+        <div class="all-loaded" *ngIf="!loading && page >= totalPages && filteredOrders.length > 0">
+            <span class="line"></span>
+            <span class="text"><i class="pi pi-check-circle"></i> All orders loaded</span>
+            <span class="line"></span>
+        </div>
+
     </div>
 </div>

@@ -1,44 +1,107 @@
 <footer class="footer">
-    <div class="footer-container">
-        <div class="quick-links">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a routerLink="/about">About Us</a></li>
-                <li><a routerLink="/products">Products</a></li>
-                <!-- <li><a routerLink="/about">Contact</a></li> -->
-                <!-- <li><a routerLink="/faq">FAQs</a></li> -->
-                <li><a routerLink="/terms">Terms & Conditions</a></li>
-                <li><a routerLink="/shipping-returns">Shipping & Returns</a></li>
-                <li><a routerLink="/privacy-policy">Privacy Policy</a></li>
-            </ul>
-        </div>
 
-        <div class="get-in-touch">
-            <h3>Get in Touch</h3>
-            <div class="social-icons">
-                <a href="https://www.facebook.com" target="_blank"><i class="pi pi-facebook"></i></a>
-                <a href="https://wa.me/your-number" target="_blank"><i class="pi pi-whatsapp"></i></a>
-                <a href="https://www.instagram.com" target="_blank"><i class="pi pi-instagram"></i></a>
-                <a href="tel:+1234567890"><i class="pi pi-phone"></i></a>
-                <a href="mailto:info@example.com"><i class="pi pi-envelope"></i></a>
-                <a href="https://twitter.com" target="_blank"><i class="pi pi-twitter"></i></a>
-                <a href="https://discord.com" target="_blank"><i class="pi pi-discord"></i></a>
-                <a href="https://t.me/your-telegram" target="_blank"><i class="pi pi-telegram"></i></a>
+    <!-- TOP STRIP -->
+    <div class="footer-top">
+        <div class="footer-top-inner">
+            <div class="footer-tagline">
+                <i class="pi pi-leaf"></i>
+                <span>Pure. Natural. Handmade — crafted with love for your skin and the planet.</span>
             </div>
-        </div>
-
-        <div *ngIf="false" class="footer-cover w-full flex justify-content-center align-items-center flex-column">
-            <h2>Get Exclusive Offers</h2>
-
-            <div class="subscription-wrapper w-full flex justify-content-center">
-                <input class="mail-input-field" type="email" placeholder="Enter your email">
-                <button class="subscription-btn">Subscribe</button>
+            <div class="footer-social">
+                <a href="https://www.facebook.com" target="_blank" aria-label="Facebook"><i
+                        class="pi pi-facebook"></i></a>
+                <a href="https://www.instagram.com" target="_blank" aria-label="Instagram"><i
+                        class="pi pi-instagram"></i></a>
+                <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="pi pi-twitter"></i></a>
+                <a href="https://wa.me/your-number" target="_blank" aria-label="WhatsApp"><i
+                        class="pi pi-whatsapp"></i></a>
+                <a href="https://t.me/your-telegram" target="_blank" aria-label="Telegram"><i
+                        class="pi pi-telegram"></i></a>
             </div>
-        </div>
-
-        <hr class="copyrights-divider">
-        <div class="copyrights-wrapper">
-            <p class="copyright">{{copyrightText}}</p>
         </div>
     </div>
+
+    <!-- MAIN FOOTER -->
+    <div class="footer-main">
+        <div class="footer-grid">
+
+            <!-- BRAND -->
+            <div class="footer-brand">
+                <div class="brand-logo">
+                    <img src="assets/logo/logo-2.jpeg" alt="Green Glow" />
+                    <span>Green Glow</span>
+                </div>
+                <p>We create handmade, chemical-free soaps and shampoos using only the finest organic ingredients. Good
+                    for you, good for the earth.</p>
+                <div class="brand-badges">
+                    <span><i class="pi pi-check-circle"></i> 100% Natural</span>
+                    <span><i class="pi pi-check-circle"></i> Cruelty Free</span>
+                    <span><i class="pi pi-check-circle"></i> Eco Friendly</span>
+                </div>
+            </div>
+
+            <!-- QUICK LINKS -->
+            <div class="footer-col">
+                <h4><i class="pi pi-compass"></i> Explore</h4>
+                <ul>
+                    <li><a routerLink="/home"><i class="pi pi-chevron-right"></i> Home</a></li>
+                    <li><a routerLink="/products"><i class="pi pi-chevron-right"></i> Products</a></li>
+                    <li><a routerLink="/about"><i class="pi pi-chevron-right"></i> About Us</a></li>
+                    <li><a routerLink="/my-orders"><i class="pi pi-chevron-right"></i> My Orders</a></li>
+                    <li><a routerLink="/wishlist"><i class="pi pi-chevron-right"></i> Wishlist</a></li>
+                    <li><a routerLink="/favorites"><i class="pi pi-chevron-right"></i> Favorites</a></li>
+                </ul>
+            </div>
+
+            <!-- POLICIES -->
+            <div class="footer-col">
+                <h4><i class="pi pi-file"></i> Policies</h4>
+                <ul>
+                    <li><a routerLink="/terms"><i class="pi pi-chevron-right"></i> Terms & Conditions</a></li>
+                    <li><a routerLink="/shipping-returns"><i class="pi pi-chevron-right"></i> Shipping & Returns</a>
+                    </li>
+                    <li><a routerLink="/privacy-policy"><i class="pi pi-chevron-right"></i> Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- CONTACT -->
+            <div class="footer-col">
+                <h4><i class="pi pi-headphones"></i> Contact</h4>
+                <div class="contact-list">
+                    <a href="mailto:support@greenglow.com" class="contact-item">
+                        <div class="contact-icon"><i class="pi pi-envelope"></i></div>
+                        <span>support&#64;greenglow.com</span>
+                    </a>
+                    <a href="tel:+919876543210" class="contact-item">
+                        <div class="contact-icon"><i class="pi pi-phone"></i></div>
+                        <span>+91 98765 43210</span>
+                    </a>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="pi pi-map-marker"></i></div>
+                        <span>Kerala, India</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="pi pi-clock"></i></div>
+                        <span>Mon – Sat, 9am – 6pm</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="footer-bottom">
+        <div class="footer-bottom-inner">
+            <p>{{ copyrightText }}</p>
+            <div class="bottom-links">
+                <a routerLink="/privacy-policy">Privacy</a>
+                <span>·</span>
+                <a routerLink="/terms">Terms</a>
+                <span>·</span>
+                <a routerLink="/shipping-returns">Shipping</a>
+            </div>
+        </div>
+    </div>
+
 </footer>

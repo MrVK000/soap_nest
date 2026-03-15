@@ -10,12 +10,19 @@ import { ApiService } from '../../services/api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CartService } from '../../services/cart.service';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { TextareaModule } from 'primeng/textarea';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { DividerModule } from 'primeng/divider';
 
 declare var Razorpay: any;
 
 @Component({
   selector: 'app-checkout',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, ButtonModule, InputTextModule, SelectModule, TextareaModule, IconFieldModule, InputIconModule, DividerModule],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -127,6 +134,13 @@ export class CheckoutComponent {
       } else {
         this.snackbar.open("Please use a valid coupon code");
       }
+    }
+  }
+
+  onNumericKeydown(event: KeyboardEvent) {
+    const allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+    if (!allowed.includes(event.key) && !/^[0-9]$/.test(event.key)) {
+      event.preventDefault();
     }
   }
 

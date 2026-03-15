@@ -1,146 +1,391 @@
-.checkout-wrapper {
-    background: var(--light-white);
-    width: 34rem;
-    margin-bottom: 32px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.co-header {
+  background: linear-gradient(135deg, #1a5c30 0%, #258949 100%);
+  padding: 1.2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
+.co-header-text {
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+
+  p {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+  }
+}
+
+::ng-deep .co-header .p-button {
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+  }
+}
+
+// ── Page layout ───────────────────────────────────────────────────────────────
+
+.co-page {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  align-items: flex-start;
+}
+
+// ── Summary + Form cards ──────────────────────────────────────────────────────
+
+.co-summary,
+.co-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.summary-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 16px rgba(37, 137, 73, 0.07);
+  border: 1px solid #e8f5e9;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1a2e1a;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  i {
+    color: #258949;
+  }
+}
+
+// ── Product list ──────────────────────────────────────────────────────────────
+
 .product-list {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .product-item {
-    display: flex;
-    align-items: center;
-    background: var(--white);
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-}
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f7faf7;
+  border-radius: 12px;
+  border: 1px solid #e8f5e9;
 
-.product-item img {
-    width: 80px;
-    height: 80px;
+  img {
+    width: 60px;
+    height: 60px;
     object-fit: cover;
-    border-radius: 8px;
-    margin-right: 10px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
 }
 
-form div {
-    margin-bottom: 20px;
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
-
-label {
-    font-weight: bold;
+.product-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a2e1a;
 }
 
-// input,
-// textarea,
-// select {
-//     width: 100%;
-//     min-width: 100%;
-//     max-width: 100%;
-//     padding: 8px;
-//     margin: 5px 0 20px 0;
-//     border: 1px solid var(--grey);
-//     border-radius: 4px;
-// }
-
-input,
-textarea {
-    margin-top: 8px;
+.product-category {
+  font-size: 0.75rem;
+  color: #258949;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.error {
-    color: var(--red);
-    font-size: 14px;
+.product-price {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #258949;
+  flex-shrink: 0;
 }
 
-.coupon-wrapper {
-    margin-top: 12px;
+// ── Coupon ────────────────────────────────────────────────────────────────────
+
+.coupon-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
 }
 
-.add-coupon,
-.apply-coupon {
-    margin: 4px 0;
+.coupon-input {
+  flex: 1;
+
+  input[pInputText] {
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
+    height: 42px;
+    border-radius: 10px;
+    border: 1.5px solid #e0e8e0;
+    background: #f7faf7;
+    font-size: 0.9rem;
+    padding-left: 2.5rem;
+
+    &:focus {
+      outline: none;
+      border-color: #258949;
+      box-shadow: 0 0 0 3px rgba(37, 137, 73, 0.1);
+    }
+  }
 }
 
-.add-coupon {
-    background-color: var(--green);
-    color: var(--white);
+// ── Price breakdown ───────────────────────────────────────────────────────────
+
+.price-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
-.remove-coupon {
-    width: 8rem;
-    background-color: var(--red);
-    color: var(--white);
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #4a6e4a;
+
+  &.discount {
+    color: #258949;
+    font-weight: 600;
+
+    i {
+      margin-right: 4px;
+    }
+  }
+
+  &.total {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1a2e1a;
+
+    span:last-child {
+      color: #258949;
+      font-size: 1.3rem;
+    }
+  }
 }
 
-.apply-coupon {
-    background-color: var(--orange);
-    color: var(--white);
+.delivery-free {
+  color: #e65100;
+  font-weight: 600;
 }
 
-.coupon-inputfield {
-    min-width: 0 !important;
-    margin: 0;
+// ── Form fields ───────────────────────────────────────────────────────────────
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  &.three-col {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
-.verify-coupon {
-    width: 8rem;
-    background: var(--blue);
-    color: var(--white);
-}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 1rem;
 
-.verified-coupon {
-    background: var(--green);
-}
+  label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #1a2e1a;
+  }
 
-.coupon-section button i {
-    margin-right: 8px;
-}
+  input[pInputText] {
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
+    height: 42px;
+    border-radius: 10px;
+    border: 1.5px solid #e0e8e0;
+    background: #f7faf7;
+    font-size: 0.9rem;
+    padding-left: 2.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
 
-.order-summary {
-    background: var(--white);
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 6px;
-    margin-bottom: 20px;
-}
-
-.order-summary p {
-    margin: 20px 0;
-}
-
-.submit-btn {
-    background: var(--green);
-    color: var(--white);
-}
-
-.cancel-btn {
-    background: var(--red);
-    color: var(--white);
-}
-
-button:disabled {
-    background: var(--grey);
-    cursor: not-allowed;
-}
-
-
-@media screen and (max-width: 576px) {
-    .checkout-wrapper {
-        width: auto;
-        margin: 12px;
-        margin-top: 0;
+    &:focus {
+      outline: none;
+      border-color: #258949;
+      box-shadow: 0 0 0 3px rgba(37, 137, 73, 0.1);
+      background: #fff;
     }
 
-    .button-container {
-        flex-direction: column;
+    &.ng-invalid.ng-dirty {
+      border-color: #e53935;
     }
+  }
+
+  textarea[pTextarea] {
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
+    min-height: 70px;
+    border-radius: 10px;
+    border: 1.5px solid #e0e8e0;
+    background: #f7faf7;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    resize: none;
+    height: auto;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #258949;
+      box-shadow: 0 0 0 3px rgba(37, 137, 73, 0.1);
+      background: #fff;
+    }
+
+    &.ng-invalid.ng-dirty {
+      border-color: #e53935;
+    }
+  }
+}
+
+::ng-deep .field .p-select {
+  width: 100%;
+  height: 42px;
+  border-radius: 10px;
+  border: 1.5px solid #e0e8e0;
+  background: #f7faf7;
+
+  &:hover,
+  &.p-focus {
+    border-color: #258949;
+  }
+
+  .p-select-label {
+    font-size: 0.9rem;
+    padding: 10px 14px;
+  }
+}
+
+.error-msg {
+  color: #e53935;
+  font-size: 0.75rem;
+}
+
+// ── Payment method display ────────────────────────────────────────────────────
+
+.payment-method {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f0faf4;
+  border: 1.5px solid #c8e6c9;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a2e1a;
+
+  .pi-credit-card {
+    color: #258949;
+    font-size: 1.1rem;
+  }
+
+  .pi-lock {
+    color: #258949;
+    margin-left: auto;
+  }
+}
+
+// ── Actions ───────────────────────────────────────────────────────────────────
+
+.action-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+::ng-deep .cancel-btn.p-button {
+  flex: 0 0 auto;
+  height: 46px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+::ng-deep .pay-btn.p-button {
+  flex: 1;
+  height: 46px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 800;
+  justify-content: center;
+}
+
+// ── Secure badge ──────────────────────────────────────────────────────────────
+
+.secure-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #6b7c6b;
+  font-weight: 500;
+
+  i {
+    color: #258949;
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 860px) {
+  .co-page {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+    margin: 1.5rem auto;
+  }
+
+  .co-header {
+    padding: 1rem 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .field-row,
+  .field-row.three-col {
+    grid-template-columns: 1fr;
+  }
+
+  .co-header-text h1 {
+    font-size: 1.3rem;
+  }
 }

@@ -1,9 +1,69 @@
-<div class="success-container">
-  <img src="assets/success_images/success-image-2.gif" alt="Success">
-  <h1 class="page-title text-center">Order Placed Successfully!</h1>
-  <p>Your order ID is <strong>{{ orderId }}</strong>.</p>
-  <p>Thank you for shopping with us!</p>
+<div class="success-page">
 
-  <button (click)="goToOrders()">View Orders</button>
-  <button class="home-btn " (click)="goToHome()">Continue Shopping</button>
+  <!-- BG CIRCLES -->
+  <div class="bg-circle c1"></div>
+  <div class="bg-circle c2"></div>
+  <div class="bg-circle c3"></div>
+
+  <div class="success-card">
+
+    <!-- SUCCESS ANIMATION -->
+    <div class="success-icon-wrap">
+      <div class="success-ring r1"></div>
+      <div class="success-ring r2"></div>
+      <div class="success-icon">
+        <i class="pi pi-check"></i>
+      </div>
+    </div>
+
+    <!-- HEADING -->
+    <h1>Order Placed Successfully!</h1>
+    <p class="subtitle">Thank you for shopping with <strong>Green Glow</strong>. Your order is confirmed and will be
+      processed shortly.</p>
+
+    <!-- ORDER ID -->
+    <div class="order-id-box">
+      <span class="oid-label"><i class="pi pi-hashtag"></i> Order ID</span>
+      <span class="oid-value">{{ orderId }}</span>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div class="next-steps">
+      <div class="step" *ngFor="let step of steps; let i = index">
+        <div class="step-icon"><i [class]="step.icon"></i></div>
+        <div class="step-connector" *ngIf="i < steps.length - 1"></div>
+        <span class="step-label">{{ step.label }}</span>
+      </div>
+    </div>
+
+    <!-- INFO STRIP -->
+    <div class="info-strip">
+      <div class="info-item">
+        <i class="pi pi-truck"></i>
+        <span>Delivery in 3–7 days</span>
+      </div>
+      <div class="info-divider"></div>
+      <div class="info-item">
+        <i class="pi pi-bell"></i>
+        <span>Updates via email</span>
+      </div>
+      <div class="info-divider"></div>
+      <div class="info-item">
+        <i class="pi pi-headphones"></i>
+        <span>24/7 Support</span>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="action-buttons">
+      <button class="btn-primary" (click)="goToOrders()">
+        <i class="pi pi-list"></i> View My Orders
+      </button>
+      <button class="btn-outline" (click)="goToHome()">
+        <i class="pi pi-shopping-bag"></i> Continue Shopping
+      </button>
+    </div>
+
+  </div>
+
 </div>

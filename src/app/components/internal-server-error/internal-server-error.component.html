@@ -1,5 +1,56 @@
-<div class="wrapper">
-    <h1>500</h1>
-    <h2>Oops! Server Error </h2>
-    <p>Technical team will be notified. Please visit some other time</p>
+<div class="error-page">
+
+    <!-- BG CIRCLES -->
+    <div class="bg-circle c1"></div>
+    <div class="bg-circle c2"></div>
+    <div class="bg-circle c3"></div>
+
+    <div class="error-card">
+
+        <!-- ICON -->
+        <div class="error-icon-wrap">
+            <div class="error-icon">
+                <i class="pi pi-server"></i>
+            </div>
+            <div class="pulse-ring"></div>
+        </div>
+
+        <!-- CODE -->
+        <div class="error-code">500</div>
+
+        <!-- TEXT -->
+        <h1>Internal Server Error</h1>
+        <p>Something went wrong on our end. Our technical team has been notified and is working on a fix. Please try
+            again in a little while.</p>
+
+        <!-- WHAT HAPPENED -->
+        <div class="info-strip">
+            <div class="info-item">
+                <i class="pi pi-bell"></i>
+                <span>Team notified</span>
+            </div>
+            <div class="info-divider"></div>
+            <div class="info-item">
+                <i class="pi pi-wrench"></i>
+                <span>Fix in progress</span>
+            </div>
+            <div class="info-divider"></div>
+            <div class="info-item">
+                <i class="pi pi-clock"></i>
+                <span>Try again soon</span>
+            </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="error-actions">
+            <a class="btn-primary" routerLink="/home">
+                <i class="pi pi-home"></i> Go to Home
+            </a>
+            <button class="btn-outline" (click)="reload()">
+                <i class="pi pi-refresh"></i> Try Again
+            </button>
+        </div>
+
+    </div>
+
 </div>

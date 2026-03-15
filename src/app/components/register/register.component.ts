@@ -6,12 +6,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { Subject, takeUntil } from 'rxjs';
-import { DropdownModule } from 'primeng/dropdown';
 import { RegisterUserForm } from '../../interfaces/interfaces';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { SelectModule } from 'primeng/select';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { TextareaModule } from 'primeng/textarea';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, CommonModule, RouterModule, DropdownModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, InputTextModule, PasswordModule, ButtonModule, SelectModule, IconFieldModule, InputIconModule, TextareaModule, CheckboxModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -21,7 +28,7 @@ export class RegisterComponent {
   districtsList: string[] = [];
   pincodesList: string[] = [];
   registerForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl('', [Validators.required]),
@@ -43,6 +50,13 @@ export class RegisterComponent {
   handleKeyBoardEvent(event: KeyboardEvent) {
     if (event?.code?.toLowerCase() === 'enter') {
       this.submitForm();
+    }
+  }
+
+  onNumericKeydown(event: KeyboardEvent) {
+    const allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+    if (!allowed.includes(event.key) && !/^[0-9]$/.test(event.key)) {
+      event.preventDefault();
     }
   }
 

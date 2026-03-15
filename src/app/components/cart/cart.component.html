@@ -1,40 +1,128 @@
-<section class="back-btn-wrapper w-full"><button class="back-btn" (click)="sharedService.goBack()">
-    <i class="pi pi-arrow-left"></i>Back</button></section>
-<div class="cart-container w-full"
-    *ngIf="(cartService?.cartItems ? cartService.cartItems.length : 0) > 0; else emptyCart">
-    <h1 *ngIf="false" class="page-title text-center">Shopping Cart</h1>
+<div class="cart-page">
 
-    <div class="item-wrapper">
-        <div class="cart-item flex align-items-center" *ngFor="let item of cartService.cartItems; let i = index">
-            <img class="cart-item-img" [src]="item.image" [alt]="item.name" />
-            <div class="details-wrapper flex align-items-center justify-space-between">
-                <div class="product-detail">
-                    <h3>{{ item.name }}</h3>
-                    <!-- <p>Product code: {{ item.productId }}</p> -->
-                </div>
-                <div class="btn-wrapper flex flex-column justify-content-center">
-                    <div class="quantity flex align-items-center">
-                        <button class="btn"
-                            (click)="decreaseQuantity(item.cartItemId, item.quantity)">-</button>
-                        <span>{{ item?.quantity }}</span>
-                        <button class="btn" (click)="increaseQuantity(item.cartItemId, item.quantity)">+</button>
-                    </div>
-                    <button class="btn remove" (click)="removeItem(item.cartItemId)"><i class="icon fa-solid fa-trash"></i>Remove</button>
-                </div>
-                <h3>Price: ₹{{ item.price - (item.price * item.offer / 100) }}</h3>
-            </div>
+    <!-- HEADER -->
+    <div class="cart-header">
+        <p-button label="Back" icon="pi pi-arrow-left" [text]="true" severity="secondary"
+            (onClick)="sharedService.goBack()" />
+        <div class="header-title">
+            <i class="pi pi-shopping-cart"></i>
+            <span>Shopping Cart</span>
+            <span class="item-count" *ngIf="cartService.summary.itemCount > 0">{{ cartService.summary.itemCount }} item{{ cartService.summary.itemCount > 1 ? 's' : '' }}</span>
         </div>
     </div>
 
-    <div class="cart-summary w-full">
-        <h3>Total: ₹{{ getTotalPrice() }}</h3>
-        <button class="btn checkout" (click)="goToCheckout()">Proceed to Checkout</button>
-    </div>
-</div>
+    <!-- CART CONTENT -->
+    <div class="cart-layout" *ngIf="cartService.summary.itemCount > 0; else emptyCart">
 
-<ng-template #emptyCart>
-    <span class="empty-cart-container flex flex-column align-items-center justify-content-center">
-        <h2>Your cart is empty 😢</h2>
-        <button class="shop-now-btn" routerLink="/products">Shop Now</button>
-    </span>
-</ng-template>
+        <!-- LEFT: ITEMS -->
+        <div class="cart-items-col">
+            <div class="cart-card" *ngFor="let item of cartService.cartItems">
+
+                <div class="item-image-wrap">
+                    <img [src]="item.image" [alt]="item.name" class="item-img" />
+                    <span *ngIf="+item.offer > 0" class="offer-badge">{{ item.offer }}% OFF</span>
+                </div>
+
+                <div class="item-details">
+                    <div class="item-top">
+                        <div>
+                            <p-tag [value]="item.category" severity="success" />
+                            <h3 class="item-name">{{ item.name }}</h3>
+                            <p class="item-desc">{{ item.description }}</p>
+                        </div>
+                        <p-button icon="pi pi-trash" [text]="true" severity="danger"
+                            (onClick)="removeItem(item.cartItemId)" />
+                    </div>
+
+                    <div class="item-bottom">
+                        <div class="price-block">
+                            <span class="price-current">₹{{ item.discountPrice }}</span>
+                            <span *ngIf="+item.offer > 0" class="price-original">₹{{ item.price }}</span>
+                        </div>
+
+                        <div class="qty-control">
+                            <p-button icon="pi pi-minus" [text]="true" severity="success"
+                                (onClick)="decreaseQuantity(item.cartItemId, item.quantity)"
+                                [disabled]="item.quantity <= 1" />
+                            <span class="qty-val">{{ item.quantity }}</span>
+                            <p-button icon="pi pi-plus" [text]="true" severity="success"
+                                (onClick)="increaseQuantity(item.cartItemId, item.quantity)"
+                                [disabled]="item.quantity >= item.stock" />
+                        </div>
+
+                        <span class="item-total">₹{{ (+item.discountPrice * item.quantity).toFixed(2) }}</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SCROLL LOADER -->
+            <div class="cart-loader" *ngIf="cartService.cartLoading">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+
+            <!-- END INDICATOR -->
+            <div class="all-loaded"
+                *ngIf="!cartService.cartLoading && cartService.cartPage >= cartService.cartTotalPages && cartService.cartItems.length > 0">
+                <span class="all-loaded-line"></span>
+                <span class="all-loaded-text"><i class="pi pi-check-circle"></i> All items loaded</span>
+                <span class="all-loaded-line"></span>
+            </div>
+        </div>
+
+        <!-- RIGHT: ORDER SUMMARY -->
+        <div class="summary-col">
+            <div class="summary-card">
+                <h2 class="summary-title"><i class="pi pi-receipt"></i> Order Summary</h2>
+                <p-divider />
+
+                <div *ngIf="cartService.summaryLoading" class="summary-loader">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </div>
+
+                <ng-container *ngIf="!cartService.summaryLoading">
+                    <div class="summary-row" *ngFor="let item of cartService.summaryItems">
+                        <span class="summary-item-name">{{ item.name }} <span class="qty-badge">×{{ item.quantity }}</span></span>
+                        <span>₹{{ item.itemTotal }}</span>
+                    </div>
+
+                    <p-divider />
+
+                    <div class="summary-row" *ngIf="cartService.summary.totalSavings > 0">
+                        <span class="savings-label"><i class="pi pi-tag"></i> Total Savings</span>
+                        <span class="savings-val">−₹{{ cartService.summary.totalSavings }}</span>
+                    </div>
+
+                    <div class="summary-row total-row">
+                        <span>Total</span>
+                        <span class="total-val">₹{{ cartService.summary.total }}</span>
+                    </div>
+                </ng-container>
+
+                <p-button label="Proceed to Checkout" icon="pi pi-arrow-right" iconPos="right" severity="success"
+                    styleClass="checkout-btn" (onClick)="goToCheckout()" />
+
+                <p-button label="Continue Shopping" icon="pi pi-shopping-bag" [text]="true" severity="success"
+                    styleClass="continue-btn" routerLink="/products" />
+            </div>
+
+            <div class="trust-badges">
+                <div class="badge-item"><i class="pi pi-shield"></i><span>Secure Checkout</span></div>
+                <div class="badge-item"><i class="pi pi-truck"></i><span>Fast Delivery</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- EMPTY CART -->
+    <ng-template #emptyCart>
+        <div class="empty-cart">
+            <div class="empty-icon"><i class="pi pi-shopping-cart"></i></div>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added anything yet.</p>
+            <p-button label="Shop Now" icon="pi pi-arrow-right" iconPos="right" severity="success"
+                routerLink="/products" />
+        </div>
+    </ng-template>
+
+</div>

@@ -9,10 +9,15 @@ import { LoginUserForm, RegisterUserForm } from '../../interfaces/interfaces';
 import { ApiService } from '../../services/api.service';
 import { SharedService } from '../../services/shared.service';
 import { Subject, takeUntil } from 'rxjs';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, InputTextModule, PasswordModule, ButtonModule, IconFieldModule, InputIconModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

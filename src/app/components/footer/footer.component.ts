@@ -10,5 +10,4 @@ import { RouterModule } from '@angular/router';
 })
 export class FooterComponent {
   copyrightText: string = `Copyright© ${new Date().getFullYear()} Green Glow - All Rights Reserved.`;
-
 }

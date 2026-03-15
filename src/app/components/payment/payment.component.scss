@@ -1,37 +1,405 @@
-.payment-container {
-    text-align: center;
-    // max-width: 400px;
-    margin: auto;
-    margin: 2rem 8px;
-    padding: 20px;
-    background: var(--light-white);
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+.payment-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f4f7f4 0%, #e8f5e9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
 }
 
-.page-title {
-    margin-top: 0;
+// ── BG Circles ────────────────────────────────────────────────────────────────
+
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: #258949;
+  pointer-events: none;
+
+  &.c1 { width: 500px; height: 500px; top: -180px; right: -150px; opacity: 0.05; }
+  &.c2 { width: 320px; height: 320px; bottom: -100px; left: -80px; opacity: 0.04; }
 }
 
-p {
-    font-size: 18px;
+// ── Wrap ──────────────────────────────────────────────────────────────────────
+
+.payment-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  max-width: 900px;
+  width: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(37, 137, 73, 0.14);
+  position: relative;
+  z-index: 1;
+  animation: slideUp 0.45s ease;
 }
 
-.pay-btn,
-.cancel-btn {
-    padding: 10px;
-    color: var(--white);
-    border: none;
-    border-radius: 4px;
-    margin: 12px;
-    width: 6rem;
-    margin-top: 30px;
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.pay-btn {
-    background: var(--green);
+// ── Summary Panel (Left) ──────────────────────────────────────────────────────
+
+.summary-panel {
+  background: linear-gradient(160deg, #1a5c30 0%, #258949 100%);
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: #fff;
 }
 
-.cancel-btn {
-    background: var(--red);
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  img {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.2);
+  }
+
+  span {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+  }
+}
+
+.secure-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+
+  i { font-size: 0.72rem; }
+}
+
+.order-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 1.2rem;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.order-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.info-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.65);
+
+  i { font-size: 0.78rem; }
+}
+
+.info-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  text-align: right;
+  word-break: break-all;
+}
+
+.amount-box {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 18px;
+  padding: 1.5rem;
+  text-align: center;
+
+  .amount-label {
+    display: block;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.65);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.4rem;
+  }
+
+  .amount-value {
+    display: block;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .amount-note {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.55);
+  }
+}
+
+.trust-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: auto;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+
+  i { font-size: 0.85rem; color: #a8e6be; }
+}
+
+// ── Action Panel (Right) ──────────────────────────────────────────────────────
+
+.action-panel {
+  background: #fff;
+  padding: 2.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.action-header {
+  text-align: center;
+}
+
+.payment-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+
+  i { font-size: 1.8rem; color: #258949; }
+}
+
+.action-header h1 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #1a2e1a;
+  margin: 0 0 0.5rem;
+}
+
+.action-header p {
+  font-size: 0.88rem;
+  color: #7a8e7a;
+  line-height: 1.6;
+  margin: 0;
+}
+
+// ── Razorpay Info ─────────────────────────────────────────────────────────────
+
+.razorpay-info {
+  background: #f7faf7;
+  border: 1.5px solid #e0ede0;
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+
+  .razorpay-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.4rem;
+
+    i { font-size: 1.1rem; color: #258949; }
+
+    span {
+      font-size: 0.88rem;
+      color: #5a6e5a;
+
+      strong { color: #1a2e1a; }
+    }
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: #7a8e7a;
+    margin: 0 0 0.9rem;
+  }
+}
+
+.payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.method-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fff;
+  border: 1.5px solid #d4e8d4;
+  color: #258949;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+
+  i { font-size: 0.72rem; }
+}
+
+// ── Amount Summary ────────────────────────────────────────────────────────────
+
+.amount-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f4f7f4;
+  border-radius: 12px;
+  padding: 1rem 1.4rem;
+
+  span {
+    font-size: 0.9rem;
+    color: #5a6e5a;
+    font-weight: 600;
+  }
+
+  .pay-amount {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #258949;
+  }
+}
+
+// ── Buttons ───────────────────────────────────────────────────────────────────
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.btn-pay {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #1a5c30, #258949);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(37, 137, 73, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  i { font-size: 0.95rem; }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(37, 137, 73, 0.4);
+  }
+
+  &:active { transform: translateY(0); }
+}
+
+.btn-cancel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: #7a8e7a;
+  border: 1.5px solid #d4e8d4;
+  padding: 12px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+
+  i { font-size: 0.85rem; }
+
+  &:hover {
+    background: #f4f7f4;
+    color: #1a2e1a;
+    border-color: #b0ccb0;
+  }
+}
+
+// ── Bottom Note ───────────────────────────────────────────────────────────────
+
+.bottom-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #9aaa9a;
+  text-align: center;
+  justify-content: center;
+
+  i { font-size: 0.78rem; margin-top: 1px; flex-shrink: 0; }
+
+  a {
+    color: #258949;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover { text-decoration: underline; }
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: 768px) {
+  .payment-wrap {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .summary-panel {
+    gap: 1.4rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .trust-badges { flex-direction: row; flex-wrap: wrap; gap: 0.75rem; }
+
+  .action-panel { padding: 2rem 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  .payment-page { padding: 1rem; }
+
+  .payment-wrap { border-radius: 20px; }
+
+  .amount-box .amount-value { font-size: 2rem; }
+
+  .action-header h1 { font-size: 1.2rem; }
 }

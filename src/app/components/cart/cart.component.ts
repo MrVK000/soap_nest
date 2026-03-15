@@ -1,15 +1,15 @@
-import { AuthService } from './../../services/auth.service';
 import { SharedService } from '../../services/shared.service';
-import { Component } from '@angular/core';
-import { Product } from '../../interfaces/interfaces';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart.service';
-import { ApiService } from '../../services/api.service';
+import { ButtonModule } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ButtonModule, TagModule, DividerModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
@@ -18,10 +18,20 @@ export class CartComponent {
   constructor(private router: Router, public sharedService: SharedService, public cartService: CartService) { }
 
   ngOnInit(): void {
-    this.sharedService.addSeo("Your Cart - Green Glow");
-    this.cartService.getCartItems();
+    this.sharedService.addSeo('Your Cart - Green Glow');
+    this.cartService.loadCartItems(1, false);
+    this.cartService.loadCartSummary();
   }
 
+  @HostListener('window:scroll')
+  onScroll() {
+    if (this.cartService.cartLoading) return;
+    if (this.cartService.cartPage >= this.cartService.cartTotalPages) return;
+    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+    if (nearBottom) {
+      this.cartService.loadCartItems(this.cartService.cartPage + 1, true);
+    }
+  }
 
   increaseQuantity(cartItemId: number, quantity: number) {
     this.cartService.increaseQuantity(cartItemId, quantity + 1);
@@ -31,12 +41,8 @@ export class CartComponent {
     this.cartService.decreaseQuantity(cartItemId, quantity - 1);
   }
 
-  removeItem(cartItem: number) {
-    this.cartService.removeItem(cartItem);
-  }
-
-  getTotalPrice() {
-    return this.cartService.getTotalPrice().toFixed(2);
+  removeItem(cartItemId: number) {
+    this.cartService.removeItem(cartItemId);
   }
 
   goToCheckout() {

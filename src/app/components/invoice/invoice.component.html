@@ -1,60 +1,103 @@
-<div id="invoice" class="invoice-wrapper">
-    <header>
-        <h1>Invoice</h1>
-        <p>Order ID: {{ order.id }}</p>
-        <p>Date: {{ order.date }}</p>
-    </header>
+<div class="invoice-page">
+    <div class="download-bar no-print">
+        <button class="btn-download" (click)="downloadPDF()">
+            <i class="pi pi-download"></i> Download PDF
+        </button>
+    </div>
 
-    <section class="seller-buyer-info">
-        <div>
-            <h3>From:</h3>
-            <p>{{ company.name }}</p>
-            <p>{{ company.address }}</p>
-            <p>{{ company.phone }}</p>
-            <p>{{ company.email }}</p>
+    <div id="invoice" class="invoice-card" *ngIf="order">
+
+        <!-- Header -->
+        <div class="inv-header">
+            <div class="inv-brand">
+                <div class="brand-logo">🌿</div>
+                <div>
+                    <div class="brand-name">{{ company.name }}</div>
+                    <div class="brand-tagline">Pure. Natural. Organic.</div>
+                </div>
+            </div>
+            <div class="inv-meta">
+                <div class="inv-badge">INVOICE</div>
+                <div class="inv-id"># {{ order.id }}</div>
+                <div class="inv-date">{{ order.date | date: 'dd MMM yyyy' }}</div>
+            </div>
         </div>
 
-        <div>
-            <h3>To:</h3>
-            <p>{{ order.customer.name }}</p>
-            <p>{{ order.customer.address }}</p>
-            <p>{{ order.customer.phone }}</p>
-            <p>{{ order.customer.email }}</p>
+        <div class="inv-divider"></div>
+
+        <!-- From / To -->
+        <div class="inv-parties">
+            <div class="party-card">
+                <div class="party-label"><i class="pi pi-building"></i> From</div>
+                <div class="party-name">{{ company.name }}</div>
+                <div class="party-detail"><i class="pi pi-map-marker"></i> {{ company.address }}</div>
+                <div class="party-detail"><i class="pi pi-phone"></i> {{ company.phone }}</div>
+                <div class="party-detail"><i class="pi pi-envelope"></i> {{ company.email }}</div>
+            </div>
+            <div class="party-arrow"><i class="pi pi-arrow-right"></i></div>
+            <div class="party-card party-card--customer">
+                <div class="party-label"><i class="pi pi-user"></i> Bill To</div>
+                <div class="party-name">{{ order.customer.name }}</div>
+                <div class="party-detail"><i class="pi pi-map-marker"></i> {{ order.customer.address }}</div>
+                <div class="party-detail"><i class="pi pi-phone"></i> {{ order.customer.phone }}</div>
+                <div class="party-detail"><i class="pi pi-envelope"></i> {{ order.customer.email }}</div>
+            </div>
         </div>
-    </section>
 
-    <table class="product-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Product</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of order.items; index as i">
-                <td>{{ i + 1 }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>₹{{ item.price }}</td>
-                <td>₹{{ item.quantity * item.price }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <!-- Items Table -->
+        <div class="inv-table-wrap">
+            <table class="inv-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of order.items; index as i">
+                        <td class="td-num">{{ i + 1 }}</td>
+                        <td class="td-name">{{ item.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ item.price | number:'1.2-2' }}</td>
+                        <td class="td-total">₹{{ item.quantity * item.price | number:'1.2-2' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    <section class="totals">
-        <p><strong>Subtotal:</strong> ₹{{ order.subtotal }}</p>
-        <p><strong>GST ({{ order.taxRate }}%):</strong> ₹{{ order.taxAmount }}</p>
-        <p><strong>Delivery:</strong> ₹{{ order.deliveryCharge }}</p>
-        <p><strong>Grand Total:</strong> ₹{{ order.total }}</p>
-    </section>
+        <!-- Totals -->
+        <div class="inv-totals-wrap">
+            <div class="inv-totals">
+                <div class="totals-row">
+                    <span>Subtotal</span><span>₹{{ order.subtotal | number:'1.2-2' }}</span>
+                </div>
+                <div class="totals-row">
+                    <span>GST ({{ order.taxRate }}%)</span><span>₹{{ order.taxAmount | number:'1.2-2' }}</span>
+                </div>
+                <div class="totals-row">
+                    <span>Delivery</span><span>₹{{ order.deliveryCharge | number:'1.2-2' }}</span>
+                </div>
+                <div class="totals-divider"></div>
+                <div class="totals-row totals-grand">
+                    <span>Grand Total</span><span>₹{{ order.total | number:'1.2-2' }}</span>
+                </div>
+            </div>
+        </div>
 
-    <footer>
-        <p>Thank you for shopping with us!</p>
-        <p>Need help? Contact {{ company.support }}</p>
-    </footer>
+        <!-- Footer -->
+        <div class="inv-footer">
+            <div class="inv-footer-msg">
+                <i class="pi pi-heart-fill"></i>
+                Thank you for choosing {{ company.name }}!
+            </div>
+            <div class="inv-footer-contact">
+                Need help? <a [href]="'mailto:' + company.email">{{ company.email }}</a> &nbsp;|&nbsp; {{
+                company.support }}
+            </div>
+        </div>
 
-    <button (click)="downloadPDF()">Download Invoice</button>
+    </div>
 </div>
