@@ -89,14 +89,17 @@ export const routes: Routes = [
     },
     {
         path: 'checkout',
+        canActivate: [AuthGuard],
         component: CheckoutComponent
     },
     {
         path: 'payment',
+        canActivate: [AuthGuard],
         component: PaymentComponent
     },
     {
         path: 'order-success',
+        canActivate: [AuthGuard],
         component: OrderSuccessComponent
     },
     // {

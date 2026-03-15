@@ -1,14 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { CartItemPayload, FavoriteItemPayload, LoginUserForm, Message, RegisterUserForm, WishlistItemPayload } from '../interfaces/interfaces';
+import {
+  CartItemsResponse,
+  CartItemPayload,
+  CouponValidationResponse,
+  FavoriteItemPayload,
+  LoginUserForm,
+  Message,
+  OrdersResponse,
+  OrderDetailsResponse,
+  ProductListResponse,
+  RegionResponse,
+  RegisterUserForm,
+  SuggestionsResponse,
+  WishlistItemsResponse,
+  WishlistItemPayload
+} from '../interfaces/interfaces';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private baseUrl: string = "http://localhost:5000/api/v1/";
+  private readonly baseUrl: string = environment.apiBaseUrl;
   private registerUserUrl: string = "register";
   private loginUserUrl: string = "login";
   private listProductsUrl: string = "public/product/list";
@@ -39,12 +55,13 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
 
-  fetchSuggestions(searchString: string): Observable<any> {
-    if (!searchString) {
-      return of([]);
+  fetchSuggestions(searchString: string): Observable<SuggestionsResponse> {
+    if (!searchString?.trim()) {
+      return of({ data: [] });
     }
+
     const url = `${this.baseUrl}${this.suggestionsUrl}${encodeURIComponent(searchString)}`;
-    return this.http.get(url);
+    return this.http.get<SuggestionsResponse>(url);
   }
 
   registerUser(registerFormPayload: RegisterUserForm) {
@@ -55,12 +72,12 @@ export class ApiService {
     return this.http.post(this.baseUrl.concat(this.loginUserUrl), loginFormPayload);
   }
 
-  listProducts(customerId: string): Observable<any> {
-    return this.http.post(this.baseUrl.concat(this.listProductsUrl), { customerId });
+  listProducts(customerId: string): Observable<ProductListResponse> {
+    return this.http.post<ProductListResponse>(this.baseUrl.concat(this.listProductsUrl), { customerId });
   }
 
-  fetchPlaceholderWords(): Observable<any> {
-    return this.http.get(this.baseUrl.concat(this.placeholderUrl));
+  fetchPlaceholderWords(): Observable<RegionResponse> {
+    return this.http.get<RegionResponse>(this.baseUrl.concat(this.placeholderUrl));
   }
 
   getProductById(productId: string, customerId: string): Observable<any> {
@@ -79,8 +96,8 @@ export class ApiService {
     return this.http.post(this.baseUrl.concat(this.addToCartUrl), cartItemPayload);
   }
 
-  getCartItemsByCustomerId(customerId: string) {
-    return this.http.get(this.baseUrl.concat(this.getCartItemsUrl).concat(customerId));
+  getCartItemsByCustomerId(customerId: string): Observable<CartItemsResponse> {
+    return this.http.get<CartItemsResponse>(this.baseUrl.concat(this.getCartItemsUrl).concat(customerId));
   }
 
   updateCartItem(cartItemPayload: CartItemPayload) {
@@ -95,8 +112,8 @@ export class ApiService {
     return this.http.post(this.baseUrl.concat(this.addToWishlistUrl), wishlistItemPayload);
   }
 
-  getWishlistItemsByCustomerId(customerId: string) {
-    return this.http.get(this.baseUrl.concat(this.getWishlistItemsUrl).concat(customerId));
+  getWishlistItemsByCustomerId(customerId: string): Observable<WishlistItemsResponse> {
+    return this.http.get<WishlistItemsResponse>(this.baseUrl.concat(this.getWishlistItemsUrl).concat(customerId));
   }
 
   removeWishlistItem(id: number) {
@@ -115,12 +132,12 @@ export class ApiService {
     return this.http.post(this.baseUrl.concat(this.removeFavoriteItemUrl), { id });
   }
 
-  getOrdersByCustomerId(customerId: string) {
-    return this.http.get(this.baseUrl.concat(this.getOrdersByCustomerIdUrl).concat(customerId));
+  getOrdersByCustomerId(customerId: string): Observable<OrdersResponse> {
+    return this.http.get<OrdersResponse>(this.baseUrl.concat(this.getOrdersByCustomerIdUrl).concat(customerId));
   }
 
-  getOrder(orderId: string) {
-    return this.http.get(this.baseUrl.concat(this.getOrderUrl).concat(orderId));
+  getOrder(orderId: string): Observable<OrderDetailsResponse> {
+    return this.http.get<OrderDetailsResponse>(this.baseUrl.concat(this.getOrderUrl).concat(orderId));
   }
 
   makePayment(amount: number) {
@@ -131,20 +148,20 @@ export class ApiService {
     return this.http.post(this.baseUrl.concat(this.verifyPaymentUrl), handlerResponse);
   }
 
-  getStates() {
-    return this.http.get(this.baseUrl.concat(this.getStatesUrl));
+  getStates(): Observable<RegionResponse> {
+    return this.http.get<RegionResponse>(this.baseUrl.concat(this.getStatesUrl));
   }
 
-  getDistrictsByState(state: string) {
-    return this.http.get((this.baseUrl.concat(this.getDistrictsByStateUrl)).concat(state));
+  getDistrictsByState(state: string): Observable<RegionResponse> {
+    return this.http.get<RegionResponse>((this.baseUrl.concat(this.getDistrictsByStateUrl)).concat(state));
   }
 
-  getPincodesByDistrict(district: string) {
-    return this.http.get((this.baseUrl.concat(this.getPincodesByDistrictUrl)).concat(district));
+  getPincodesByDistrict(district: string): Observable<RegionResponse> {
+    return this.http.get<RegionResponse>((this.baseUrl.concat(this.getPincodesByDistrictUrl)).concat(district));
   }
 
-  validateCouponCode(code: string, cartTotal: number = 1) {
-    return this.http.post(this.baseUrl.concat(this.validateCouponUrl), { code, cartTotal });
+  validateCouponCode(code: string, cartTotal: number = 1): Observable<CouponValidationResponse> {
+    return this.http.post<CouponValidationResponse>(this.baseUrl.concat(this.validateCouponUrl), { code, cartTotal });
   }
 
 }

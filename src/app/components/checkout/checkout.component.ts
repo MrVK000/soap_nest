@@ -2,12 +2,14 @@ import { SharedService } from './../../services/shared.service';
 import { AuthService } from './../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Coupon, Product } from './../../interfaces/interfaces';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormArray, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApiService } from '../../services/api.service';
 import { Subject, takeUntil } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { CartService } from '../../services/cart.service';
 
 declare var Razorpay: any;
 
@@ -15,7 +17,8 @@ declare var Razorpay: any;
   selector: 'app-checkout',
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './checkout.component.html',
-  styleUrl: './checkout.component.scss'
+  styleUrl: './checkout.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CheckoutComponent {
   private destroy$ = new Subject<void>();
@@ -29,7 +32,7 @@ export class CheckoutComponent {
   gst: number = 0;
   deliveryCharge: number = 50;
   grandTotal: string = '';
-  razorpayKey = 'YOUR_RAZORPAY_KEY_ID'; // Replace with your actual Razorpay Key ID
+  razorpayKey = environment.razorpayKey; // Public key configured per-environment
 
   checkoutForm = new FormGroup({
     fullName: new FormControl('', [Validators.required]),
@@ -41,12 +44,27 @@ export class CheckoutComponent {
     paymentMethod: new FormControl('Online payment', [Validators.required]),
   });
 
-  constructor(private route: ActivatedRoute, private router: Router, private snackbar: MatSnackBar, private api: ApiService, private authService: AuthService, public sharedService: SharedService, private fb: FormBuilder) {
-    const state = this.router.getCurrentNavigation()?.extras.state;
-    if (!(state) || !(state['data'])) this.router.navigate(['/products']);
-    if (state && state['data']) {
-      this.products = state['data'];
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private snackbar: MatSnackBar,
+    private api: ApiService,
+    private authService: AuthService,
+    public sharedService: SharedService,
+    private fb: FormBuilder,
+    private cartService: CartService
+  ) {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as { data?: Product[] } | undefined;
+
+    if (state && Array.isArray(state.data) && state.data.length > 0) {
+      this.products = state.data;
       this.calculateTotal();
+    } else if (this.cartService.cartItems.length > 0) {
+      this.products = this.cartService.cartItems as unknown as Product[];
+      this.calculateTotal();
+    } else {
+      this.router.navigate(['/cart']);
     }
 
     this.coupons = fb.group({
@@ -55,7 +73,7 @@ export class CheckoutComponent {
   }
 
   ngOnInit() {
-    // this.loadRazorpayScript();
+    this.loadRazorpayScript();
     this.patchUserDetails();
     this.getStates();
     this.addCoupon();
@@ -193,11 +211,17 @@ export class CheckoutComponent {
     // });
   }
 
-  verifyPayment(paymentResponse: any) {
+  verifyPayment(paymentResponse: any, orderId?: string) {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = paymentResponse;
     const verifyPaymentPayload = { razorpayOrderId: razorpay_order_id, razorpayPaymentId: razorpay_payment_id, razorpaySignature: razorpay_signature };
-    this.api.verifyPayment(verifyPaymentPayload).pipe(takeUntil(this.destroy$)).subscribe(res => {
-      this.snackbar.open("Payment Successful!", '', { duration: 3000 });
+    this.api.verifyPayment(verifyPaymentPayload).pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        this.snackbar.open('Payment successful!', '', { duration: 3000 });
+        this.router.navigate(['/order-success'], { state: { orderId } });
+      },
+      error: () => {
+        this.snackbar.open('Payment verification failed. Please contact support.', '', { duration: 4000 });
+      }
     });
   }
 
@@ -263,6 +287,14 @@ export class CheckoutComponent {
   }
 
   loadRazorpayScript() {
+    const existingScript = Array.from(document.getElementsByTagName('script')).find(
+      (s) => s.src === 'https://checkout.razorpay.com/v1/checkout.js'
+    );
+
+    if (existingScript) {
+      return;
+    }
+
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.defer = true;
@@ -270,6 +302,12 @@ export class CheckoutComponent {
   }
 
   completePayment() {
+    if (!this.checkoutForm.valid || this.products.length === 0) {
+      this.snackbar.open('Please check your details and cart before making payment.', '', { duration: 3000 });
+      this.checkoutForm.markAllAsTouched();
+      return;
+    }
+
     const orderId = this.getOrderId();
     const options = {
       key: this.razorpayKey,
@@ -278,7 +316,7 @@ export class CheckoutComponent {
       name: 'Eco-Friendly Store',
       description: `Order #${orderId}`,
       handler: (response: any) => {
-        this.router.navigate(['/order-success'], { state: { orderId: orderId } });
+        this.verifyPayment(response, orderId);
       },
       prefill: {
         name: 'Customer Name',

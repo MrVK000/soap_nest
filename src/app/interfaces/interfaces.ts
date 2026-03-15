@@ -197,3 +197,29 @@ export interface Suggestion {
     name: string;
     productId: string;
 }
+
+// Generic API response wrappers
+export interface ApiListResponse<T> {
+    data: T[];
+    message?: string;
+}
+
+export interface ApiItemResponse<T> {
+    data: T;
+    message?: string;
+}
+
+export interface CouponValidationData {
+    discountedTotal: number;
+    discount: number;
+}
+
+export type CouponValidationResponse = ApiItemResponse<CouponValidationData>;
+
+export type ProductListResponse = ApiListResponse<Product>;
+export type CartItemsResponse = ApiListResponse<CartItem>;
+export type WishlistItemsResponse = ApiListResponse<WishlistItem>;
+export type OrdersResponse = ApiListResponse<Order>;
+export type OrderDetailsResponse = ApiItemResponse<Order>;
+export type SuggestionsResponse = ApiListResponse<Suggestion>;
+export type RegionResponse = ApiListResponse<string>;

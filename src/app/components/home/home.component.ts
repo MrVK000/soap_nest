@@ -25,9 +25,7 @@ export class HomeComponent {
   benifits = BENEFITS;
   reviews = REVIEWS;
 
-  constructor(private api: ApiService, private router: Router, private snackbar: MatSnackBar, private sharedService: SharedService, private authService: AuthService) {
-    authService.logout();
-  }
+  constructor(private api: ApiService, private router: Router, private snackbar: MatSnackBar, private sharedService: SharedService, private authService: AuthService) { }
 
   ngOnInit() {
     this.sharedService.addSeo("Green Glow - Handmade Soaps & Organic Shampoos");

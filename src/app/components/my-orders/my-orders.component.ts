@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -11,7 +11,8 @@ import { Order } from '../../interfaces/interfaces';
   selector: 'app-my-orders',
   imports: [CommonModule, FormsModule],
   templateUrl: './my-orders.component.html',
-  styleUrl: './my-orders.component.scss'
+  styleUrl: './my-orders.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyOrdersComponent {
   private destroy$ = new Subject<void>();

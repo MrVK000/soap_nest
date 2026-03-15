@@ -50,19 +50,21 @@ export class MyaccountComponent {
 
   saveChanges() {
     if (this.accountForm.valid) {
-      alert('Profile updated successfully!');
+      this.snackbar.open('Profile updated successfully!', '', { duration: 3000 });
       this.isEditing = false;
+    } else {
+      this.snackbar.open('Please fix the errors in the form.', '', { duration: 3000 });
     }
   }
 
   changePassword() {
     if (this.passwordForm.valid &&
       this.passwordForm.value.newPassword === this.passwordForm.value.confirmPassword) {
-      alert('Password updated successfully!');
+      this.snackbar.open('Password updated successfully!', '', { duration: 3000 });
       this.isChangingPassword = false;
       this.passwordForm.reset();
     } else {
-      alert('Passwords do not match.');
+      this.snackbar.open('Passwords do not match.', '', { duration: 3000 });
     }
   }
 }

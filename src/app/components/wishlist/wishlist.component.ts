@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { ApiService } from './../../services/api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { WishlistItem } from '../../interfaces/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -10,7 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-wishlist',
   imports: [CommonModule],
   templateUrl: './wishlist.component.html',
-  styleUrl: './wishlist.component.scss'
+  styleUrl: './wishlist.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WishlistComponent implements OnInit {
   wishlist: WishlistItem[] = [];

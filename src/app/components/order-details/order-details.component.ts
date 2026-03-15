@@ -1,5 +1,5 @@
 // import { html2pdf } from 'html2pdf.js';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Order } from '../../interfaces/interfaces';
 import { CommonModule } from '@angular/common';
@@ -13,7 +13,8 @@ declare var html2pdf: any;
   selector: 'app-order-details',
   imports: [CommonModule],
   templateUrl: './order-details.component.html',
-  styleUrl: './order-details.component.scss'
+  styleUrl: './order-details.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrderDetailsComponent {
   private destroy$ = new Subject<void>();

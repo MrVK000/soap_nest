@@ -1,5 +1,5 @@
 import { SharedService } from './../../services/shared.service';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
@@ -17,7 +17,8 @@ import { AuthService } from '../../services/auth.service';
   imports: [FormsModule, CommonModule, DropdownModule, RouterModule, MatSnackBarModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
-  providers: [provideAnimations()]
+  providers: [provideAnimations()],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductsComponent {
   private destroy$ = new Subject<void>();

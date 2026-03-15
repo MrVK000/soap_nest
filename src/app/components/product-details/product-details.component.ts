@@ -1,6 +1,6 @@
 import { SharedService } from './../../services/shared.service';
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CartService } from '../../services/cart.service';
@@ -15,7 +15,8 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-product-details',
   imports: [CommonModule, ReactiveFormsModule, RatingModule],
   templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.scss'
+  styleUrl: './product-details.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 }) export class ProductDetailsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   product: Product = {} as Product;
