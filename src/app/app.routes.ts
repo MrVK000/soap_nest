@@ -21,6 +21,8 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export const routes: Routes = [
     {
@@ -63,6 +65,14 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent
+    },
+    {
+        path: 'reset-password',
+        component: ResetPasswordComponent
     },
     {
         path: 'register',

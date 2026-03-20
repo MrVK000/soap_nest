@@ -30,6 +30,8 @@ export class ApiService {
   private loginUserUrl: string = "login";
   private authRefreshUrl: string = "auth/refresh";
   private authLogoutUrl: string = "auth/logout";
+  private forgotPasswordUrl: string = "password/forgot-password";
+  private resetPasswordUrl: string = "password/reset-password";
   private listProductsUrl: string = "public/product/list";
   private placeholderUrl: string = "public/product/placeholder";
   private getProductByIdUrl: string = "public/product/get/";
@@ -126,6 +128,14 @@ export class ApiService {
         }),
       }
     );
+  }
+
+  forgotPassword(email: string) {
+    return this.http.post(this.baseUrl.concat(this.forgotPasswordUrl), { email });
+  }
+
+  resetPassword(token: string, newPassword: string) {
+    return this.http.post(this.baseUrl.concat(this.resetPasswordUrl), { token, newPassword });
   }
 
   listProducts(customerId: string, page: number = 1): Observable<ProductListResponse> {

@@ -34,7 +34,8 @@
       <!-- CART -->
       <div class="cart-wrap" routerLink="/cart">
         <p-button icon="pi pi-shopping-cart" [text]="true" severity="success" styleClass="action-btn" />
-        <span *ngIf="cartService.getCartCount > 0" class="cart-badge">{{ cartService.getCartCount > 99 ? '99+' : cartService.getCartCount }}</span>
+        <span *ngIf="cartService.getCartCount > 0" class="cart-badge">{{ cartService.getCartCount > 99 ? '99+' :
+          cartService.getCartCount }}</span>
       </div>
 
       <!-- PROFILE POPOVER -->
