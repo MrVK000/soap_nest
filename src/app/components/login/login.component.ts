@@ -33,6 +33,11 @@ export class LoginComponent {
   constructor(private api: ApiService, public sharedService: SharedService, private snackbar: MatSnackBar, private authService: AuthService, private cartService: CartService) { }
 
   ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.snackbar.open('You are already logged in', '', { duration: 2000 });
+      this.sharedService.goBack();
+      return;
+    }
     this.cartService.resetCartCount();
   }
 
