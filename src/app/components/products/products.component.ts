@@ -35,6 +35,7 @@ export class ProductsComponent {
   totalPages: number = 1;
   isLoading: boolean = false;
   hasMore: boolean = true;
+  private isReady: boolean = false;
   private customerId: string = '-';
 
   categoryOptions = [
@@ -67,6 +68,7 @@ export class ProductsComponent {
     this.loadProducts();
   }
 
+
   loadProducts(append: boolean = false) {
     if (this.isLoading || (!append && this.currentPage > 1)) return;
     this.isLoading = true;
@@ -79,8 +81,11 @@ export class ProductsComponent {
       }));
       this.totalPages = res?.totalPages ?? 1;
       this.products = append ? [...this.products, ...fetched] : fetched;
+      this.totalPages = res?.totalPages ?? 1;
+      this.products = append ? [...this.products, ...fetched] : fetched;
       this.hasMore = this.currentPage < this.totalPages;
       this.isLoading = false;
+      this.isReady = true;
       this.applyClientFilters();
       this.cdr.markForCheck();
     }, () => {
@@ -107,7 +112,7 @@ export class ProductsComponent {
 
   @HostListener('window:scroll')
   onScroll() {
-    if (this.isLoading || !this.hasMore) return;
+    if (!this.isReady || this.isLoading || !this.hasMore) return;
     const scrolled = window.innerHeight + window.scrollY;
     const threshold = document.body.offsetHeight - 300;
     if (scrolled >= threshold) {

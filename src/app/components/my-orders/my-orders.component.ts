@@ -21,6 +21,7 @@ export class MyOrdersComponent {
   loading = false;
   page = 1;
   totalPages = 1;
+  private isReady = false;
 
   selectedStatus: string = '';
   statusOptions = [
@@ -57,13 +58,14 @@ export class MyOrdersComponent {
       this.page = res?.page ?? page;
       this.totalPages = res?.totalPages ?? 1;
       this.loading = false;
+      this.isReady = true;
       this.cdr.markForCheck();
     }, () => { this.loading = false; this.cdr.markForCheck(); });
   }
 
   @HostListener('window:scroll')
   onScroll() {
-    if (this.loading || this.page >= this.totalPages) return;
+    if (!this.isReady || this.loading || this.page >= this.totalPages) return;
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
     if (nearBottom) this.loadOrders(this.page + 1, true);
   }

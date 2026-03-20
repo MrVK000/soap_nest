@@ -14,18 +14,19 @@ import { DividerModule } from 'primeng/divider';
   styleUrl: './cart.component.scss'
 })
 export class CartComponent {
+  private isReady = false;
 
   constructor(private router: Router, public sharedService: SharedService, public cartService: CartService) { }
 
   ngOnInit(): void {
     this.sharedService.addSeo('Your Cart - Green Glow');
-    this.cartService.loadCartItems(1, false);
+    this.cartService.loadCartItems(1, false, () => this.isReady = true);
     this.cartService.loadCartSummary();
   }
 
   @HostListener('window:scroll')
   onScroll() {
-    if (this.cartService.cartLoading) return;
+    if (!this.isReady || this.cartService.cartLoading) return;
     if (this.cartService.cartPage >= this.cartService.cartTotalPages) return;
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
     if (nearBottom) {

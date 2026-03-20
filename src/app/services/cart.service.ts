@@ -25,7 +25,7 @@ export class CartService {
     this.calculateCartCount();
   }
 
-  loadCartItems(page: number = 1, append: boolean = false) {
+  loadCartItems(page: number = 1, append: boolean = false, onReady?: () => void) {
     const user = this.authService.getUser();
     if (!user?.customerId || !this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
@@ -45,6 +45,7 @@ export class CartService {
       this.cartTotalPages = res?.totalPages ?? 1;
       this.cartLoading = false;
       this.calculateCartCount();
+      onReady?.();
     }, (err) => {
       this.cartLoading = false;
       if (err?.error?.error === 'Invalid or expired token.') {

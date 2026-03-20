@@ -1,7 +1,7 @@
 import { CartService } from './../../services/cart.service';
 import { AuthService } from './../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
@@ -34,13 +34,6 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.cartService.resetCartCount();
-  }
-
-  @HostListener('document:keydown', ['$event'])
-  handleKeyBoardEvent(event: KeyboardEvent) {
-    if (event?.code?.toLowerCase() === 'enter') {
-      this.submitForm();
-    }
   }
 
   togglePassword() {
