@@ -5,6 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
 import { ApiService } from '../../services/api.service';
+import { AuthService } from '../../services/auth.service';
 import { Subject, takeUntil } from 'rxjs';
 import { RegisterUserForm } from '../../interfaces/interfaces';
 import { InputTextModule } from 'primeng/inputtext';
@@ -40,7 +41,7 @@ export class RegisterComponent {
     terms: new FormControl(false, Validators.requiredTrue),
   });
 
-  constructor(private api: ApiService, private router: Router, private snackbar: MatSnackBar) { }
+  constructor(private api: ApiService, private router: Router, private snackbar: MatSnackBar, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.getStates();
@@ -94,7 +95,9 @@ export class RegisterComponent {
   submitForm() {
     if (this.registerForm.valid) {
       const registerFormPayload: RegisterUserForm = this.registerForm.value as unknown as RegisterUserForm;
-      this.api.registerUser(registerFormPayload).pipe(takeUntil(this.destroy$)).subscribe((res) => {
+      this.api.registerUser(registerFormPayload).pipe(takeUntil(this.destroy$)).subscribe((res: { token?: string; user?: any }) => {
+        if (res?.token) this.authService.setToken(res.token);
+        if (res?.user) this.authService.setUser(res.user);
         this.snackbar.open(`Welcome, ${registerFormPayload.name}! Your account has been created.`, '', { duration: 2000 });
         this.registerForm.reset();
         this.router.navigate(['/home']);

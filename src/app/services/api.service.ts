@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {
@@ -28,6 +28,8 @@ export class ApiService {
   private readonly baseUrl: string = environment.apiBaseUrl;
   private registerUserUrl: string = "register";
   private loginUserUrl: string = "login";
+  private authRefreshUrl: string = "auth/refresh";
+  private authLogoutUrl: string = "auth/logout";
   private listProductsUrl: string = "public/product/list";
   private placeholderUrl: string = "public/product/placeholder";
   private getProductByIdUrl: string = "public/product/get/";
@@ -61,6 +63,14 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  private getCookieValue(name: string): string {
+    // document.cookie is only readable for cookies that are not httpOnly.
+    const parts = document.cookie ? document.cookie.split(';') : [];
+    const match = parts.map((p) => p.trim()).find((p) => p.startsWith(`${name}=`));
+    if (!match) return '';
+    return decodeURIComponent(match.split('=').slice(1).join('='));
+  }
+
 
   fetchSuggestions(searchString: string): Observable<SuggestionsResponse> {
     if (!searchString?.trim()) {
@@ -72,11 +82,49 @@ export class ApiService {
   }
 
   registerUser(registerFormPayload: RegisterUserForm) {
-    return this.http.post(this.baseUrl.concat(this.registerUserUrl), registerFormPayload);
+    // Backend returns { message, user, token } on success.
+    return this.http.post<{ message: string; user: any; token: string }>(
+      this.baseUrl.concat(this.registerUserUrl),
+      registerFormPayload,
+      { withCredentials: true }
+    );
   }
 
   loginUser(loginFormPayload: LoginUserForm) {
-    return this.http.post(this.baseUrl.concat(this.loginUserUrl), loginFormPayload);
+    return this.http.post<{ message: string; user: any; token: string }>(
+      this.baseUrl.concat(this.loginUserUrl),
+      loginFormPayload,
+      { withCredentials: true }
+    );
+  }
+
+  refreshSession() {
+    // Refresh token is stored server-side in an httpOnly cookie.
+    const csrfToken = this.getCookieValue('csrfToken');
+    return this.http.post(
+      this.baseUrl.concat(this.authRefreshUrl),
+      {},
+      {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'x-csrf-token': csrfToken,
+        }),
+      }
+    );
+  }
+
+  logout() {
+    const csrfToken = this.getCookieValue('csrfToken');
+    return this.http.post(
+      this.baseUrl.concat(this.authLogoutUrl),
+      {},
+      {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'x-csrf-token': csrfToken,
+        }),
+      }
+    );
   }
 
   listProducts(customerId: string, page: number = 1): Observable<ProductListResponse> {
