@@ -30,9 +30,8 @@
         <div class="card-image-wrap">
           <img [src]="item.image" [alt]="item.name" class="card-img" />
           <span class="offer-badge" *ngIf="+item.offer > 0">{{ item.offer }}% OFF</span>
-          <button class="remove-btn" (click)="removeFromFavorites(item)" matTooltip="Remove from favorites" matTooltipPosition="above">
-            <i class="pi pi-heart-fill"></i>
-          </button>
+          <p-button icon="pi pi-heart-fill" [text]="true" severity="danger" styleClass="remove-btn"
+            (onClick)="removeFromFavorites(item)" title="Remove from favorites" />
         </div>
 
         <div class="card-body">

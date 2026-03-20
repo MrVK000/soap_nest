@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-order-success',
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonModule],
   templateUrl: './order-success.component.html',
   styleUrl: './order-success.component.scss'
 })

@@ -42,12 +42,8 @@
 
     <!-- ACTIONS -->
     <div class="error-actions">
-      <a class="btn-primary" routerLink="/home">
-        <i class="pi pi-home"></i> Go to Home
-      </a>
-      <a class="btn-outline" routerLink="/products">
-        <i class="pi pi-shopping-bag"></i> Browse Products
-      </a>
+      <p-button label="Go to Home" icon="pi pi-home" severity="success" routerLink="/home" />
+      <p-button label="Browse Products" icon="pi pi-shopping-bag" [outlined]="true" severity="success" routerLink="/products" />
     </div>
 
   </div>

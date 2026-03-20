@@ -2,9 +2,7 @@
 
   <!-- PAGE HEADER -->
   <div class="page-header">
-    <button class="back-btn" (click)="sharedService.goBack()">
-      <i class="pi pi-arrow-left"></i> Back
-    </button>
+    <p-button label="Back" icon="pi pi-arrow-left" [text]="true" severity="secondary" (onClick)="sharedService.goBack()" />
     <div class="header-text">
       <h1>Our Products</h1>
       <p>Handmade with love, crafted for your skin 🌿</p>
@@ -48,18 +46,13 @@
       <div class="card-image" (click)="viewProductDetails(product.productId)">
         <img [src]="product.image" [alt]="product.name" loading="lazy">
         <div class="card-overlay">
-          <button class="overlay-action" (click)="viewProductDetails(product.productId)">
-            <i class="pi pi-eye"></i> View
-          </button>
-          <button class="overlay-action" (click)="buyNow(product); $event.stopPropagation()">
-            <i class="pi pi-bolt"></i> Buy Now
-          </button>
+          <p-button label="View" icon="pi pi-eye" size="small" severity="success" (onClick)="viewProductDetails(product.productId); $event.stopPropagation()" />
+          <p-button label="Buy Now" icon="pi pi-bolt" size="small" severity="success" (onClick)="buyNow(product); $event.stopPropagation()" />
         </div>
         <span *ngIf="product?.offer && +product.offer > 0" class="badge-offer">{{ product.offer }}% OFF</span>
-        <button class="btn-favorite"
-          (click)="addOrRemoveFavorites(product.productId, product.favoriteItemId, product.isFavoriteItem); $event.stopPropagation()">
-          <i [ngClass]="product.isFavoriteItem ? 'pi pi-heart-fill' : 'pi pi-heart'"></i>
-        </button>
+        <p-button [icon]="product.isFavoriteItem ? 'pi pi-heart-fill' : 'pi pi-heart'" [text]="true"
+          [severity]="product.isFavoriteItem ? 'danger' : 'secondary'" styleClass="btn-favorite"
+          (onClick)="addOrRemoveFavorites(product.productId, product.favoriteItemId, product.isFavoriteItem); $event.stopPropagation()" />
       </div>
 
       <div class="card-body">
@@ -69,9 +62,7 @@
           <span class="price-current">₹{{ product.discountPrice }}</span>
           <span *ngIf="product?.offer && +product.offer > 0" class="price-original">₹{{ product.price }}</span>
         </div>
-        <button class="btn-cart" (click)="addToCart(product.productId)">
-          <i class="pi pi-shopping-cart"></i> Add to Cart
-        </button>
+        <p-button label="Add to Cart" icon="pi pi-shopping-cart" severity="success" styleClass="btn-cart" (onClick)="addToCart(product.productId)" />
       </div>
     </div>
 

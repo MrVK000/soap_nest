@@ -47,18 +47,10 @@
             </div>
 
             <div class="profile-actions">
-                <a class="profile-link" routerLink="/my-orders">
-                    <i class="pi pi-list"></i> My Orders
-                </a>
-                <a class="profile-link" routerLink="/wishlist">
-                    <i class="pi pi-bookmark"></i> Wishlist
-                </a>
-                <a class="profile-link" routerLink="/favorites">
-                    <i class="pi pi-heart"></i> Favorites
-                </a>
-                <button class="profile-link logout" (click)="logout()">
-                    <i class="pi pi-sign-out"></i> Logout
-                </button>
+                <p-button label="My Orders" icon="pi pi-list" [text]="true" severity="success" styleClass="profile-link" routerLink="/my-orders" />
+                <p-button label="Wishlist" icon="pi pi-bookmark" [text]="true" severity="success" styleClass="profile-link" routerLink="/wishlist" />
+                <p-button label="Favorites" icon="pi pi-heart" [text]="true" severity="success" styleClass="profile-link" routerLink="/favorites" />
+                <p-button label="Logout" icon="pi pi-sign-out" [text]="true" severity="danger" styleClass="profile-link logout" (onClick)="logout()" />
             </div>
         </div>
 

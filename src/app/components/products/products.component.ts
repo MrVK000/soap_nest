@@ -7,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { SelectModule } from 'primeng/select';
+import { ButtonModule } from 'primeng/button';
 import { FavoriteItemPayload, Product } from '../../interfaces/interfaces';
 import { Router, RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart.service';
@@ -18,7 +19,7 @@ import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-products',
-  imports: [FormsModule, CommonModule, SelectModule, InputTextModule, IconFieldModule, InputIconModule, RouterModule, MatSnackBarModule],
+  imports: [FormsModule, CommonModule, SelectModule, InputTextModule, IconFieldModule, InputIconModule, RouterModule, MatSnackBarModule, ButtonModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
   providers: [provideAnimations()],

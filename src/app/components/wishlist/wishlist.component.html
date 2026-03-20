@@ -31,9 +31,8 @@
         <div class="card-image-wrap">
           <img [src]="item.image" [alt]="item.name" class="card-img" />
           <span class="offer-badge" *ngIf="+item.offer > 0">{{ item.offer }}% OFF</span>
-          <button class="remove-btn" (click)="removeFromWishlist(item)" title="Remove from wishlist">
-            <i class="pi pi-bookmark-fill"></i>
-          </button>
+          <p-button icon="pi pi-bookmark-fill" [text]="true" severity="danger" styleClass="remove-btn"
+            title="Remove from wishlist" (onClick)="removeFromWishlist(item)" />
         </div>
 
         <div class="card-body">

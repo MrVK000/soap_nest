@@ -43,12 +43,8 @@
 
         <!-- ACTIONS -->
         <div class="error-actions">
-            <a class="btn-primary" routerLink="/home">
-                <i class="pi pi-home"></i> Go to Home
-            </a>
-            <button class="btn-outline" (click)="reload()">
-                <i class="pi pi-refresh"></i> Try Again
-            </button>
+            <p-button label="Go to Home" icon="pi pi-home" severity="success" routerLink="/home" />
+            <p-button label="Try Again" icon="pi pi-refresh" [outlined]="true" severity="success" (onClick)="reload()" />
         </div>
 
     </div>

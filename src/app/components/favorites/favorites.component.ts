@@ -8,12 +8,11 @@ import { FavoriteItem } from '../../interfaces/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-favorites',
-  imports: [CommonModule, RouterModule, ButtonModule, TagModule, MatTooltipModule],
+  imports: [CommonModule, RouterModule, ButtonModule, TagModule],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss'
 })

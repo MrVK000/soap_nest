@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
 import { BENEFITS, RESPONSIVE_OPTIONS } from '../../data/data';
 import { ApiService } from '../../services/api.service';
 import { SharedService } from '../../services/shared.service';
@@ -12,7 +13,7 @@ import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterModule, CommonModule, CarouselModule],
+  imports: [RouterModule, CommonModule, CarouselModule, ButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   host: { ngSkipHydration: 'true' },

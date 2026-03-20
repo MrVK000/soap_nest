@@ -56,12 +56,8 @@
 
     <!-- ACTIONS -->
     <div class="action-buttons">
-      <button class="btn-primary" (click)="goToOrders()">
-        <i class="pi pi-list"></i> View My Orders
-      </button>
-      <button class="btn-outline" (click)="goToHome()">
-        <i class="pi pi-shopping-bag"></i> Continue Shopping
-      </button>
+      <p-button label="View My Orders" icon="pi pi-list" severity="success" (onClick)="goToOrders()" />
+      <p-button label="Continue Shopping" icon="pi pi-shopping-bag" [outlined]="true" severity="success" (onClick)="goToHome()" />
     </div>
 
   </div>
