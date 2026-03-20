@@ -56,7 +56,8 @@
                 <label>Phone Number</label>
                 <p-iconfield>
                     <p-inputicon class="pi pi-phone" />
-                    <input pInputText type="text" formControlName="phoneNumber" placeholder="10-digit number" maxlength="10" (keydown)="onNumericKeydown($event)" />
+                    <input pInputText type="text" formControlName="phoneNumber" placeholder="10-digit number"
+                        maxlength="10" (keydown)="onNumericKeydown($event)" />
                 </p-iconfield>
                 <small class="error"
                     *ngIf="contactForm.get('phoneNumber')?.invalid && contactForm.get('phoneNumber')?.touched">
