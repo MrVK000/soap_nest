@@ -37,6 +37,7 @@ export class ApiService {
   private sendMessageUrl: string = "public/message/send";
   private addToCartUrl: string = "cart/add";
   private getCartSummaryUrl: string = "cart/summary/";
+  private getCartCountUrl: string = "cart/count/";
   private getCartItemsUrl: string = "cart/";
   private updateCartItemUrl: string = "cart/update";
   private removeCartItemUrl: string = "cart/";
@@ -149,6 +150,10 @@ export class ApiService {
 
   addToCart(cartItemPayload: CartItemPayload) {
     return this.http.post(this.baseUrl.concat(this.addToCartUrl), cartItemPayload);
+  }
+
+  getCartCount(customerId: string): Observable<{ count: number }> {
+    return this.http.get<{ count: number }>(`${this.baseUrl}${this.getCartCountUrl}${customerId}`);
   }
 
   getCartItemsByCustomerId(customerId: string, page: number = 1, limit: number = 6): Observable<any> {

@@ -53,7 +53,6 @@ export class HeaderComponent {
       this.placeholderWords = res.data;
       this.startTypingEffect();
     })
-    this.cartService.calculateCartCount();
   }
 
 

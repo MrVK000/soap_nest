@@ -52,7 +52,7 @@ export class LoginComponent {
       this.api.loginUser(loginFormPayload).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         this.authService.setToken(res.token);
         this.authService.setUser(res.user);
-
+        this.cartService.fetchCartCount();
         this.snackbar.open(`Welcome back ${res?.user?.name ? res.user.name : ""}, logged in successful`, '', { duration: 2000 });
         this.loginForm.reset();
         this.sharedService.goBack();

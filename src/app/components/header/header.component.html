@@ -32,8 +32,10 @@
     <div class="actions">
 
       <!-- CART -->
-      <p-button icon="pi pi-shopping-cart" [text]="true" severity="success" routerLink="/cart" styleClass="action-btn"
-        [badge]="cartService.getCartCount ? cartService.getCartCount.toString() : ''" badgeSeverity="danger" />
+      <div class="cart-wrap" routerLink="/cart">
+        <p-button icon="pi pi-shopping-cart" [text]="true" severity="success" styleClass="action-btn" />
+        <span *ngIf="cartService.getCartCount > 0" class="cart-badge">{{ cartService.getCartCount > 99 ? '99+' : cartService.getCartCount }}</span>
+      </div>
 
       <!-- PROFILE POPOVER -->
       <p-button icon="pi pi-user" [text]="true" severity="success" styleClass="action-btn"

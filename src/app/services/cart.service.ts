@@ -22,7 +22,15 @@ export class CartService {
   private cartCount = new BehaviorSubject(0);
 
   constructor(private router: Router, private api: ApiService, private snackbar: MatSnackBar, private authService: AuthService) {
-    this.calculateCartCount();
+    this.fetchCartCount();
+  }
+
+  fetchCartCount() {
+    const user = this.authService.getUser();
+    if (!user?.customerId || !this.authService.isLoggedIn()) return;
+    this.api.getCartCount(user.customerId).subscribe((res) => {
+      this.cartCount.next(res?.count ?? 0);
+    }, () => {});
   }
 
   loadCartItems(page: number = 1, append: boolean = false, onReady?: () => void) {
@@ -78,7 +86,7 @@ export class CartService {
   }
 
   calculateCartCount() {
-    this.cartCount.next(this.cartItems.length);
+    this.cartCount.next(this.cartItems.reduce((sum, item) => sum + item.quantity, 0));
   }
 
   addToCart(customerId: string, productId: string) {
@@ -86,6 +94,7 @@ export class CartService {
     this.api.addToCart(cartItemPayload).subscribe(() => {
       this.loadCartItems(1, false);
       this.loadCartSummary();
+      this.fetchCartCount();
       this.snackbar.open('Item added to cart', '', { duration: 2000 });
     });
   }
@@ -94,6 +103,7 @@ export class CartService {
     this.api.updateCartItem({ cartItemId, quantity }).subscribe(() => {
       this.loadCartItems(1, false);
       this.loadCartSummary();
+      this.fetchCartCount();
       this.snackbar.open('Item updated successfully', '', { duration: 2000 });
     }, (err) => {
       this.snackbar.open(err?.errors?.[0]?.msg, '', { duration: 2000 });
@@ -108,6 +118,7 @@ export class CartService {
     this.api.updateCartItem({ cartItemId, quantity }).subscribe(() => {
       this.loadCartItems(1, false);
       this.loadCartSummary();
+      this.fetchCartCount();
       this.snackbar.open('Item updated successfully', '', { duration: 2000 });
     }, (err) => {
       this.snackbar.open(err?.error?.errors?.[0]?.msg, '', { duration: 2000 });
@@ -118,6 +129,7 @@ export class CartService {
     this.api.removeCartItem(cartItemId.toString()).subscribe(() => {
       this.loadCartItems(1, false);
       this.loadCartSummary();
+      this.fetchCartCount();
       this.snackbar.open('Item removed', '', { duration: 2000 });
     });
   }
