@@ -346,6 +346,52 @@
   }
 }
 
+// ── Skeleton ─────────────────────────────────────────────────────────────────
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e8ede8 25%, #d4ddd4 50%, #e8ede8 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 8px;
+}
+
+.skeleton-image {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  border-radius: 0;
+}
+
+.skeleton-text {
+  height: 14px;
+  margin-bottom: 10px;
+  width: 100%;
+
+  &.short {
+    width: 40%;
+    height: 11px;
+  }
+
+  &.medium {
+    width: 55%;
+  }
+}
+
+.skeleton-btn {
+  height: 38px;
+  border-radius: 50px;
+  margin-top: 4px;
+}
+
 // ── Scroll status ─────────────────────────────────────────────────────────────
 
 .scroll-status {

@@ -12,9 +12,55 @@
       (onClick)="downloadInvoicePDF()" />
   </div>
 
-  <!-- LOADER -->
-  <div class="od-loader" *ngIf="loading">
-    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  <!-- SKELETON -->
+  <div class="od-container" *ngIf="loading">
+
+    <div class="top-row">
+      <div class="meta-card">
+        <div class="od-sk-row" *ngFor="let i of [1,2,3,4,5]">
+          <div class="skeleton od-sk-label"></div>
+          <div class="skeleton od-sk-value"></div>
+        </div>
+      </div>
+      <div class="tracker-card">
+        <div class="skeleton od-sk-line" style="width:50%;height:16px;margin-bottom:1.5rem"></div>
+        <div class="od-sk-tracker">
+          <div class="skeleton od-sk-step-dot"></div>
+          <div class="skeleton od-sk-track-line"></div>
+          <div class="skeleton od-sk-step-dot"></div>
+          <div class="skeleton od-sk-track-line"></div>
+          <div class="skeleton od-sk-step-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="address-row">
+      <div class="address-card" *ngFor="let i of [1,2]">
+        <div class="skeleton od-sk-line" style="width:40%;height:14px;margin-bottom:0.75rem"></div>
+        <div class="skeleton od-sk-line" style="width:70%;height:14px;margin-bottom:6px"></div>
+        <div class="skeleton od-sk-line" style="width:90%;height:12px;margin-bottom:6px"></div>
+        <div class="skeleton od-sk-line" style="width:60%;height:12px"></div>
+      </div>
+    </div>
+
+    <div class="items-card">
+      <div class="skeleton od-sk-line" style="width:30%;height:16px;margin-bottom:1.2rem"></div>
+      <div class="od-sk-table-row od-sk-thead">
+        <div class="skeleton od-sk-line" *ngFor="let i of [1,2,3,4,5]" style="height:12px"></div>
+      </div>
+      <div class="od-sk-table-row" *ngFor="let i of [1,2,3]">
+        <div class="skeleton od-sk-line" style="height:14px"></div>
+        <div class="skeleton od-sk-line" style="height:14px"></div>
+        <div class="skeleton od-sk-line" style="height:14px"></div>
+        <div class="skeleton od-sk-line" style="height:14px"></div>
+        <div class="skeleton od-sk-line" style="height:14px"></div>
+      </div>
+      <div class="od-sk-grand-total">
+        <div class="skeleton od-sk-line" style="width:80px;height:16px"></div>
+        <div class="skeleton od-sk-line" style="width:100px;height:22px"></div>
+      </div>
+    </div>
+
   </div>
 
   <div class="od-container" *ngIf="!loading && order.id" id="invoice">

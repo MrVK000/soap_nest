@@ -6,8 +6,27 @@
       (onClick)="sharedService.goBack()" />
   </div>
 
+  <!-- SKELETON -->
+  <div class="pd-container" *ngIf="isLoading">
+    <div class="gallery">
+      <div class="skeleton skeleton-main-img"></div>
+      <div class="thumbnails">
+        <div class="skeleton skeleton-thumb" *ngFor="let i of [1,2,3]"></div>
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="skeleton skeleton-line" style="width:30%;height:22px"></div>
+      <div class="skeleton skeleton-line" style="width:80%;height:32px"></div>
+      <div class="skeleton skeleton-line" style="width:40%;height:18px"></div>
+      <div class="skeleton skeleton-line" style="width:55%;height:36px"></div>
+      <div class="skeleton skeleton-line" style="width:25%;height:22px"></div>
+      <div class="skeleton skeleton-line" style="width:100%;height:80px"></div>
+      <div class="skeleton skeleton-line" style="width:100%;height:44px;border-radius:50px"></div>
+    </div>
+  </div>
+
   <!-- MAIN CONTENT -->
-  <div class="pd-container" *ngIf="product?.productId">
+  <div class="pd-container" *ngIf="!isLoading && product?.productId">
 
     <!-- LEFT: IMAGE GALLERY -->
     <div class="gallery">

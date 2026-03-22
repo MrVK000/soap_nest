@@ -15,6 +15,20 @@
   <!-- CONTENT -->
   <div class="fav-container">
 
+    <!-- SKELETON -->
+    <div class="fav-grid" *ngIf="loading && favorites.length === 0">
+      <div class="fav-card" *ngFor="let i of [1,2,3,4,5,6,7,8]">
+        <div class="skeleton fav-skeleton-img"></div>
+        <div class="card-body">
+          <div class="skeleton fav-skeleton-title"></div>
+          <div class="skeleton fav-skeleton-desc"></div>
+          <div class="skeleton fav-skeleton-desc short"></div>
+          <div class="skeleton fav-skeleton-price"></div>
+          <div class="skeleton fav-skeleton-btn"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- EMPTY STATE -->
     <div class="empty-fav" *ngIf="!loading && favorites.length === 0">
       <div class="empty-icon"><i class="pi pi-heart"></i></div>
@@ -55,7 +69,7 @@
     </div>
 
     <!-- LOADER -->
-    <div class="fav-loader" *ngIf="loading">
+    <div class="fav-loader" *ngIf="loading && favorites.length > 0">
       <span class="dot"></span><span class="dot"></span><span class="dot"></span>
     </div>
 

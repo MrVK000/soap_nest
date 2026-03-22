@@ -2,7 +2,7 @@ import { SharedService } from './../../services/shared.service';
 import { AuthService } from './../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Coupon, Product } from './../../interfaces/interfaces';
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormArray, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -33,6 +33,7 @@ export class CheckoutComponent {
   districtsList: string[] = [];
   pincodesList: string[] = [];
   products: Product[] = [];
+  isLoading = true;
   coupons: FormGroup;
   couponDiscountPercentage!: number;
   totalPrice: number = 0;
@@ -59,7 +60,8 @@ export class CheckoutComponent {
     private authService: AuthService,
     public sharedService: SharedService,
     private fb: FormBuilder,
-    private cartService: CartService
+    private cartService: CartService,
+    private cdr: ChangeDetectorRef
   ) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as { data?: Product[] } | undefined;
@@ -170,6 +172,8 @@ export class CheckoutComponent {
       this.statesList = res.data;
       this.checkoutForm.patchValue({ state: this.statesList[0] });
       this.getDistrictsByState(this.statesList[0]);
+      this.isLoading = false;
+      this.cdr.markForCheck();
     })
   }
 

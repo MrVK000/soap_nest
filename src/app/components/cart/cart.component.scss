@@ -311,6 +311,36 @@
   padding: 1rem 0;
 }
 
+// ── Skeleton ─────────────────────────────────────────────────────────────────
+
+@keyframes shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e8ede8 25%, #d4ddd4 50%, #e8ede8 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 8px;
+}
+
+.skeleton-item-img {
+  width: 110px;
+  height: 110px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.skeleton-line {
+  margin-bottom: 4px;
+}
+
 // ── Scroll Loader ────────────────────────────────────────────────────────────
 
 .cart-loader {

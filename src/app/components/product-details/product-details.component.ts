@@ -35,6 +35,7 @@ import { environment } from '../../../environments/environment';
   reviewsPage = 1;
   reviewsTotalPages = 1;
   reviewsLoading = false;
+  isLoading = true;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cartService: CartService, private snackbar: MatSnackBar, private fb: FormBuilder, private apiService: ApiService, public sharedService: SharedService, private authService: AuthService, private cdr: ChangeDetectorRef) {
     this.reviewForm = this.fb.group({
@@ -57,6 +58,8 @@ import { environment } from '../../../environments/environment';
   }
 
   updateProduct() {
+    this.isLoading = true;
+    this.cdr.markForCheck();
     const user = this.authService.getUser();
     const customerId: string = (user && user.customerId) ? user.customerId : "-";
     this.apiService.getProductById(this.productId, customerId).pipe(takeUntil(this.destroy$)).subscribe((res) => {
@@ -64,6 +67,7 @@ import { environment } from '../../../environments/environment';
       this.sharedService.addSeo(`${this.product.name} - Buy Now | Green Glow`);
       this.productImages = (this.product.images ?? []).map((img: string) => environment.serverUrl + img);
       this.selectedImage = this.productImages[0] ?? '';
+      this.isLoading = false;
       this.cdr.markForCheck();
     }, () => {
       this.router.navigate(['/products']);

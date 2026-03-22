@@ -34,8 +34,21 @@
     <span>{{ displayedProducts.length }} product{{ displayedProducts.length !== 1 ? 's' : '' }} found</span>
   </div>
 
+  <!-- SKELETON GRID -->
+  <div class="product-grid" *ngIf="isLoading && products.length === 0">
+    <div class="product-card skeleton-card" *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">
+      <div class="skeleton skeleton-image"></div>
+      <div class="card-body">
+        <div class="skeleton skeleton-text short"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text medium"></div>
+        <div class="skeleton skeleton-btn"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- PRODUCT GRID -->
-  <div class="product-grid">
+  <div class="product-grid" *ngIf="!isLoading || products.length > 0">
 
     <div *ngIf="!isLoading && displayedProducts.length === 0" class="empty-state">
       <i class="pi pi-inbox"></i>

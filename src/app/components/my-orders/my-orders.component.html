@@ -25,6 +25,33 @@
     <!-- ORDERS LIST -->
     <div class="orders-container">
 
+        <!-- SKELETON -->
+        <div class="orders-grid" *ngIf="loading && orders.length === 0">
+            <div class="order-card" *ngFor="let i of [1,2,3,4,5,6]">
+                <div class="order-skeleton-header">
+                    <div>
+                        <div class="skeleton order-sk-line lg"></div>
+                        <div class="skeleton order-sk-line sm"></div>
+                    </div>
+                    <div class="skeleton order-sk-badge"></div>
+                </div>
+                <div class="order-items">
+                    <div class="order-sk-item" *ngFor="let j of [1,2]">
+                        <div class="skeleton order-sk-avatar"></div>
+                        <div class="order-sk-info">
+                            <div class="skeleton order-sk-line md"></div>
+                            <div class="skeleton order-sk-line sm"></div>
+                        </div>
+                        <div class="skeleton order-sk-price"></div>
+                    </div>
+                </div>
+                <div class="order-skeleton-footer">
+                    <div class="skeleton order-sk-line md"></div>
+                    <div class="skeleton order-sk-btn"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- EMPTY STATE -->
         <div class="empty-orders" *ngIf="!loading && filteredOrders.length === 0">
             <div class="empty-icon"><i class="pi pi-inbox"></i></div>
@@ -80,7 +107,7 @@
         </div>
 
         <!-- LOADER -->
-        <div class="orders-loader" *ngIf="loading">
+        <div class="orders-loader" *ngIf="loading && orders.length > 0">
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
         </div>
 

@@ -255,6 +255,57 @@
   }
 }
 
+// ── Skeleton ─────────────────────────────────────────────────────────────────
+
+@keyframes shimmer {
+  0% { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e8ede8 25%, #d4ddd4 50%, #e8ede8 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 8px;
+}
+
+.wl-card{
+  width: 14rem;
+}
+
+.wl-sk-img {
+  width: 100%;
+  height: 200px;
+  border-radius: 0;
+}
+
+.wl-sk-title {
+  width: 100%;
+  height: 16px;
+  margin-bottom: 8px;
+}
+
+.wl-sk-desc {
+  width: 100%;
+  height: 12px;
+  margin-bottom: 6px;
+
+  &.short { width: 65%; }
+}
+
+.wl-sk-price {
+  width: 45%;
+  height: 18px;
+  margin: 6px 0;
+}
+
+.wl-sk-btn {
+  width: 100%;
+  height: 36px;
+  border-radius: 50px;
+  margin-top: 8px;
+}
+
 // ── Loader ────────────────────────────────────────────────────────────────────
 
 .wl-loader {

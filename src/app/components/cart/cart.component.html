@@ -12,8 +12,35 @@
         </div>
     </div>
 
+    <!-- SKELETON -->
+    <div class="cart-layout" *ngIf="cartService.cartLoading && cartService.cartItems.length === 0">
+        <div class="cart-items-col">
+            <div class="cart-card skeleton-card" *ngFor="let i of [1,2,3]">
+                <div class="skeleton skeleton-item-img"></div>
+                <div class="item-details">
+                    <div class="skeleton skeleton-line" style="width:30%;height:14px"></div>
+                    <div class="skeleton skeleton-line" style="width:70%;height:18px;margin-top:6px"></div>
+                    <div class="skeleton skeleton-line" style="width:90%;height:12px;margin-top:6px"></div>
+                    <div style="display:flex;justify-content:space-between;margin-top:14px">
+                        <div class="skeleton skeleton-line" style="width:25%;height:20px"></div>
+                        <div class="skeleton skeleton-line" style="width:28%;height:32px;border-radius:50px"></div>
+                        <div class="skeleton skeleton-line" style="width:18%;height:20px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="summary-col">
+            <div class="summary-card">
+                <div class="skeleton skeleton-line" style="width:50%;height:20px;margin-bottom:1rem"></div>
+                <div class="skeleton skeleton-line" style="width:100%;height:1px;margin-bottom:1rem"></div>
+                <div class="skeleton skeleton-line" style="width:100%;height:14px;margin-bottom:10px" *ngFor="let i of [1,2,3]"></div>
+                <div class="skeleton skeleton-line" style="width:100%;height:44px;border-radius:50px;margin-top:1rem"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- CART CONTENT -->
-    <div class="cart-layout" *ngIf="cartService.summary.itemCount > 0; else emptyCart">
+    <div class="cart-layout" *ngIf="!cartService.cartLoading && cartService.summary.itemCount > 0; else emptyCartCheck">
 
         <!-- LEFT: ITEMS -->
         <div class="cart-items-col">
@@ -117,14 +144,16 @@
     </div>
 
     <!-- EMPTY CART -->
-    <ng-template #emptyCart>
-        <div class="empty-cart">
-            <div class="empty-icon"><i class="pi pi-shopping-cart"></i></div>
-            <h2>Your cart is empty</h2>
-            <p>Looks like you haven't added anything yet.</p>
-            <p-button label="Shop Now" icon="pi pi-arrow-right" iconPos="right" severity="success"
-                routerLink="/products" />
-        </div>
+    <ng-template #emptyCartCheck>
+        <ng-container *ngIf="!cartService.cartLoading">
+            <div class="empty-cart">
+                <div class="empty-icon"><i class="pi pi-shopping-cart"></i></div>
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added anything yet.</p>
+                <p-button label="Shop Now" icon="pi pi-arrow-right" iconPos="right" severity="success"
+                    routerLink="/products" />
+            </div>
+        </ng-container>
     </ng-template>
 
 </div>
