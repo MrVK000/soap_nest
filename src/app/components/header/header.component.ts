@@ -57,6 +57,10 @@ export class HeaderComponent {
 
 
   startTypingEffect() {
+    if (this.placeholderWords.length === 0) {
+      this.timeoutRef = setTimeout(() => this.startTypingEffect(), 500);
+      return;
+    }
     const currentWord = this.placeholderWords[this.currentWordIndex];
     const typingSpeed = 150;
     const erasingSpeed = 100;
