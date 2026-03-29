@@ -14,7 +14,6 @@ import { TagModule } from 'primeng/tag';
 import { ApiService } from '../../services/api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-product-details',
@@ -65,7 +64,7 @@ import { environment } from '../../../environments/environment';
     this.apiService.getProductById(this.productId, customerId).pipe(takeUntil(this.destroy$)).subscribe((res) => {
       this.product = res.data;
       this.sharedService.addSeo(`${this.product.name} - Buy Now | Green Glow`);
-      this.productImages = (this.product.images ?? []).map((img: string) => environment.serverUrl + img);
+      this.productImages = (this.product.images ?? []).map((img: string) => img);
       this.selectedImage = this.productImages[0] ?? '';
       this.isLoading = false;
       this.cdr.markForCheck();

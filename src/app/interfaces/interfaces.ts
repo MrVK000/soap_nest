@@ -14,7 +14,8 @@ export interface Product {
     isWishlistItem: boolean,
     wishlistItemId: number,
     favoriteItemId: number,
-    reviews: Review[]
+    reviews: Review[],
+    images: String[]
 }
 export interface CartItem {
     cartItemId: number;
@@ -142,31 +143,31 @@ export interface WishlistItem {
 }
 
 export interface CartSummary {
-  subtotal: number;
-  totalSavings: number;
-  total: number;
-  itemCount: number;
+    subtotal: number;
+    totalSavings: number;
+    total: number;
+    itemCount: number;
 }
 
 export interface CartSummaryItem {
-  cartItemId: number;
-  productId: string;
-  name: string;
-  category: string;
-  image: string;
-  description: string;
-  price: number;
-  offer: number;
-  discountPrice: number;
-  stock: number;
-  quantity: number;
-  itemTotal: number;
+    cartItemId: number;
+    productId: string;
+    name: string;
+    category: string;
+    image: string;
+    description: string;
+    price: number;
+    offer: number;
+    discountPrice: number;
+    stock: number;
+    quantity: number;
+    itemTotal: number;
 }
 
 export interface CartSummaryResponse {
-  message: string;
-  summary: CartSummary;
-  items: CartSummaryItem[];
+    message: string;
+    summary: CartSummary;
+    items: CartSummaryItem[];
 }
 
 export interface Message {

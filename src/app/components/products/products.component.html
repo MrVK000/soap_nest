@@ -58,7 +58,7 @@
 
     <div class="product-card" *ngFor="let product of displayedProducts">
       <div class="card-image" (click)="viewProductDetails(product.productId)">
-        <img [src]="product.image" [alt]="product.name" loading="lazy">
+        <img [src]="product.images[0]" [alt]="product.name" loading="lazy">
         <div class="card-overlay">
           <p-button label="View" icon="pi pi-eye" size="small" severity="success"
             (onClick)="viewProductDetails(product.productId); $event.stopPropagation()" />
