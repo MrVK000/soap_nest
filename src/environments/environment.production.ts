@@ -4,8 +4,8 @@ export const environment = {
    * Production API base URL.
    * Replace with your real HTTPS backend endpoint before going live.
    */
-  apiBaseUrl: 'https://api.your-domain.com/api/v1/',
-  serverUrl: 'https://api.your-domain.com',
+  apiBaseUrl: 'https://soap-nest-backend.onrender.com/api/v1/',
+  serverUrl: 'https://soap-nest-backend.onrender.com',
   /**
    * Razorpay public key for LIVE environment.
    * Never store secret keys in the frontend.

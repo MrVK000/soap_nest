@@ -181,6 +181,10 @@ textarea {
   min-width: fit-content !important;
 }
 
+.p-overlay {
+  z-index: 996 !important;
+}
+
 .back-btn-wrapper {
   max-width: 100rem !important;
   background-color: var(--white);
