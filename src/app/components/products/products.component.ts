@@ -106,7 +106,7 @@ export class ProductsComponent {
       const q = this.searchQuery.trim().toLowerCase();
       result = result.filter(p => p.name.toLowerCase().includes(q) || p.price.toString().includes(q));
     }
-    result.sort((a, b) => this.selectedSort === 'low-to-high' ? a.price - b.price : b.price - a.price);
+    result.sort((a, b) => this.selectedSort === 'low-to-high' ? a.discountPrice - b.discountPrice : b.discountPrice - a.discountPrice);
     return result;
   }
 
