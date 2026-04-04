@@ -138,8 +138,13 @@ export class ApiService {
     return this.http.post(this.baseUrl.concat(this.resetPasswordUrl), { token, newPassword });
   }
 
-  listProducts(customerId: string, page: number = 1): Observable<ProductListResponse> {
-    return this.http.post<ProductListResponse>(`${this.baseUrl}${this.listProductsUrl}?page=${page}&limit=10`, { customerId });
+  listProducts(customerId: string, page: number = 1, filters: { search?: string, category?: string, minPrice?: number, maxPrice?: number } = {}): Observable<ProductListResponse> {
+    let params = `page=${page}&limit=10&customerId=${customerId}`;
+    if (filters.search) params += `&search=${encodeURIComponent(filters.search)}`;
+    if (filters.category) params += `&category=${encodeURIComponent(filters.category)}`;
+    if (filters.minPrice !== undefined) params += `&minPrice=${filters.minPrice}`;
+    if (filters.maxPrice !== undefined) params += `&maxPrice=${filters.maxPrice}`;
+    return this.http.get<ProductListResponse>(`${this.baseUrl}${this.listProductsUrl}?${params}`);
   }
 
   fetchPlaceholderWords(): Observable<RegionResponse> {

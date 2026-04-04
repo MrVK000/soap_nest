@@ -64,7 +64,7 @@ export class FavoritesComponent implements OnInit {
   @HostListener('window:scroll')
   onScroll() {
     if (!this.isReady || this.loading || this.page >= this.totalPages) return;
-    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+    const nearBottom = window.scrollY > 0 && window.innerHeight + window.scrollY >= document.body.offsetHeight * 0.8;
     if (nearBottom) this.loadFavorites(this.page + 1, true);
   }
 

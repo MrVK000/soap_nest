@@ -28,7 +28,7 @@ export class CartComponent {
   onScroll() {
     if (!this.isReady || this.cartService.cartLoading) return;
     if (this.cartService.cartPage >= this.cartService.cartTotalPages) return;
-    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+    const nearBottom = window.scrollY > 0 && window.innerHeight + window.scrollY >= document.body.offsetHeight * 0.8;
     if (nearBottom) {
       this.cartService.loadCartItems(this.cartService.cartPage + 1, true);
     }

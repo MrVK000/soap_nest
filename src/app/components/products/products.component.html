@@ -15,23 +15,41 @@
     <div class="search-wrap">
       <p-iconfield>
         <p-inputicon class="pi pi-search" />
-        <input type="text" pInputText [(ngModel)]="searchQuery" (input)="searchProducts()"
+        <input type="text" pInputText [(ngModel)]="searchQuery" (input)="onSearchInput()"
           placeholder="Search products...">
       </p-iconfield>
     </div>
     <div class="filters">
       <p-select [options]="categoryOptions" [(ngModel)]="selectedCategory" optionLabel="label" optionValue="value"
-        [checkmark]="true" appendTo="body" (onChange)="filterProducts()">
+        [checkmark]="true" appendTo="body" (onChange)="onCategoryChange()">
       </p-select>
-      <p-select [options]="sortOptions" [(ngModel)]="selectedSort" optionLabel="label" optionValue="value"
-        [checkmark]="true" appendTo="body" (onChange)="sortProducts()">
-      </p-select>
+      <div class="price-select-wrap">
+        <div class="price-select-trigger" (click)="priceDropdownOpen = !priceDropdownOpen">
+          <span class="price-select-label">
+            <ng-container *ngIf="selectedMaxPrice; else noPrice">
+              Below ₹{{ selectedMaxPrice }}
+            </ng-container>
+            <ng-template #noPrice>Price Range</ng-template>
+          </span>
+          <i class="pi pi-times price-clear-icon" *ngIf="selectedMaxPrice"
+            (click)="clearPriceFilter(); $event.stopPropagation()"></i>
+          <i class="pi pi-chevron-down price-chevron" [class.open]="priceDropdownOpen"></i>
+        </div>
+        <div class="price-dropdown" *ngIf="priceDropdownOpen">
+          <div class="price-option" *ngFor="let opt of priceOptions" (click)="onPriceChange(opt.value)">
+            <span class="price-checkbox" [class.checked]="selectedMaxPrice === opt.value">
+              <i class="pi pi-check" *ngIf="selectedMaxPrice === opt.value"></i>
+            </span>
+            <span>{{ opt.label }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- RESULTS COUNT -->
-  <div class="results-info" *ngIf="!isLoading || displayedProducts.length > 0">
-    <span>{{ displayedProducts.length }} product{{ displayedProducts.length !== 1 ? 's' : '' }} found</span>
+  <div class="results-info" *ngIf="!isLoading || products.length > 0">
+    <span>{{ totalCount }} product{{ totalCount !== 1 ? 's' : '' }} found</span>
   </div>
 
   <!-- SKELETON GRID -->
@@ -50,13 +68,13 @@
   <!-- PRODUCT GRID -->
   <div class="product-grid" *ngIf="!isLoading || products.length > 0">
 
-    <div *ngIf="!isLoading && displayedProducts.length === 0" class="empty-state">
+    <div *ngIf="!isLoading && products.length === 0" class="empty-state">
       <i class="pi pi-inbox"></i>
       <p>No products found</p>
       <span>Try adjusting your search or filters</span>
     </div>
 
-    <div class="product-card" *ngFor="let product of displayedProducts">
+    <div class="product-card" *ngFor="let product of products">
       <div class="card-image" (click)="viewProductDetails(product.productId)">
         <img [src]="product.images[0]" [alt]="product.name" loading="lazy">
         <div class="card-overlay">
