@@ -142,6 +142,7 @@
   .placeholder-overlay {
     position: absolute;
     left: 2.5rem;
+    right: 1rem;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
@@ -149,7 +150,6 @@
     pointer-events: none;
     color: #888;
     font-size: 0.9rem;
-    white-space: nowrap;
     overflow: hidden;
   }
 
@@ -160,6 +160,8 @@
   .dynamic-wrapper {
     height: 24px;
     overflow: hidden;
+    white-space: nowrap;
+    min-width: 0;
   }
 
   .dynamic-text {
