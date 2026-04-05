@@ -519,9 +519,21 @@
 
 // ── Responsive ────────────────────────────────────────────────────────────────
 
+@media (max-width: 1440px) {
+  .product-grid {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
 @media (max-width: 1024px) {
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 826px) {
+  .product-grid {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 

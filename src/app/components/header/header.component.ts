@@ -55,9 +55,21 @@ export class HeaderComponent {
 
   startSlideEffect() {
     this.intervalRef = setInterval(() => {
-      this.slideIndex = (this.slideIndex + 1) % this.placeholderWords.length;
+      if (this.slideIndex === this.placeholderWords.length) {
+        // already on clone, silently reset to real index 0
+        this.slideTransition = false;
+        this.slideIndex = 0;
+        setTimeout(() => {
+          this.slideTransition = true;
+          this.slideIndex = 1;
+        }, 50);
+      } else {
+        this.slideIndex++;
+      }
     }, 2000);
   }
+
+  slideTransition = true;
 
   get slideTransform(): string {
     return `translateY(-${this.slideIndex * 24}px)`;

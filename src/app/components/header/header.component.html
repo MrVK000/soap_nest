@@ -23,8 +23,9 @@
         <div class="placeholder-overlay" *ngIf="!searchFocused && !searchTerm">
           <span class="static-text">Search for&nbsp;</span>
           <div class="dynamic-wrapper">
-            <div class="dynamic-text" [style.transform]="slideTransform">
+          <div class="dynamic-text" [style.transform]="slideTransform" [style.transition]="slideTransition ? 'transform 0.5s ease-in-out' : 'none'">
               <div *ngFor="let word of placeholderWords">{{ word }}</div>
+              <div>{{ placeholderWords[0] }}</div>
             </div>
           </div>
         </div>
