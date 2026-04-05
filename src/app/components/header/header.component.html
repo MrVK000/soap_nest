@@ -16,11 +16,19 @@
 
     <!-- SEARCH -->
     <div class="search-wrap">
-      <p-iconfield>
-        <p-inputicon class="pi pi-search" />
-        <input type="text" pInputText [placeholder]="placeholderText" [(ngModel)]="searchTerm"
-          (input)="onSearchChange()" (focus)="showSuggestions = true" (blur)="hideSuggestions()">
-      </p-iconfield>
+      <div class="search-inner">
+        <i class="pi pi-search search-icon"></i>
+        <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" (focus)="onSearchFocus()"
+          (blur)="onSearchBlur()">
+        <div class="placeholder-overlay" *ngIf="!searchFocused && !searchTerm">
+          <span class="static-text">Search for&nbsp;</span>
+          <div class="dynamic-wrapper">
+            <div class="dynamic-text" [style.transform]="slideTransform">
+              <div *ngFor="let word of placeholderWords">{{ word }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
       <ul *ngIf="showSuggestions && suggestions.length" class="suggestion-list">
         <li *ngFor="let item of suggestions" (click)="selectSuggestion(item)">
           <i class="pi pi-search"></i> {{ item.name }}

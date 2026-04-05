@@ -34,12 +34,10 @@ export class HeaderComponent {
   suggestions: Suggestion[] = [];
   showSuggestions = false;
   private searchSubject = new Subject<string>();
-  placeholderText = 'Search products';
-  private currentWordIndex = 0;
-  private deleting = false;
-  private charIndex = 0;
-  private timeoutRef: any;
-  private placeholderWords: string[] = [];
+  placeholderWords: string[] = [];
+  slideIndex = 0;
+  searchFocused = false;
+  private intervalRef: any;
 
   constructor(public cartService: CartService, private router: Router, public authService: AuthService, private apiService: ApiService) {
     this.searchSubject.pipe(debounceTime(300), distinctUntilChanged(), switchMap(term => apiService.fetchSuggestions(term))).subscribe(res => {
@@ -51,45 +49,32 @@ export class HeaderComponent {
   ngOnInit(): void {
     this.apiService.fetchPlaceholderWords().pipe(takeUntil(this.destroy$)).subscribe((res) => {
       this.placeholderWords = res.data;
-      this.startTypingEffect();
-    })
+      this.startSlideEffect();
+    });
   }
 
+  startSlideEffect() {
+    this.intervalRef = setInterval(() => {
+      this.slideIndex = (this.slideIndex + 1) % this.placeholderWords.length;
+    }, 2000);
+  }
 
-  startTypingEffect() {
-    if (this.placeholderWords.length === 0) {
-      this.timeoutRef = setTimeout(() => this.startTypingEffect(), 500);
-      return;
+  get slideTransform(): string {
+    return `translateY(-${this.slideIndex * 24}px)`;
+  }
+
+  onSearchFocus() {
+    this.searchFocused = true;
+    clearInterval(this.intervalRef);
+    this.showSuggestions = true;
+  }
+
+  onSearchBlur() {
+    if (!this.searchTerm) {
+      this.searchFocused = false;
+      this.startSlideEffect();
     }
-    const currentWord = this.placeholderWords[this.currentWordIndex];
-    const typingSpeed = 150;
-    const erasingSpeed = 100;
-    const pauseAfterTyping = 1500;
-    const pauseAfterErasing = 500;
-
-    if (!this.deleting && this.charIndex <= currentWord.length) {
-      // typing
-      this.placeholderText = currentWord.substring(0, this.charIndex);
-      this.charIndex++;
-      this.timeoutRef = setTimeout(() => this.startTypingEffect(), typingSpeed);
-
-    } else if (this.deleting && this.charIndex >= 0) {
-      // erasing
-      this.placeholderText = currentWord.substring(0, this.charIndex);
-      this.charIndex--;
-      this.timeoutRef = setTimeout(() => this.startTypingEffect(), erasingSpeed);
-
-    } else {
-      // switch states
-      if (!this.deleting) {
-        this.deleting = true;
-        this.timeoutRef = setTimeout(() => this.startTypingEffect(), pauseAfterTyping);
-      } else {
-        this.deleting = false;
-        this.currentWordIndex = (this.currentWordIndex + 1) % this.placeholderWords.length;
-        this.timeoutRef = setTimeout(() => this.startTypingEffect(), pauseAfterErasing);
-      }
-    }
+    this.hideSuggestions();
   }
 
   onSearchChange() {
@@ -131,7 +116,7 @@ export class HeaderComponent {
   }
 
   ngOnDestroy() {
-    clearInterval(this.timeoutRef);
+    clearInterval(this.intervalRef);
     this.destroy$.next();
     this.destroy$.complete();
   }

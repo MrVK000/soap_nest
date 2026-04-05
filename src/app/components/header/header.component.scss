@@ -105,28 +105,71 @@
   position: relative;
   max-width: 420px;
 
-  p-iconfield {
-    width: 100%;
-    display: block;
+  .search-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
   }
 
-  input[pInputText] {
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    color: #888;
+    font-size: 0.9rem;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  input {
     width: 100%;
-    min-width: unset;
-    max-width: unset;
     height: 40px;
     border-radius: 50px;
     border: 1.5px solid #e0e8e0;
     background: #f7faf7;
     font-size: 0.9rem;
     padding-left: 2.5rem;
+    padding-right: 1rem;
+    outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
 
     &:focus {
-      outline: none;
       border-color: #258949;
       box-shadow: 0 0 0 3px rgba(37, 137, 73, 0.1);
       background: #fff;
+    }
+  }
+
+  .placeholder-overlay {
+    position: absolute;
+    left: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    color: #888;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .static-text {
+    flex-shrink: 0;
+  }
+
+  .dynamic-wrapper {
+    height: 24px;
+    overflow: hidden;
+  }
+
+  .dynamic-text {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.5s ease-in-out;
+
+    div {
+      height: 24px;
+      line-height: 24px;
     }
   }
 }
