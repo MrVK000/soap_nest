@@ -9,7 +9,6 @@ import { ApiService } from '../../services/api.service';
 import { SharedService } from '../../services/shared.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +36,7 @@ export class HomeComponent {
     this.api.getPublicFeaturedProducts().pipe(takeUntil(this.destroy$)).subscribe((res) => {
       this.featuredProducts = (res?.data ?? []).map((product: any) => ({
         ...product,
-        image: environment.serverUrl + product.images[0]
+        image: product.images?.[0] ?? ''
       }));
     }, () => {
       this.snackbar.open("Couldn't fetch the products", '', { duration: 3000 });

@@ -123,7 +123,6 @@ import { AuthService } from '../../services/auth.service';
       return;
     }
     this.cartService.addToCart(user.customerId, this.product.productId);
-    this.snackbar.open('Item added to cart', '', { duration: 2000 });
   }
 
   addToWishlist() {

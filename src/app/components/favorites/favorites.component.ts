@@ -8,7 +8,6 @@ import { FavoriteItem } from '../../interfaces/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-favorites',
@@ -48,7 +47,7 @@ export class FavoritesComponent implements OnInit {
       const mapped: FavoriteItem[] = (res?.data ?? []).map((item: any) => {
         try {
           const imgs = JSON.parse(item.image as string);
-          item.image = environment.serverUrl + imgs[0];
+          item.image = imgs[0] ?? '';
         } catch { }
         return item;
       });

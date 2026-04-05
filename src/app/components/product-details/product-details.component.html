@@ -43,7 +43,7 @@
     <!-- RIGHT: PRODUCT INFO -->
     <div class="info-panel">
 
-      <p-tag [value]="product.category" severity="success" />
+      <p-tag [value]="product.category | titlecase" severity="success"></p-tag>
       <h1 class="product-name">{{ product.name }}</h1>
 
       <!-- RATING -->

@@ -247,10 +247,6 @@
     transform: translateY(-6px);
     box-shadow: 0 12px 32px rgba(37, 137, 73, 0.15);
 
-    .product-overlay {
-      opacity: 1;
-    }
-
     .product-img-wrap img {
       transform: scale(1.06);
     }
@@ -267,28 +263,6 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
-  }
-}
-
-.product-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 40, 15, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s;
-
-  .overlay-btn {
-    background: var(--white);
-    color: var(--green);
-    font-weight: 700;
-    padding: 10px 22px;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    border: none;
-    cursor: pointer;
   }
 }
 
@@ -541,6 +515,27 @@
 
 // ── Responsive ───────────────────────────────────────────────────────────────
 
+@media (max-width: 1239px) {
+  .products-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .carousel-wrap {
+    width: 44rem;
+  }
+
+  .testimonial-card {
+    padding: 1.5rem 1.2rem;
+    margin: 0.5rem 0.25rem;
+  }
+}
+
 @media (max-width: 768px) {
   .hero {
     min-height: 80vh;
@@ -559,17 +554,26 @@
   }
 
   .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
   }
 
   .benefits-grid {
     grid-template-columns: 1fr;
   }
 
+  .carousel-wrap {
+    width: 38.8rem;
+  }
+
   .testimonial-card {
     padding: 1.5rem 1.2rem;
     margin: 0.5rem 0.25rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .products-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -580,10 +584,41 @@
   }
 
   .products-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   .stat-number {
     font-size: 1.5rem;
+  }
+
+  .testimonials {
+    padding: 60px 20px;
+  }
+
+  .carousel-wrap {
+    width: 21rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .testimonials {
+    padding: 60px 20px;
+  }
+
+  .carousel-wrap {
+    width: 17.5rem;
   }
 }

@@ -55,9 +55,6 @@
             <div class="product-card" *ngFor="let product of featuredProducts" (click)="viewProduct(product)">
                 <div class="product-img-wrap">
                     <img [src]="product.images[0]" [alt]="product.name" loading="lazy">
-                    <div class="product-overlay">
-                        <p-button label="View Product" icon="pi pi-eye" severity="success" size="small" />
-                    </div>
                     @if (product.offer && +product.offer > 0) {
                     <span class="product-badge">{{ product.offer }}% OFF</span>
                     }

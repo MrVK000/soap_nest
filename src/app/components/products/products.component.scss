@@ -54,7 +54,7 @@
 
 .toolbar {
   position: sticky;
-  top: 0;
+  top: 4rem;
   z-index: 100;
   background: var(--white);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
@@ -124,7 +124,9 @@
     box-shadow: 0 0 0 3px rgba(37, 137, 73, 0.1);
   }
 
-  .price-select-label { flex: 1; }
+  .price-select-label {
+    flex: 1;
+  }
 
   .price-clear-icon {
     font-size: 0.75rem;
@@ -144,7 +146,9 @@
     color: #888;
     transition: transform 0.2s;
 
-    &.open { transform: rotate(180deg); }
+    &.open {
+      transform: rotate(180deg);
+    }
   }
 }
 
@@ -171,7 +175,9 @@
   cursor: pointer;
   transition: background 0.15s;
 
-  &:hover { background: #f0faf4; }
+  &:hover {
+    background: #f0faf4;
+  }
 
   .price-checkbox {
     width: 18px;
@@ -277,10 +283,6 @@
     transform: translateY(-5px);
     box-shadow: 0 12px 32px rgba(37, 137, 73, 0.14);
 
-    .card-overlay {
-      opacity: 1;
-    }
-
     .card-image img {
       transform: scale(1.06);
     }
@@ -301,37 +303,7 @@
   }
 }
 
-.card-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 40, 15, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
 
-.overlay-action {
-  background: var(--white);
-  color: var(--green);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 50px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: background 0.2s, color 0.2s;
-
-  &:hover {
-    background: var(--green);
-    color: var(--white);
-  }
-}
 
 .badge-offer {
   position: absolute;
@@ -423,7 +395,7 @@
 }
 
 .btn-cart {
-  width: 100%;
+  flex: 1;
   background: var(--green);
   color: var(--white);
   border: none;
@@ -606,16 +578,6 @@
     gap: 0.9rem;
     padding: 1rem;
   }
-
-  .card-overlay {
-    opacity: 1;
-    background: rgba(10, 40, 15, 0.35);
-  }
-
-  .overlay-action {
-    padding: 6px 10px;
-    font-size: 0.78rem;
-  }
 }
 
 @media (max-width: 480px) {
@@ -655,12 +617,6 @@
   .btn-cart {
     padding: 8px;
     font-size: 0.8rem;
-  }
-
-  .overlay-action {
-    padding: 5px 8px;
-    font-size: 0.72rem;
-    gap: 3px;
   }
 
   .badge-offer {

@@ -5,7 +5,6 @@ import { CartItem, CartItemPayload, CartSummary, CartSummaryItem } from '../inte
 import { ApiService } from './api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +29,7 @@ export class CartService {
     if (!user?.customerId || !this.authService.isLoggedIn()) return;
     this.api.getCartCount(user.customerId).subscribe((res) => {
       this.cartCount.next(res?.count ?? 0);
-    }, () => {});
+    }, () => { });
   }
 
   loadCartItems(page: number = 1, append: boolean = false, onReady?: () => void) {
@@ -44,7 +43,7 @@ export class CartService {
       const mapped: CartItem[] = (res?.data ?? []).map((cartItem: CartItem) => {
         try {
           const imgs = JSON.parse(cartItem.image as string);
-          cartItem.image = environment.serverUrl + imgs[0];
+          cartItem.image = imgs[0] ?? '';
         } catch { }
         return cartItem;
       });
@@ -71,7 +70,7 @@ export class CartService {
       this.summaryItems = res.items.map(item => {
         try {
           const imgs = JSON.parse(item.image as string);
-          item.image = environment.serverUrl + imgs[0];
+          item.image = imgs[0] ?? '';
         } catch { }
         return item;
       });

@@ -8,7 +8,6 @@ import { WishlistItem } from '../../interfaces/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-wishlist',
@@ -48,7 +47,7 @@ export class WishlistComponent implements OnInit {
       const mapped: WishlistItem[] = (res?.data ?? []).map((item: any) => {
         try {
           const imgs = JSON.parse(item.image as string);
-          item.image = environment.serverUrl + imgs[0];
+          item.image = imgs[0] ?? '';
         } catch { }
         return item;
       });

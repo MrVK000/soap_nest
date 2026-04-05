@@ -372,6 +372,10 @@
     display: none;
   }
 
+  ::ng-deep .profile-btn.p-button {
+    display: none !important;
+  }
+
   ::ng-deep .mobile-menu-btn.p-button {
     display: inline-flex !important;
   }
@@ -389,5 +393,9 @@
 
   .search-wrap {
     max-width: unset;
+  }
+
+  .actions {
+    gap: 0rem;
   }
 }

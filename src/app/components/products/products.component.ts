@@ -104,7 +104,7 @@ export class ProductsComponent {
     this.api.listProducts(this.customerId, this.currentPage, filters).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       const fetched = (res?.data ?? []).map((product: any) => ({
         ...product,
-        image: environment.serverUrl + product.images[0]
+        image: product.images?.[0] ?? ''
       }));
       this.totalPages = res?.totalPages ?? 1;
       this.totalCount = res?.total ?? 0;
