@@ -196,7 +196,7 @@
     align-items: center;
   }
 
-  .p-select-trigger {
+  .p-select-dropdown {
     width: 2.5rem;
     height: 100%;
     display: flex;
@@ -205,6 +205,8 @@
     position: absolute;
     right: 0;
     top: 0;
+    z-index: 1;
+    flex-shrink: 0;
   }
 }
 
