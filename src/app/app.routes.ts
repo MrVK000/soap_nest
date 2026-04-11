@@ -15,9 +15,6 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { InternalServerErrorComponent } from './components/internal-server-error/internal-server-error.component';
-import { TermsAndConditionsComponent } from './components/terms-and-conditions/terms-and-conditions.component';
-import { ShippingAndReturnsComponent } from './components/shipping-and-returns/shipping-and-returns.component';
-import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { InvoiceComponent } from './components/invoice/invoice.component';
@@ -48,15 +45,21 @@ export const routes: Routes = [
     },
     {
         path: 'terms',
-        component: TermsAndConditionsComponent
+        loadComponent: () =>
+            import('./components/dynamic-site-page/dynamic-site-page.component').then((m) => m.DynamicSitePageComponent),
+        data: { sitePageSlug: 'terms-and-conditions', pageLabel: 'Terms & Conditions' },
     },
     {
         path: 'shipping-returns',
-        component: ShippingAndReturnsComponent
+        loadComponent: () =>
+            import('./components/dynamic-site-page/dynamic-site-page.component').then((m) => m.DynamicSitePageComponent),
+        data: { sitePageSlug: 'shipping-and-returns', pageLabel: 'Shipping & Returns' },
     },
     {
         path: 'privacy-policy',
-        component: PrivacyPolicyComponent
+        loadComponent: () =>
+            import('./components/dynamic-site-page/dynamic-site-page.component').then((m) => m.DynamicSitePageComponent),
+        data: { sitePageSlug: 'privacy-policy', pageLabel: 'Privacy Policy' },
     },
     // {
     //     path: 'contact',

@@ -66,7 +66,7 @@ export class HeaderComponent {
       } else {
         this.slideIndex++;
       }
-    }, 2000);
+    }, 5000);
   }
 
   slideTransition = true;

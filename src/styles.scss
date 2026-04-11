@@ -177,40 +177,9 @@ textarea {
   margin: 2rem 0;
 }
 
-/* Snackbar: width follows message instead of stretching full overlay / 344px min */
-.mat-mdc-snack-bar-container {
-  flex: 0 0 auto !important;
-  width: auto !important;
-  max-width: calc(100vw - 24px) !important;
-}
-
-.mat-mdc-snack-bar-handset .mat-mdc-snack-bar-container {
-  width: auto !important;
-  max-width: calc(100vw - 16px) !important;
-}
-
-.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
-  width: auto !important;
-  min-width: 0 !important;
-  max-width: min(672px, calc(100vw - 24px)) !important;
-}
-
-.mat-mdc-snack-bar-container .mat-mdc-snack-bar-label {
-  flex: 0 1 auto !important;
-  width: auto !important;
-  max-width: 100%;
-}
-
-.mat-mdc-snack-bar-container .mdc-snackbar__label {
-  width: auto !important;
-  max-width: 100%;
-  flex-grow: 0 !important;
-  white-space: normal;
-}
-
-.mat-mdc-simple-snack-bar {
-  width: fit-content;
-  max-width: 100%;
+.mdc-snackbar__surface,
+.mat-mdc-snackbar-surface {
+  width: fit-content !important;
 }
 
 .p-overlay {

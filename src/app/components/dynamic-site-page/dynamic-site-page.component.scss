@@ -1,0 +1,69 @@
+@import '../privacy-policy/privacy-policy.component.scss';
+
+.dynamic-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.cms-dynamic {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #1a2e1a;
+
+  ::ng-deep h2 {
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #1a5c30;
+  }
+
+  ::ng-deep h3 {
+    margin-top: 1.25rem;
+    font-size: 1.1rem;
+    color: #2d4a33;
+  }
+
+  ::ng-deep p {
+    margin: 0.65rem 0;
+  }
+
+  ::ng-deep ul,
+  ::ng-deep ol {
+    margin: 0.5rem 0 0.5rem 1.25rem;
+  }
+
+  ::ng-deep a {
+    color: #1a5c30;
+    font-weight: 600;
+  }
+
+  ::ng-deep .cms-block {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+}
+
+.state-block {
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: #5a6b5e;
+
+  &.error h2 {
+    color: #c62828;
+    margin-bottom: 0.5rem;
+  }
+
+  a {
+    color: #1a5c30;
+    font-weight: 600;
+  }
+}

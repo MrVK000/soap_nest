@@ -1,0 +1,27 @@
+<div class="pp-page">
+  @if (loading) {
+  <div class="state-block">
+    <p>Loading…</p>
+  </div>
+  } @else if (error) {
+  <div class="state-block error">
+    <h2>Couldn’t load this page</h2>
+    <p>Please try again in a moment or go back to the <a routerLink="/home">home page</a>.</p>
+  </div>
+  } @else {
+  <div class="pp-header">
+    <div class="pp-header-content">
+      <span class="header-badge">Legal</span>
+      <h1>{{ title }}</h1>
+      <p>{{ pageLabel }} — Green Glow</p>
+      @if (updatedAt) {
+      <span class="last-updated">Last updated: {{ updatedAt | date : 'longDate' }}</span>
+      }
+    </div>
+  </div>
+
+  <div class="pp-body dynamic-wrap">
+    <div class="cms-dynamic" [innerHTML]="safeHtml"></div>
+  </div>
+  }
+</div>
