@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
+import { AuthService } from '../../services/auth.service';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -20,7 +21,11 @@ export class OrderSuccessComponent implements OnInit {
     { icon: 'pi pi-home',         label: 'Delivered' },
   ];
 
-  constructor(private router: Router, private sharedService: SharedService) {
+  constructor(
+    private router: Router,
+    private sharedService: SharedService,
+    public authService: AuthService
+  ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     this.orderId = state?.['orderId'] || this.generateRandomOrderId();
   }

@@ -75,7 +75,9 @@ export class CheckoutComponent {
       this.products = this.cartService.cartItems as unknown as Product[];
       this.calculateTotal();
     } else {
-      this.router.navigate(['/cart']);
+      this.router.navigate(
+        this.authService.isLoggedIn() ? ['/cart'] : ['/products']
+      );
     }
 
     this.coupons = fb.group({
