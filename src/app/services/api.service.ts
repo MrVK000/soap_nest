@@ -12,7 +12,6 @@ import {
   OrdersResponse,
   OrderDetailsResponse,
   ProductListResponse,
-  RegionResponse,
   RegisterUserForm,
   SuggestionsResponse,
   WishlistItemsResponse,
@@ -55,9 +54,6 @@ export class ApiService {
   private updatePasswordUrl: string = "user/update-password/";
   private makePaymentUrl: string = "payment/make-payment";
   private verifyPaymentUrl: string = "payment/verify-payment";
-  private getStatesUrl: string = "public/region/state";
-  private getDistrictsByStateUrl: string = "public/region/district/";
-  private getPincodesByDistrictUrl: string = "public/region/pincode/";
   private validateCouponUrl: string = "coupon/validate-coupon";
   private suggestionsUrl: string = "suggestions?search=";
   private getTopReviewsUrl: string = "public/review/top";
@@ -147,8 +143,8 @@ export class ApiService {
     return this.http.get<ProductListResponse>(`${this.baseUrl}${this.listProductsUrl}?${params}`);
   }
 
-  fetchPlaceholderWords(): Observable<RegionResponse> {
-    return this.http.get<RegionResponse>(this.baseUrl.concat(this.placeholderUrl));
+  fetchPlaceholderWords(): Observable<any> {
+    return this.http.get<any>(this.baseUrl.concat(this.placeholderUrl));
   }
 
   getProductById(productId: string, customerId: string): Observable<any> {
@@ -233,18 +229,6 @@ export class ApiService {
 
   verifyPayment(handlerResponse: any) {
     return this.http.post(this.baseUrl.concat(this.verifyPaymentUrl), handlerResponse);
-  }
-
-  getStates(): Observable<RegionResponse> {
-    return this.http.get<RegionResponse>(this.baseUrl.concat(this.getStatesUrl));
-  }
-
-  getDistrictsByState(state: string): Observable<RegionResponse> {
-    return this.http.get<RegionResponse>((this.baseUrl.concat(this.getDistrictsByStateUrl)).concat(state));
-  }
-
-  getPincodesByDistrict(district: string): Observable<RegionResponse> {
-    return this.http.get<RegionResponse>((this.baseUrl.concat(this.getPincodesByDistrictUrl)).concat(district));
   }
 
   validateCouponCode(code: string, cartTotal: number = 1): Observable<CouponValidationResponse> {

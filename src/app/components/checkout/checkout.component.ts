@@ -10,6 +10,7 @@ import { ApiService } from '../../services/api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CartService } from '../../services/cart.service';
+import { RegionService } from '../../services/region.service';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
@@ -61,6 +62,7 @@ export class CheckoutComponent {
     public sharedService: SharedService,
     private fb: FormBuilder,
     private cartService: CartService,
+    private regionService: RegionService,
     private cdr: ChangeDetectorRef
   ) {
     const navigation = this.router.getCurrentNavigation();
@@ -168,28 +170,34 @@ export class CheckoutComponent {
   }
 
   getStates() {
-    this.api.getStates().pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      this.statesList = res.data;
-      this.checkoutForm.patchValue({ state: this.statesList[0] });
-      this.getDistrictsByState(this.statesList[0]);
+    this.regionService.getStates().pipe(takeUntil(this.destroy$)).subscribe(states => {
+      this.statesList = states;
+      const user = this.authService.getUser();
+      const savedState = user?.state && states.includes(user.state) ? user.state : states[0];
+      this.checkoutForm.patchValue({ state: savedState });
+      this.getDistrictsByState(savedState);
       this.isLoading = false;
       this.cdr.markForCheck();
-    })
+    });
   }
 
   getDistrictsByState(state: string) {
-    this.api.getDistrictsByState(state).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      this.districtsList = res.data;
-      this.checkoutForm.patchValue({ district: this.districtsList[0] });
-      this.getPincodesByDistrict(this.districtsList[0]);
-    })
+    this.regionService.getDistrictsByState(state).pipe(takeUntil(this.destroy$)).subscribe(districts => {
+      this.districtsList = districts;
+      const user = this.authService.getUser();
+      const savedDistrict = user?.district && districts.includes(user.district) ? user.district : districts[0];
+      this.checkoutForm.patchValue({ district: savedDistrict });
+      this.getPincodesByDistrict(savedDistrict);
+    });
   }
 
   getPincodesByDistrict(district: string) {
-    this.api.getPincodesByDistrict(district).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      this.pincodesList = res.data;
-      this.checkoutForm.patchValue({ pincode: this.pincodesList[0] });
-    })
+    this.regionService.getPincodesByDistrict(district).pipe(takeUntil(this.destroy$)).subscribe(pincodes => {
+      this.pincodesList = pincodes;
+      const user = this.authService.getUser();
+      const savedPincode = user?.pincode && pincodes.includes(user.pincode) ? user.pincode : pincodes[0];
+      this.checkoutForm.patchValue({ pincode: savedPincode });
+    });
   }
 
   get state(): string {

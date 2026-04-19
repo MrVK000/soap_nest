@@ -176,7 +176,7 @@
           <div class="field">
             <label>State</label>
             <p-select formControlName="state" [options]="statesList" placeholder="Select state" appendTo="body"
-              [checkmark]="true" (onChange)="getDistrictsByState(state)" styleClass="w-full" />
+              [checkmark]="true" [filter]="true" (onChange)="getDistrictsByState(state)" styleClass="w-full" />
             <small class="error-msg" *ngIf="checkoutForm.get('state')?.invalid && checkoutForm.get('state')?.touched">
               Select a state.
             </small>
@@ -185,7 +185,7 @@
           <div class="field">
             <label>District</label>
             <p-select formControlName="district" [options]="districtsList" placeholder="Select district" appendTo="body"
-              [checkmark]="true" (onChange)="getPincodesByDistrict(district)" styleClass="w-full" />
+              [checkmark]="true" [filter]="true" (onChange)="getPincodesByDistrict(district)" styleClass="w-full" />
             <small class="error-msg"
               *ngIf="checkoutForm.get('district')?.invalid && checkoutForm.get('district')?.touched">
               Select a district.
@@ -195,7 +195,7 @@
           <div class="field">
             <label>Pincode</label>
             <p-select formControlName="pincode" [options]="pincodesList" placeholder="Select pincode" appendTo="body"
-              [checkmark]="true" styleClass="w-full" />
+              [checkmark]="true" [filter]="true" styleClass="w-full" />
             <small class="error-msg"
               *ngIf="checkoutForm.get('pincode')?.invalid && checkoutForm.get('pincode')?.touched">
               Select a pincode.

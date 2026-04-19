@@ -16,6 +16,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { TextareaModule } from 'primeng/textarea';
 import { CheckboxModule } from 'primeng/checkbox';
+import { RegionService } from '../../services/region.service';
 
 @Component({
   selector: 'app-register',
@@ -41,7 +42,7 @@ export class RegisterComponent {
     terms: new FormControl(false, Validators.requiredTrue),
   });
 
-  constructor(private api: ApiService, private router: Router, private snackbar: MatSnackBar, private authService: AuthService) { }
+  constructor(private api: ApiService, private router: Router, private snackbar: MatSnackBar, private authService: AuthService, private regionService: RegionService) { }
 
   ngOnInit(): void {
     this.getStates();
@@ -62,26 +63,26 @@ export class RegisterComponent {
   }
 
   getStates() {
-    this.api.getStates().pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      this.statesList = res.data;
+    this.regionService.getStates().pipe(takeUntil(this.destroy$)).subscribe(states => {
+      this.statesList = states;
       this.registerForm.patchValue({ state: this.statesList[0] });
       this.getDistrictsByState(this.statesList[0]);
-    })
+    });
   }
 
   getDistrictsByState(state: string) {
-    this.api.getDistrictsByState(state).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      this.districtsList = res.data;
+    this.regionService.getDistrictsByState(state).pipe(takeUntil(this.destroy$)).subscribe(districts => {
+      this.districtsList = districts;
       this.registerForm.patchValue({ district: this.districtsList[0] });
       this.getPincodesByDistrict(this.districtsList[0]);
-    })
+    });
   }
 
   getPincodesByDistrict(district: string) {
-    this.api.getPincodesByDistrict(district).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
-      this.pincodesList = res.data;
+    this.regionService.getPincodesByDistrict(district).pipe(takeUntil(this.destroy$)).subscribe(pincodes => {
+      this.pincodesList = pincodes;
       this.registerForm.patchValue({ pincode: this.pincodesList[0] });
-    })
+    });
   }
 
   get state(): string {
