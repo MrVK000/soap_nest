@@ -451,10 +451,27 @@
   flex-shrink: 0;
 }
 
-// ── Responsive ────────────────────────────────────────────────────────────────
+.skeleton-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
 
-@media (max-width: 860px) {
+  &.three {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+
+@media (max-width:1024px) {
+  .field-row {
+    display: block !important;
+  }
+}
+
+@media (max-width: 768px) {
   .co-page {
+    display: grid !important;
     grid-template-columns: 1fr;
     padding: 0 1rem;
     margin: 1.5rem auto;
@@ -463,16 +480,105 @@
   .co-header {
     padding: 1rem 1.2rem;
   }
+
+  .co-summary .skeleton-summary-card,
+  .co-form .skeleton-summary-card {
+    width: 100%;
+  }
 }
 
 @media (max-width: 576px) {
-
-  .field-row,
-  .field-row.three-col {
-    grid-template-columns: 1fr;
+  .co-header {
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
   }
 
   .co-header-text h1 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+  }
+
+  .co-header-text p {
+    font-size: 0.8rem;
+  }
+
+  .co-page {
+    padding: 0 0.75rem;
+    margin: 1rem auto;
+    gap: 1.25rem;
+  }
+
+  .summary-card {
+    padding: 1.1rem;
+    border-radius: 12px;
+  }
+
+  .card-title {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  // product item wraps on very small screens
+  .product-item {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+
+    img {
+      width: 52px;
+      height: 52px;
+    }
+  }
+
+  .product-price {
+    margin-left: auto;
+  }
+
+  // coupon row stacks
+  .coupon-row {
+    flex-direction: column;
+    align-items: stretch;
+
+    ::ng-deep .p-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .coupon-input {
+    width: 100%;
+  }
+
+  // all field-row grids collapse to single column
+  .field-row,
+  .field-row.three-col {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  // action buttons stack
+  .action-row {
+    flex-direction: column;
+    gap: 0.6rem;
+
+    ::ng-deep .cancel-btn.p-button,
+    ::ng-deep .pay-btn.p-button {
+      width: 100%;
+      flex: unset;
+    }
+  }
+
+  .secure-badge {
+    font-size: 0.75rem;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .price-row.total span:last-child {
+    font-size: 1.1rem;
+  }
+
+  .skeleton-field-row,
+  .skeleton-field-row.three {
+    grid-template-columns: 1fr;
   }
 }
