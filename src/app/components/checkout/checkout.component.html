@@ -195,10 +195,11 @@
           <div class="field">
             <label>Pincode</label>
             <p-select formControlName="pincode" [options]="pincodesList" placeholder="Select pincode" appendTo="body"
-              [checkmark]="true" [filter]="true" styleClass="w-full" />
+              [checkmark]="true" [filter]="true" [filterMatchMode]="'startsWith'" styleClass="w-full"
+              (keydown)="onNumericKeydown($event)" />
             <small class="error-msg"
               *ngIf="checkoutForm.get('pincode')?.invalid && checkoutForm.get('pincode')?.touched">
-              Select a pincode.
+              Enter a valid 6-digit pincode.
             </small>
           </div>
         </div>

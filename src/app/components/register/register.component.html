@@ -113,10 +113,11 @@
           <div class="field">
             <label>Pincode</label>
             <p-select formControlName="pincode" [options]="pincodesList" placeholder="Select pincode" appendTo="body"
-              [checkmark]="true" [filter]="true" [editable]="true" styleClass="w-full" />
+              [checkmark]="true" [filter]="true" [editable]="true" [filterMatchMode]="'startsWith'" styleClass="w-full"
+              (keydown)="onNumericKeydown($event)" />
             <small class="error-msg"
               *ngIf="registerForm.get('pincode')?.invalid && registerForm.get('pincode')?.touched">
-              Select a pincode.
+              Enter a valid 6-digit pincode.
             </small>
           </div>
         </div>

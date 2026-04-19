@@ -48,8 +48,8 @@ export class CheckoutComponent {
     address: new FormControl('', [Validators.required]),
     state: new FormControl('', [Validators.required]),
     district: new FormControl('', [Validators.required]),
-    pincode: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
+    pincode: new FormControl('', [Validators.required, Validators.pattern(/^\d{6}$/)]),
+    phone: new FormControl('', [Validators.required, Validators.pattern(/^\d{10}$/)]),
     paymentMethod: new FormControl('Online payment', [Validators.required]),
   });
 
@@ -142,8 +142,23 @@ export class CheckoutComponent {
   }
 
   onNumericKeydown(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
+
     const allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
-    if (!allowed.includes(event.key) && !/^[0-9]$/.test(event.key)) {
+
+    // Allow navigation/edit keys
+    if (allowed.includes(event.key)) {
+      return;
+    }
+
+    // Block non-numeric keys
+    if (!/^[0-9]$/.test(event.key)) {
+      event.preventDefault();
+      return;
+    }
+
+    // Enforce max length = 6
+    if (input.value && input.value.length >= 6) {
       event.preventDefault();
     }
   }
@@ -197,6 +212,7 @@ export class CheckoutComponent {
       const user = this.authService.getUser();
       const savedPincode = user?.pincode && pincodes.includes(user.pincode) ? user.pincode : pincodes[0];
       this.checkoutForm.patchValue({ pincode: savedPincode });
+      this.cdr.markForCheck();
     });
   }
 

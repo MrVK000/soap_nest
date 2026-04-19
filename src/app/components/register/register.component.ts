@@ -29,16 +29,17 @@ export class RegisterComponent {
   statesList: string[] = [];
   districtsList: string[] = [];
   pincodesList: string[] = [];
+
   registerForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
+    phone: new FormControl('', [Validators.required, Validators.pattern(/^\d{10}$/)]),
     address: new FormControl('', [Validators.required]),
     district: new FormControl('', [Validators.required]),
     state: new FormControl('', [Validators.required]),
-    pincode: new FormControl('', [Validators.required]),
+    pincode: new FormControl('', [Validators.required, Validators.pattern(/^\d{6}$/)]),
     terms: new FormControl(false, Validators.requiredTrue),
   });
 
@@ -56,8 +57,23 @@ export class RegisterComponent {
   }
 
   onNumericKeydown(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
+
     const allowed = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
-    if (!allowed.includes(event.key) && !/^[0-9]$/.test(event.key)) {
+
+    // Allow navigation/edit keys
+    if (allowed.includes(event.key)) {
+      return;
+    }
+
+    // Block non-numeric keys
+    if (!/^[0-9]$/.test(event.key)) {
+      event.preventDefault();
+      return;
+    }
+
+    // Enforce max length = 6
+    if (input.value && input.value.length >= 6) {
       event.preventDefault();
     }
   }
@@ -105,7 +121,6 @@ export class RegisterComponent {
       }, (error) => {
         this.snackbar.open(`Couldn't create an account.`, '', { duration: 2000 });
       });
-
     } else {
       this.registerForm.markAllAsTouched();
       this.registerForm.markAsDirty();
