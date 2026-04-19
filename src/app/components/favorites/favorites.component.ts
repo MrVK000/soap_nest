@@ -71,7 +71,7 @@ export class FavoritesComponent implements OnInit {
     this.apiService.removeFavoritesItem(item.id as number).subscribe((res: any) => {
       this.favorites = this.favorites.filter(f => f.id !== item.id);
       this.cdr.markForCheck();
-      this.snackbar.open(res?.message ?? 'Removed from favorites', '', { duration: 2000 });
+      this.snackbar.open(res?.message ?? 'Removed from favorites', '', { duration: 2000, panelClass: ['custom-snackbar'] });
     });
   }
 

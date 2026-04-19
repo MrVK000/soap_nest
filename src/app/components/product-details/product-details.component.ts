@@ -139,14 +139,14 @@ import { AuthService } from '../../services/auth.service';
 
     this.apiService.addToWishlist(wishlistPayload).subscribe((res: any) => {
       this.updateProduct();
-      this.snackbar.open(res?.message, '', { duration: 2000 });
+      this.snackbar.open(res?.message, '', { duration: 2000, panelClass: ['custom-snackbar'] });
     });
   }
 
   removeFromWishlist() {
     this.apiService.removeWishlistItem(this.product.wishlistItemId).subscribe((res: any) => {
       this.updateProduct();
-      this.snackbar.open(res?.message, '', { duration: 2000 });
+      this.snackbar.open(res?.message, '', { duration: 2000, panelClass: ['custom-snackbar'] });
     });
   }
 
@@ -156,13 +156,13 @@ import { AuthService } from '../../services/auth.service';
   //     productId
   //   }
   //   this.apiService.addToWishlist(wishlistPayload).subscribe((res: any) => {
-  //     this.snackbar.open(res?.message, '', { duration: 2000 });
+  //     this.snackbar.open(res?.message, '', { duration: 2000, panelClass: ['custom-snackbar'] });
   //   });
   // }
 
   // removeFromWishlist(id: number) {
   //   this.apiService.removeWishlistItem(id).subscribe((res: any) => {
-  //     this.snackbar.open(res?.message, '', { duration: 2000 });
+  //     this.snackbar.open(res?.message, '', { duration: 2000, panelClass: ['custom-snackbar'] });
   //   });
   // }
 
@@ -189,15 +189,15 @@ import { AuthService } from '../../services/auth.service';
 
       this.apiService.addReview(reviewPayload).pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
         this.loadReviews(true);
-        this.snackbar.open('Comment Added Successfully', '', { duration: 2000 });
+        this.snackbar.open('Comment Added Successfully', '', { duration: 2000, panelClass: ['custom-snackbar'] });
       },
         () => {
-          this.snackbar.open("Couldn't Add Comment", '', { duration: 2000 });
+          this.snackbar.open("Couldn't Add Comment", '', { duration: 2000, panelClass: ['custom-snackbar'] });
         }
       );
       this.closeAddReviewModal();
     } else {
-      this.snackbar.open('Please fill all the fields', '', { duration: 2000 });
+      this.snackbar.open('Please fill all the fields', '', { duration: 2000, panelClass: ['custom-snackbar'] });
     }
   }
 

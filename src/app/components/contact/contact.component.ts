@@ -21,17 +21,17 @@ export class ContactComponent {
   submitting = false;
 
   contactForm = new FormGroup({
-    name:        new FormControl('', [Validators.required, Validators.minLength(2)]),
-    email:       new FormControl('', [Validators.required, Validators.email]),
+    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{10}$')]),
-    message:     new FormControl('', [Validators.required, Validators.minLength(10)])
+    message: new FormControl('', [Validators.required, Validators.minLength(10)])
   });
 
   infoItems = [
-    { icon: 'pi pi-envelope', label: 'Email',   value: 'hello@greenglow.com' },
-    { icon: 'pi pi-phone',    label: 'Phone',   value: '+91 98765 43210' },
+    { icon: 'pi pi-envelope', label: 'Email', value: 'hello@greenglow.com' },
+    { icon: 'pi pi-phone', label: 'Phone', value: '+91 98765 43210' },
     { icon: 'pi pi-map-marker', label: 'Location', value: 'Kerala, India' },
-    { icon: 'pi pi-clock',    label: 'Working Hours', value: 'Mon – Sat, 9am – 6pm' },
+    { icon: 'pi pi-clock', label: 'Working Hours', value: 'Mon – Sat, 9am – 6pm' },
   ];
 
   constructor(private api: ApiService, private snackbar: MatSnackBar) { }
@@ -51,20 +51,20 @@ export class ContactComponent {
 
     this.submitting = true;
     const message: Message = {
-      name:        this.contactForm.value.name!.trim(),
-      email:       this.contactForm.value.email!.trim(),
+      name: this.contactForm.value.name!.trim(),
+      email: this.contactForm.value.email!.trim(),
       phoneNumber: this.contactForm.value.phoneNumber!.trim(),
-      message:     this.contactForm.value.message!.trim()
+      message: this.contactForm.value.message!.trim()
     };
 
     this.api.sendMessage(message).subscribe({
       next: () => {
-        this.snackbar.open(`Thank you, ${message.name}! We'll get back to you soon.`, '', { duration: 3000 });
+        this.snackbar.open(`Thank you, ${message.name}! We'll get back to you soon.`, '', { duration: 3000, panelClass: ['custom-snackbar'] });
         this.contactForm.reset();
         this.submitting = false;
       },
       error: () => {
-        this.snackbar.open("Couldn't send message. Please try again.", '', { duration: 3000 });
+        this.snackbar.open("Couldn't send message. Please try again.", '', { duration: 3000, panelClass: ['custom-snackbar'] });
         this.submitting = false;
       }
     });

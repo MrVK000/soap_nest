@@ -15,9 +15,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     // Ensure the snackbar runs inside Angular zone
     this.zone.run(() => {
-      this.snackBar.open('Something went wrong. Please try again.', '', {
-        duration: 4000,
-      });
+      this.snackBar.open('Something went wrong. Please try again.', '', { duration: 4000, panelClass: ['custom-snackbar'] });
     });
 
     // Re-throw or log to console for visibility during development

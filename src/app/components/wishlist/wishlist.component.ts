@@ -71,7 +71,7 @@ export class WishlistComponent implements OnInit {
     this.apiService.removeWishlistItem(item.id as number).subscribe((res: any) => {
       this.wishlist = this.wishlist.filter(w => w.id !== item.id);
       this.cdr.markForCheck();
-      this.snackbar.open(res?.message ?? 'Removed from wishlist', '', { duration: 2000 });
+      this.snackbar.open(res?.message ?? 'Removed from wishlist', '', { duration: 2000, panelClass: ['custom-snackbar'] });
     });
   }
 

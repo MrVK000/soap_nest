@@ -34,7 +34,7 @@ export class LoginComponent {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.snackbar.open('You are already logged in', '', { duration: 2000 });
+      this.snackbar.open('You are already logged in', '', { duration: 2000, panelClass: ['custom-snackbar'] });
       this.sharedService.goBack();
       return;
     }
@@ -53,22 +53,22 @@ export class LoginComponent {
         this.authService.setToken(res.token);
         this.authService.setUser(res.user);
         this.cartService.fetchCartCount();
-        this.snackbar.open(`Welcome back ${res?.user?.name ? res.user.name : ""}, logged in successful`, '', { duration: 2000 });
+        this.snackbar.open(`Welcome back ${res?.user?.name ? res.user.name : ""}, logged in successful`, '', { duration: 2000, panelClass: ['custom-snackbar'] });
         this.loginForm.reset();
         this.sharedService.goBack();
       }, (error) => {
         if (error.status == 404)
-          this.snackbar.open(`Couldn't find your account`, '', { duration: 2000 });
+          this.snackbar.open(`Couldn't find your account`, '', { duration: 2000, panelClass: ['custom-snackbar'] });
         else if (error.status == 401)
-          this.snackbar.open('Please Login Again', '', { duration: 2000 });
+          this.snackbar.open('Please Login Again', '', { duration: 2000, panelClass: ['custom-snackbar'] });
         else
-          this.snackbar.open(`Something went wrong`, '', { duration: 2000 });
+          this.snackbar.open(`Something went wrong`, '', { duration: 2000, panelClass: ['custom-snackbar'] });
       });
 
     } else {
       this.loginForm.markAllAsTouched();
       this.loginForm.markAsDirty();
-      this.snackbar.open(`Please fill out all fields correctly`, '', { duration: 2000 });
+      this.snackbar.open(`Please fill out all fields correctly`, '', { duration: 2000, panelClass: ['custom-snackbar'] });
     }
   }
 

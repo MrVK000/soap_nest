@@ -45,7 +45,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           }),
           catchError((refreshErr) => {
             authService.logout(false);
-            snackbar.open("Please login", '', { duration: 3000 });
+            snackbar.open("Please login", '', { duration: 3000, panelClass: ['custom-snackbar'] });
             router.navigate(['/login']);
             return throwError(() => refreshErr);
           })

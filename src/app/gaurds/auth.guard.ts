@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
     const isLoggedIn = this.authService.isLoggedIn();
 
     if (!isLoggedIn) {
-      this.snackbar.open('Please log in to continue', '', { duration: 2000 });
+      this.snackbar.open('Please log in to continue', '', { duration: 3000, panelClass: ['custom-snackbar'], });
       this.router.navigate(['/login']);
       return false;
     }

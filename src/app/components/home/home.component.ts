@@ -39,7 +39,7 @@ export class HomeComponent {
         image: product.images?.[0] ?? ''
       }));
     }, () => {
-      this.snackbar.open("Couldn't fetch the products", '', { duration: 3000 });
+      this.snackbar.open("Couldn't fetch the products", '', { duration: 3000, panelClass: ['custom-snackbar'] });
     });
   }
 

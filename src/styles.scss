@@ -177,9 +177,20 @@ textarea {
   margin: 2rem 0;
 }
 
-.mdc-snackbar__surface,
-.mat-mdc-snackbar-surface {
-  width: fit-content !important;
+.mat-mdc-snack-bar-container.custom-snackbar .mdc-snackbar__surface {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: fit-content !important;
+  padding: 8px 12px !important;
+}
+
+.mat-mdc-snack-bar-container.custom-snackbar .mdc-snackbar__label {
+  padding: 0 !important;
+}
+
+.mat-mdc-snack-bar-handset {
+  display: flex !important;
+  justify-content: center !important;
 }
 
 .p-overlay {

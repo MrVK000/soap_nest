@@ -94,7 +94,7 @@ export class CartService {
       this.loadCartItems(1, false);
       this.loadCartSummary();
       this.fetchCartCount();
-      this.snackbar.open('Item added to cart', '', { duration: 2000 });
+      this.snackbar.open('Item added to cart', '', { duration: 2000, panelClass: ['custom-snackbar'] });
     });
   }
 
@@ -103,24 +103,24 @@ export class CartService {
       this.loadCartItems(1, false);
       this.loadCartSummary();
       this.fetchCartCount();
-      this.snackbar.open('Item updated successfully', '', { duration: 2000 });
+      this.snackbar.open('Item updated successfully', '', { duration: 2000, panelClass: ['custom-snackbar'] });
     }, (err) => {
-      this.snackbar.open(err?.errors?.[0]?.msg, '', { duration: 2000 });
+      this.snackbar.open(err?.errors?.[0]?.msg, '', { duration: 2000, panelClass: ['custom-snackbar'] });
     });
   }
 
   decreaseQuantity(cartItemId: number, quantity: number) {
     if (quantity < 1) {
-      this.snackbar.open('Quantity must be at least 1', '', { duration: 2000 });
+      this.snackbar.open('Quantity must be at least 1', '', { duration: 2000, panelClass: ['custom-snackbar'] });
       return;
     }
     this.api.updateCartItem({ cartItemId, quantity }).subscribe(() => {
       this.loadCartItems(1, false);
       this.loadCartSummary();
       this.fetchCartCount();
-      this.snackbar.open('Item updated successfully', '', { duration: 2000 });
+      this.snackbar.open('Item updated successfully', '', { duration: 2000, panelClass: ['custom-snackbar'] });
     }, (err) => {
-      this.snackbar.open(err?.error?.errors?.[0]?.msg, '', { duration: 2000 });
+      this.snackbar.open(err?.error?.errors?.[0]?.msg, '', { duration: 2000, panelClass: ['custom-snackbar'] });
     });
   }
 
@@ -129,7 +129,7 @@ export class CartService {
       this.loadCartItems(1, false);
       this.loadCartSummary();
       this.fetchCartCount();
-      this.snackbar.open('Item removed', '', { duration: 2000 });
+      this.snackbar.open('Item removed', '', { duration: 2000, panelClass: ['custom-snackbar'] });
     });
   }
 

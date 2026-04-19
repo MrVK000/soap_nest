@@ -93,7 +93,7 @@ export class MyaccountComponent implements OnInit {
   saveChanges() {
     if (this.accountForm.invalid) {
       this.accountForm.markAllAsTouched();
-      this.snackbar.open('Please fix the errors in the form.', '', { duration: 3000 });
+      this.snackbar.open('Please fix the errors in the form.', '', { duration: 3000, panelClass: ['custom-snackbar'] });
       return;
     }
     const { fullName, phone, address } = this.accountForm.getRawValue();
@@ -104,12 +104,12 @@ export class MyaccountComponent implements OnInit {
             this.user = { ...this.user, name: fullName!, phone: phone!, address: address! };
             this.authService.setUser(this.user);
           }
-          this.snackbar.open(res?.message ?? 'Profile updated successfully!', '', { duration: 3000 });
+          this.snackbar.open(res?.message ?? 'Profile updated successfully!', '', { duration: 3000, panelClass: ['custom-snackbar'] });
           this.isEditing = false;
           this.accountForm.disable();
         },
         error: (err) => {
-          this.snackbar.open(err?.error?.message ?? 'Failed to update profile.', '', { duration: 3000 });
+          this.snackbar.open(err?.error?.message ?? 'Failed to update profile.', '', { duration: 3000, panelClass: ['custom-snackbar'] });
         }
       });
   }
@@ -127,18 +127,18 @@ export class MyaccountComponent implements OnInit {
     }
     if (newPassword !== confirmPassword) {
       this.passwordForm.markAllAsTouched();
-      this.snackbar.open('Passwords do not match.', '', { duration: 3000 });
+      this.snackbar.open('Passwords do not match.', '', { duration: 3000, panelClass: ['custom-snackbar'] });
       return;
     }
     this.api.updatePassword(this.user!.customerId, { oldPassword: oldPassword!, newPassword: newPassword! })
       .subscribe({
         next: (res: any) => {
-          this.snackbar.open(res?.message ?? 'Password updated successfully!', '', { duration: 3000 });
+          this.snackbar.open(res?.message ?? 'Password updated successfully!', '', { duration: 3000, panelClass: ['custom-snackbar'] });
           this.isChangingPassword = false;
           this.passwordForm.reset();
         },
         error: (err) => {
-          this.snackbar.open(err?.error?.message ?? 'Failed to update password.', '', { duration: 3000 });
+          this.snackbar.open(err?.error?.message ?? 'Failed to update password.', '', { duration: 3000, panelClass: ['custom-snackbar'] });
         }
       });
   }

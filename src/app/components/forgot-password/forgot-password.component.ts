@@ -44,7 +44,7 @@ export class ForgotPasswordComponent {
         this.isLoading = false;
       },
       error: () => {
-        this.snackbar.open('Something went wrong. Please try again.', '', { duration: 3000 });
+        this.snackbar.open('Something went wrong. Please try again.', '', { duration: 3000, panelClass: ['custom-snackbar'] });
         this.isLoading = false;
       }
     });

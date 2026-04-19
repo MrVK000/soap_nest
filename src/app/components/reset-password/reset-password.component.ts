@@ -62,7 +62,7 @@ export class ResetPasswordComponent {
       },
       error: (err) => {
         const msg = err?.error?.message || 'Something went wrong. Please try again.';
-        this.snackbar.open(msg, '', { duration: 4000 });
+        this.snackbar.open(msg, '', { duration: 4000, panelClass: ['custom-snackbar'] });
         if (err?.status === 400) this.invalidToken = true;
         this.isLoading = false;
       }

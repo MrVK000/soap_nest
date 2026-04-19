@@ -115,7 +115,7 @@ export class ProductsComponent {
       this.cdr.markForCheck();
     }, () => {
       this.isLoading = false;
-      this.snackbar.open("Couldn't fetch the products", '', { duration: 3000 });
+      this.snackbar.open("Couldn't fetch the products", '', { duration: 3000, panelClass: ['custom-snackbar'] });
       this.cdr.markForCheck();
     });
   }
@@ -163,7 +163,7 @@ export class ProductsComponent {
   addToCart(productId: string) {
     const user = this.authService.getUser();
     if (!user?.customerId || !this.authService.isLoggedIn()) {
-      this.snackbar.open("Please Login First", '', { duration: 3000 });
+      this.snackbar.open("Please Login First", '', { duration: 3000, panelClass: ['custom-snackbar'] });
       this.router.navigate(['/login']);
       return;
     }
@@ -173,7 +173,7 @@ export class ProductsComponent {
   addOrRemoveFavorites(productId: string, favoriteId: number, type: boolean) {
     const user = this.authService.getUser();
     if (!user?.customerId || !this.authService.isLoggedIn()) {
-      this.snackbar.open("Please Login First", '', { duration: 3000 });
+      this.snackbar.open("Please Login First", '', { duration: 3000, panelClass: ['custom-snackbar'] });
       this.router.navigate(['/login']);
       return;
     }
@@ -181,13 +181,13 @@ export class ProductsComponent {
       this.api.removeFavoritesItem(favoriteId).subscribe((res: any) => {
         this.products = this.products.map(p => p.productId === productId ? { ...p, isFavoriteItem: false, favoriteItemId: 0 } : p);
         this.cdr.markForCheck();
-        this.snackbar.open(res?.message, '', { duration: 2000 });
+        this.snackbar.open(res?.message, '', { duration: 2000, panelClass: ['custom-snackbar'] });
       });
     } else {
       this.api.addToFavorites({ customerId: this.customerId, productId }).subscribe((res: any) => {
         this.products = this.products.map(p => p.productId === productId ? { ...p, isFavoriteItem: true, favoriteItemId: res?.data?.id } : p);
         this.cdr.markForCheck();
-        this.snackbar.open(res?.message, '', { duration: 2000 });
+        this.snackbar.open(res?.message, '', { duration: 2000, panelClass: ['custom-snackbar'] });
       });
     }
   }

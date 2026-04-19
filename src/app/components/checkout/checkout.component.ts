@@ -124,7 +124,7 @@ export class CheckoutComponent {
           coupon.get('isVerified')?.setValue(true);
           this.grandTotal = res?.data?.discountedTotal.toFixed(2);
           this.couponDiscountPercentage = res?.data?.discount.toFixed(2);
-          this.snackbar.open("Added coupon discount", "", { duration: 3000 })
+          this.snackbar.open("Added coupon discount", '', { duration: 3000, panelClass: ['custom-snackbar'] })
         }, (error) => {
           let errorMessage = "Error while validating the coupon";
           if (error?.error?.errors && error?.error?.errors?.length > 0)
@@ -132,11 +132,11 @@ export class CheckoutComponent {
           else
             errorMessage = error?.error?.message
 
-          this.snackbar.open(errorMessage, "", { duration: 3000 })
+          this.snackbar.open(errorMessage, '', { duration: 3000, panelClass: ['custom-snackbar'] })
           coupon.get('isVerified')?.setValue(false);
         })
       } else {
-        this.snackbar.open("Please use a valid coupon code");
+        this.snackbar.open("Please use a valid coupon code", '', { duration: 3000, panelClass: ['custom-snackbar'] });
       }
     }
   }
@@ -258,11 +258,11 @@ export class CheckoutComponent {
     const verifyPaymentPayload = { razorpayOrderId: razorpay_order_id, razorpayPaymentId: razorpay_payment_id, razorpaySignature: razorpay_signature };
     this.api.verifyPayment(verifyPaymentPayload).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
-        this.snackbar.open('Payment successful!', '', { duration: 3000 });
+        this.snackbar.open('Payment successful!', '', { duration: 3000, panelClass: ['custom-snackbar'] });
         this.router.navigate(['/order-success'], { state: { orderId } });
       },
       error: () => {
-        this.snackbar.open('Payment verification failed. Please contact support.', '', { duration: 4000 });
+        this.snackbar.open('Payment verification failed. Please contact support.', '', { duration: 4000, panelClass: ['custom-snackbar'] });
       }
     });
   }
@@ -345,7 +345,7 @@ export class CheckoutComponent {
 
   completePayment() {
     if (!this.checkoutForm.valid || this.products.length === 0) {
-      this.snackbar.open('Please check your details and cart before making payment.', '', { duration: 3000 });
+      this.snackbar.open('Please check your details and cart before making payment.', '', { duration: 3000, panelClass: ['custom-snackbar'] });
       this.checkoutForm.markAllAsTouched();
       return;
     }

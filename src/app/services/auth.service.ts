@@ -91,7 +91,7 @@ export class AuthService {
       error: () => { /* ignore */ },
     });
     if (showSnackbar) {
-      this.snackbar.open(`Logged out successfully`, '', { duration: 2000 });
+      this.snackbar.open(`Logged out successfully`, '', { duration: 2000, panelClass: ['custom-snackbar'] });
     }
   }
 

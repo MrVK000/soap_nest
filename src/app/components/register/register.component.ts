@@ -115,16 +115,16 @@ export class RegisterComponent {
       this.api.registerUser(registerFormPayload).pipe(takeUntil(this.destroy$)).subscribe((res: { token?: string; user?: any }) => {
         if (res?.token) this.authService.setToken(res.token);
         if (res?.user) this.authService.setUser(res.user);
-        this.snackbar.open(`Welcome, ${registerFormPayload.name}! Your account has been created.`, '', { duration: 2000 });
+        this.snackbar.open(`Welcome, ${registerFormPayload.name}! Your account has been created.`, '', { duration: 2000, panelClass: ['custom-snackbar'] });
         this.registerForm.reset();
         this.router.navigate(['/home']);
       }, (error) => {
-        this.snackbar.open(`Couldn't create an account.`, '', { duration: 2000 });
+        this.snackbar.open(`Couldn't create an account.`, '', { duration: 2000, panelClass: ['custom-snackbar'] });
       });
     } else {
       this.registerForm.markAllAsTouched();
       this.registerForm.markAsDirty();
-      this.snackbar.open(`Please fill out all fields correctly.`, '', { duration: 2000 });
+      this.snackbar.open(`Please fill out all fields correctly.`, '', { duration: 2000, panelClass: ['custom-snackbar'] });
     }
   }
 

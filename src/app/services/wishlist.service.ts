@@ -39,13 +39,13 @@ export class WishlistService {
       productId
     }
     this.apiService.addToWishlist(wishlistPayload).subscribe((res: any) => {
-      this.snackbar.open(res?.message, '', { duration: 2000 });
+      this.snackbar.open(res?.message, '', { duration: 2000, panelClass: ['custom-snackbar'] });
     });
   }
 
   removeFromWishlist(id: number) {
     this.apiService.removeWishlistItem(id).subscribe((res: any) => {
-      this.snackbar.open(res?.message, '', { duration: 2000 });
+      this.snackbar.open(res?.message, '', { duration: 2000, panelClass: ['custom-snackbar'] });
     });
   }
 }
