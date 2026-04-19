@@ -6,12 +6,13 @@ import { ApiService } from './../../services/api.service';
 import { Component, OnInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { FavoriteItem } from '../../interfaces/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SafeUrlPipe } from '../../pipes/safe-url.pipe';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-favorites',
-  imports: [CommonModule, RouterModule, ButtonModule, TagModule],
+  imports: [CommonModule, RouterModule, ButtonModule, TagModule, SafeUrlPipe],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss'
 })

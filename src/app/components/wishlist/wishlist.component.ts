@@ -6,12 +6,13 @@ import { ApiService } from './../../services/api.service';
 import { Component, OnInit, ChangeDetectorRef, HostListener } from '@angular/core';
 import { WishlistItem } from '../../interfaces/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SafeUrlPipe } from '../../pipes/safe-url.pipe';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-wishlist',
-  imports: [CommonModule, RouterModule, ButtonModule, TagModule],
+  imports: [CommonModule, RouterModule, ButtonModule, TagModule, SafeUrlPipe],
   templateUrl: './wishlist.component.html',
   styleUrl: './wishlist.component.scss'
 })

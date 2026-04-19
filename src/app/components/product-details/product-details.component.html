@@ -31,12 +31,12 @@
     <!-- LEFT: IMAGE GALLERY -->
     <div class="gallery">
       <div class="main-image">
-        <img [src]="selectedImage" [alt]="product.name">
+        <img [src]="selectedImage | safeUrl" [alt]="product.name">
         <span *ngIf="product?.offer && +product.offer > 0" class="offer-badge">{{ product.offer }}% OFF</span>
       </div>
       <div class="thumbnails" *ngIf="productImages.length > 1">
-        <img *ngFor="let img of productImages" [src]="img" [alt]="product.name" [class.active]="img === selectedImage"
-          (click)="selectImage(img)">
+        <img *ngFor="let img of productImages" [src]="img | safeUrl" [alt]="product.name"
+          [class.active]="img === selectedImage" (click)="selectImage(img)">
       </div>
     </div>
 

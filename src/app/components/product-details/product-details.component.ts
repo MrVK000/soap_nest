@@ -14,10 +14,11 @@ import { TagModule } from 'primeng/tag';
 import { ApiService } from '../../services/api.service';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { SafeUrlPipe } from '../../pipes/safe-url.pipe';
 
 @Component({
   selector: 'app-product-details',
-  imports: [CommonModule, ReactiveFormsModule, RatingModule, ButtonModule, TextareaModule, DialogModule, TagModule],
+  imports: [CommonModule, ReactiveFormsModule, RatingModule, ButtonModule, TextareaModule, DialogModule, TagModule, SafeUrlPipe],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

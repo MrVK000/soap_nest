@@ -11,6 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CartService } from '../../services/cart.service';
 import { RegionService } from '../../services/region.service';
+import { SafeUrlPipe } from '../../pipes/safe-url.pipe';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
@@ -23,7 +24,7 @@ declare var Razorpay: any;
 
 @Component({
   selector: 'app-checkout',
-  imports: [ReactiveFormsModule, CommonModule, ButtonModule, InputTextModule, SelectModule, TextareaModule, IconFieldModule, InputIconModule, DividerModule],
+  imports: [ReactiveFormsModule, CommonModule, ButtonModule, InputTextModule, SelectModule, TextareaModule, IconFieldModule, InputIconModule, DividerModule, SafeUrlPipe],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -70,6 +71,8 @@ export class CheckoutComponent {
 
     if (state && Array.isArray(state.data) && state.data.length > 0) {
       this.products = state.data;
+      console.log(">>>> products  >>>  ", this.products);
+
       this.calculateTotal();
     } else if (this.cartService.cartItems.length > 0) {
       this.products = this.cartService.cartItems as unknown as Product[];

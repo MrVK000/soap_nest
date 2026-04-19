@@ -1,3 +1,4 @@
+import { SafeUrlPipe } from '../../pipes/safe-url.pipe';
 import { SharedService } from '../../services/shared.service';
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,7 +10,7 @@ import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-cart',
-  imports: [CommonModule, RouterModule, ButtonModule, TagModule, DividerModule],
+  imports: [CommonModule, RouterModule, ButtonModule, TagModule, DividerModule, SafeUrlPipe],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })

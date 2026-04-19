@@ -9,10 +9,11 @@ import { ApiService } from '../../services/api.service';
 import { SharedService } from '../../services/shared.service';
 import { Subject, takeUntil } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SafeUrlPipe } from '../../pipes/safe-url.pipe';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterModule, CommonModule, CarouselModule, ButtonModule],
+  imports: [RouterModule, CommonModule, CarouselModule, ButtonModule, SafeUrlPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   host: { ngSkipHydration: 'true' },

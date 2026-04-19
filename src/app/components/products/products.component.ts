@@ -18,10 +18,11 @@ import { ApiService } from '../../services/api.service';
 import { Subject, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment';
+import { SafeUrlPipe } from '../../pipes/safe-url.pipe';
 
 @Component({
   selector: 'app-products',
-  imports: [FormsModule, CommonModule, SelectModule, InputTextModule, IconFieldModule, InputIconModule, RouterModule, MatSnackBarModule, ButtonModule, CheckboxModule],
+  imports: [FormsModule, CommonModule, SelectModule, InputTextModule, IconFieldModule, InputIconModule, RouterModule, MatSnackBarModule, ButtonModule, CheckboxModule, SafeUrlPipe],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
   providers: [provideAnimations()],

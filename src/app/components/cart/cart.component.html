@@ -47,7 +47,7 @@
             <div class="cart-card" *ngFor="let item of cartService.cartItems">
 
                 <div class="item-image-wrap">
-                    <img [src]="item.image" [alt]="item.name" class="item-img" />
+                    <img [src]="item.image | safeUrl" [alt]="item.name" class="item-img" />
                     <span *ngIf="+item.offer > 0" class="offer-badge">{{ item.offer }}% OFF</span>
                 </div>
 

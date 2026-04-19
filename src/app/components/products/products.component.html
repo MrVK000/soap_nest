@@ -76,7 +76,7 @@
 
     <div class="product-card" *ngFor="let product of products">
       <div class="card-image" (click)="viewProductDetails(product.productId)">
-        <img [src]="product.images[0]" [alt]="product.name" loading="lazy">
+        <img [src]="product.image | safeUrl" [alt]="product.name" loading="lazy">
         <span *ngIf="product?.offer && +product.offer > 0" class="badge-offer">{{ product.offer }}% OFF</span>
         <p-button [icon]="product.isFavoriteItem ? 'pi pi-heart-fill' : 'pi pi-heart'" [text]="true"
           [severity]="product.isFavoriteItem ? 'danger' : 'secondary'" styleClass="btn-favorite"
