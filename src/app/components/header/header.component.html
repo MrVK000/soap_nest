@@ -21,7 +21,7 @@
         <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" (focus)="onSearchFocus()"
           (blur)="onSearchBlur()">
         <div class="placeholder-overlay" *ngIf="!searchFocused && !searchTerm">
-          <span class="static-text">Search for&nbsp;</span>
+          <span class="static-text">Search&nbsp;</span>
           <div class="dynamic-wrapper">
           <div class="dynamic-text" [style.transform]="slideTransform" [style.transition]="slideTransition ? 'transform 0.5s ease-in-out' : 'none'">
               <div *ngFor="let word of placeholderWords">{{ word }}</div>
