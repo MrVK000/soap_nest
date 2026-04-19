@@ -3,6 +3,7 @@ import { AuthService } from './../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Coupon, Product } from './../../interfaces/interfaces';
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormArray, FormBuilder } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -19,15 +20,24 @@ import { TextareaModule } from 'primeng/textarea';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { DividerModule } from 'primeng/divider';
+import { FormsModule } from '@angular/forms';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 declare var Razorpay: any;
 
 @Component({
   selector: 'app-checkout',
-  imports: [ReactiveFormsModule, CommonModule, ButtonModule, InputTextModule, SelectModule, TextareaModule, IconFieldModule, InputIconModule, DividerModule, SafeUrlPipe],
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, ToggleSwitchModule, ButtonModule, InputTextModule, SelectModule, TextareaModule, IconFieldModule, InputIconModule, DividerModule, SafeUrlPipe],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('expandCollapse', [
+      state('open', style({ height: '*', opacity: 1, marginTop: '1rem' })),
+      state('closed', style({ height: '0px', opacity: 0, marginTop: '0' })),
+      transition('closed <=> open', animate('280ms cubic-bezier(0.4, 0, 0.2, 1)')),
+    ])
+  ]
 })
 export class CheckoutComponent {
   private destroy$ = new Subject<void>();
@@ -42,6 +52,7 @@ export class CheckoutComponent {
   gst: number = 0;
   deliveryCharge: number = 50;
   grandTotal: string = '';
+  showCouponSection: boolean = false;
   razorpayKey = environment.razorpayKey; // Public key configured per-environment
 
   checkoutForm = new FormGroup({

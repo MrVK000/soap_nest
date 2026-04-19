@@ -73,22 +73,29 @@
     </div>
 
     <!-- COUPON -->
-    <div class="summary-card" [formGroup]="coupons">
-      <h3 class="card-title"><i class="pi pi-tag"></i> Gift Coupon</h3>
-      <div formArrayName="formArray">
-        <ng-container *ngFor="let coupon of getCoupons.controls; let i = index">
-          <div [formGroupName]="i" class="coupon-row">
-            <p-iconfield class="coupon-input">
-              <p-inputicon class="pi pi-ticket" />
-              <input type="text" pInputText formControlName="code" placeholder="Enter coupon code"
-                [readonly]="getCouponVerificationStatus(i)">
-            </p-iconfield>
-            <p-button [label]="getCouponVerificationStatus(i) ? 'Applied' : 'Apply'"
-              [icon]="getCouponVerificationStatus(i) ? 'pi pi-check' : 'pi pi-arrow-right'"
-              [severity]="getCouponVerificationStatus(i) ? 'success' : 'info'"
-              [outlined]="!getCouponVerificationStatus(i)" (onClick)="verifyCoupon(i)" />
+    <div class="summary-card">
+      <div class="coupon-header-toggle" (click)="showCouponSection = !showCouponSection">
+        <h3 class="card-title"><i class="pi pi-tag"></i> Have a Gift Coupon?</h3>
+        <i class="pi pi-chevron-down coupon-chevron" [class.open]="showCouponSection"></i>
+      </div>
+      <div class="coupon-body" [@expandCollapse]="showCouponSection ? 'open' : 'closed'">
+        <div [formGroup]="coupons">
+          <div formArrayName="formArray">
+            <ng-container *ngFor="let coupon of getCoupons.controls; let i = index">
+              <div [formGroupName]="i" class="coupon-row">
+                <p-iconfield class="coupon-input">
+                  <p-inputicon class="pi pi-ticket" />
+                  <input type="text" pInputText formControlName="code" placeholder="Enter coupon code"
+                    [readonly]="getCouponVerificationStatus(i)">
+                </p-iconfield>
+                <p-button [label]="getCouponVerificationStatus(i) ? 'Applied' : 'Apply'"
+                  [icon]="getCouponVerificationStatus(i) ? 'pi pi-check' : 'pi pi-arrow-right'"
+                  [severity]="getCouponVerificationStatus(i) ? 'success' : 'info'"
+                  [outlined]="!getCouponVerificationStatus(i)" (onClick)="verifyCoupon(i)" />
+              </div>
+            </ng-container>
           </div>
-        </ng-container>
+        </div>
       </div>
     </div>
 
